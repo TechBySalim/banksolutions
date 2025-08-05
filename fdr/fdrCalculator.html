@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank FDR Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fdrStyle.css">
+    <style>
+        .result-table th {
+            text-align: left;
+            padding: 6px 12px;
+            background: #f5f5f5;
+        }
+
+        .result-table td {
+            padding: 6px 12px;
+        }
+
+        .result-explanation {
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+
+            .result-table,
+            .result-table th,
+            .result-table td {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        .modal {
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px #3333;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+    </style>
+
+    <div class="headerStyle">
+        <div class=" header-title">Bank Soluations</div>
+
+    </div>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Bank FDR Calculator</h2>
+
+        <label for="principal">Deposit Amount (৳)</label>
+        <input type="number" id="principal" placeholder="Enter amount">
+
+        <label for="rate">Interest Rate (Annual %)</label>
+        <input type="number" id="rate" placeholder="e.g. 10">
+
+        <label for="months">Duration (Months)</label>
+        <select id="months">
+            <option value="1">01 Months</option>
+            <option value="3">03 Months</option>
+            <option value="6">06 Months</option>
+            <option value="12">12 Months</option>
+            <option value="24">24 Months</option>
+            <option value="36">36 Months</option>
+            <option value="48">48 Months</option>
+            <option value="60">60 Months</option>
+        </select>
+
+        <label for="tax">Tax Deduction on Interest</label>
+        <select id="tax">
+            <option value="0">No Tax</option>
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+        </select>
+
+        <div class="btn-group">
+            <button class="calculate-btn" onclick="calculateFDR()">Calculate</button>
+            <button class="clear-btn" onclick="clearForm()">Clear</button>
+            <button class="print-btn" onclick="window.print()">Print</button>
+        </div>
+
+        <div class="print-datetime" id="printDateTime" style="display:none;"></div>
+        <div class="print-header" id="printHeader" style="display:none;">FDR Interest Calculate</div>
+        <div class="print-line" id="printLine" style="display:none;"></div>
+
+        <div class="result" id="result" style="display: none;">
+            <h3>Calculation Summary</h3>
+            <table class="result-table">
+                <tr>
+                    <th>Deposit Amount</th>
+                    <td id="tablePrincipal"></td>
+                </tr>
+                <tr>
+                    <th>Interest Rate</th>
+                    <td id="tableRate"></td>
+                </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td id="tableMonths"></td>
+                </tr>
+                <tr>
+                    <th>Interest Earned</th>
+                    <td id="interestBefore"></td>
+                </tr>
+                <tr>
+                    <th>Tax Deducted</th>
+                    <td id="taxAmount"></td>
+                </tr>
+                <tr>
+                    <th>Net Interest</th>
+                    <td id="interestAfter" style="font-weight:bold;color:green;"></td>
+                </tr>
+                <tr>
+                    <th>Total Before Tax</th>
+                    <td id="totalBeforeTax"></td>
+                </tr>
+                <tr>
+                    <th>Maturity Amount</th>
+                    <td id="maturity" style="font-weight:bold;color:blue;"></td>
+                </tr>
+            </table>
+            <div class="result-explanation">
+                <p><strong>Net Interest:</strong> Interest after tax deduction.</p>
+                <p><strong>Maturity Amount:</strong> Total amount you will receive at the end of the term.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="summaryModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Calculation Summary</h3>
+            <table class="result-table">
+                <tr>
+                    <th>Deposit Amount</th>
+                    <td id="modalPrincipal"></td>
+                </tr>
+                <tr>
+                    <th>Interest Rate</th>
+                    <td id="modalRate"></td>
+                </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td id="modalMonths"></td>
+                </tr>
+                <tr>
+                    <th>Interest Earned</th>
+                    <td id="modalInterestBefore"></td>
+                </tr>
+                <tr>
+                    <th>Tax Deducted</th>
+                    <td id="modalTaxAmount"></td>
+                </tr>
+                <tr>
+                    <th>Net Interest</th>
+                    <td id="modalInterestAfter" style="font-weight:bold;color:green;"></td>
+                </tr>
+                <tr>
+                    <th>Total Before Tax</th>
+                    <td id="modalTotalBeforeTax"></td>
+                </tr>
+                <tr>
+                    <th>Maturity Amount</th>
+                    <td id="modalMaturity" style="font-weight:bold;color:blue;"></td>
+                </tr>
+            </table>
+            <div class="result-explanation">
+                <p><strong>Net Interest:</strong> Interest after tax deduction.</p>
+                <p><strong>Maturity Amount:</strong> Total amount you will receive at the end of the term.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateFDR() {
+            const principal = parseFloat(document.getElementById('principal').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const months = parseInt(document.getElementById('months').value);
+            const taxRate = parseFloat(document.getElementById('tax').value);
+
+            if (isNaN(principal) || isNaN(rate) || isNaN(months) || principal <= 0 || rate <= 0 || months <= 0) {
+                alert("Please enter valid values in all fields.");
+                return;
+            }
+
+            // Determine compounding frequency based on months
+            let n;
+            if (months === 1) n = 12;
+            else if (months === 3) n = 3;
+            else if (months === 6) n = 6;
+            else n = 1;
+
+            const t = months / 12;
+
+            const amount = principal * Math.pow((1 + (rate / (n * 100))), n * t);
+            const interest = amount - principal;
+            const tax = interest * (taxRate / 100);
+            const netInterest = interest - tax;
+            const netMaturity = principal + netInterest;
+            const totalBeforeTax = principal + interest;
+
+            document.getElementById('tablePrincipal').textContent = `৳ ${principal.toFixed(2)}`;
+            document.getElementById('tableRate').textContent = `${rate.toFixed(2)}%`;
+            document.getElementById('tableMonths').textContent = `${months} Month`;
+
+            document.getElementById('interestBefore').textContent = `৳ ${interest.toFixed(2)}`;
+            document.getElementById('taxAmount').textContent = `৳ ${tax.toFixed(2)}`;
+            document.getElementById('interestAfter').textContent = `৳ ${netInterest.toFixed(2)}`;
+            document.getElementById('maturity').textContent = `৳ ${netMaturity.toFixed(2)}`;
+            document.getElementById('totalBeforeTax').textContent = `৳ ${totalBeforeTax.toFixed(2)}`;
+
+            // Show header and datetime in print
+            const now = new Date();
+            document.getElementById('printDateTime').textContent =
+                `Date: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+            document.getElementById('printDateTime').style.display = "block";
+            document.getElementById('printHeader').style.display = "block";
+            document.getElementById('printLine').style.display = "block";
+
+            document.getElementById('result').style.display = 'block';
+
+            // Show popup modal with summary
+            showModal(principal, rate, months, interest, tax, netInterest, netMaturity, totalBeforeTax);
+        }
+
+        function clearForm() {
+            document.getElementById('principal').value = '';
+            document.getElementById('rate').value = '';
+            document.getElementById('months').value = '1';
+            document.getElementById('tax').value = '0';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('printHeader').style.display = "none";
+            document.getElementById('printDateTime').style.display = "none";
+            document.getElementById('printLine').style.display = "none";
+        }
+
+        function showModal(principal, rate, months, interest, tax, netInterest, netMaturity, totalBeforeTax) {
+            document.getElementById('modalPrincipal').textContent = `৳ ${principal.toFixed(2)}`;
+            document.getElementById('modalRate').textContent = `${rate.toFixed(2)}%`;
+            document.getElementById('modalMonths').textContent = `${months} Month`;
+            document.getElementById('modalInterestBefore').textContent = `৳ ${interest.toFixed(2)}`;
+            document.getElementById('modalTaxAmount').textContent = `৳ ${tax.toFixed(2)}`;
+            document.getElementById('modalInterestAfter').textContent = `৳ ${netInterest.toFixed(2)}`;
+            document.getElementById('modalMaturity').textContent = `৳ ${netMaturity.toFixed(2)}`;
+            document.getElementById('modalTotalBeforeTax').textContent = `৳ ${totalBeforeTax.toFixed(2)}`;
+            document.getElementById('summaryModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('summaryModal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Calculator</title>
+    <link rel="stylesheet" href="/dateCalculator/dateCalculatorStyle.css">
+
+    <header>
+        <div class="header-title">Bank Solutions</div>
+    </header>
+</head>
+
+
+<body>
+    <div class="calcularor-form">
+        <div class="container">
+            <h2>Date Calculator</h2>
+
+            <label for="startDate">Select Date:</label>
+            <input type="date" id="startDate" />
+
+            <label for="duration">Select Duration:</label>
+            <select id="duration">
+                <option value="">-- Choose --</option>
+                <option value="1">1 Month</option>
+                <option value="3">3 Months</option>
+                <option value="6">6 Months</option>
+                <option value="12">1 Year</option>
+            </select>
+
+            <button onclick="calculateDate()">Calculate Next Date</button>
+            <button class="clear" onclick="clearForm()">Clear Form</button>
+
+            <div class="result" id="result"></div>
+        </div>
+
+    </div>
+
+
+    <script>
+        function calculateDate() {
+            const startDate = document.getElementById('startDate').value;
+            const duration = document.getElementById('duration').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!startDate || !duration) {
+                resultDiv.textContent = "Please select both date and duration.";
+                return;
+            }
+
+            const date = new Date(startDate);
+            date.setMonth(date.getMonth() + parseInt(duration));
+
+            const formattedDate = date.toISOString().split('T')[0];
+            resultDiv.textContent = "Next Date: " + formattedDate;
+        }
+
+        function clearForm() {
+            document.getElementById('startDate').value = '';
+            document.getElementById('duration').value = '';
+            document.getElementById('result').textContent = '';
+        }
+    </script>
+</body>
+
+</html>

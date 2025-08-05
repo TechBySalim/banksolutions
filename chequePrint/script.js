@@ -38,7 +38,7 @@ function generateCheque() {
 
     document.getElementById('cheque-name').innerText = name;
     document.getElementById('cheque-date').innerText = formattedDate;
-    document.getElementById('cheque-amount').innerText = "= " + parseFloat(amount).toFixed(2);
+    document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
 
     const amountInWords = numberToWords(amount) + " Taka Only";
     document.getElementById('cheque-words').innerText = amountInWords;
@@ -50,15 +50,15 @@ function adjustAmountPosition() {
     const wordsElement = document.getElementById('cheque-words');
     const amountElement = document.getElementById('cheque-amount');
 
-    wordsElement.style.top = '150px';
-    amountElement.style.top = '170px';
+    // wordsElement.style.right = '150px';
+    // amountElement.style.right = '170px';
 
-    const wordsHeight = wordsElement.offsetHeight;
-    const wordsTop = parseInt(wordsElement.style.top);
+    // const wordsHeight = wordsElement.offsetHeight;
+    // const wordsTop = parseInt(wordsElement.style.right);
 
-    if (wordsHeight > 24) {
-        amountElement.style.top = (wordsTop + wordsHeight - 24) + 'px';
-    }
+    // if (wordsHeight > 24) {
+    //     amountElement.style.top = (wordsTop + wordsHeight - 24) + 'px';
+    // }
 }
 
 function formatDate(dateString) {
@@ -66,7 +66,7 @@ function formatDate(dateString) {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return `${day} - ${month} - ${year}`;
 }
 
 function printCheque() {
@@ -76,22 +76,22 @@ function printCheque() {
     }
 
     // Create a print-specific stylesheet
-    const printStyle = document.createElement('style');
-    printStyle.innerHTML = `
-        @page {
-          size: 19cm 8.5cm;
-          margin: 0;
-        }
-        body {
-          width: 19cm;
-          height: 8.5cm;
-        }
-        #cheque {
-          width: 19cm;
-          height: 8.5cm;
-        }
-      `;
-    document.head.appendChild(printStyle);
+    // const printStyle = document.createElement('style');
+    // printStyle.innerHTML = `
+    //     @page {
+    //       size: 19cm 8.5cm;
+    //       margin: 0;
+    //     }
+    //     body {
+    //       width: 19cm;
+    //       height: 8.5cm;
+    //     }
+    //     #cheque {
+    //       width: 19cm;
+    //       height: 8.5cm;
+    //     }
+    //   `;
+    // document.head.appendChild(printStyle);
 
     window.print();
 

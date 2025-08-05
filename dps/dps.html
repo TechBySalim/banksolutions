@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DPS Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/dps/dpsStyle.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+    <header>
+        <div class="header-title">Bank Solutions</div>
+    </header>
+    <div class="max-w-xl mx-auto mt-10 bg-white shadow-xl p-8 rounded-2xl">
+        <h1 class="text-2xl font-bold text-center mb-6">Bank DPS Calculator</h1>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block font-medium">Monthly Deposit (৳):</label>
+                <input id="deposit" type="number" class="w-full border rounded p-2" placeholder="e.g. 1000" />
+            </div>
+
+            <div>
+                <label class="block font-medium">Duration (Years):</label>
+                <input id="years" type="number" class="w-full border rounded p-2" placeholder="e.g. 5" />
+            </div>
+
+            <div>
+                <label class="block font-medium">Interest Rate (% per year):</label>
+                <input id="rate" type="number" step="0.01" class="w-full border rounded p-2" placeholder="e.g. 7" />
+            </div>
+
+            <div class="flex space-x-4">
+                <button onclick="calculateDPS()"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full font-semibold">
+                    Calculate
+                </button>
+                <button onclick="clearForm()"
+                    class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 w-full font-semibold">
+                    Clear
+                </button>
+            </div>
+
+            <div id="result" class="mt-6 bg-gray-50 p-4 rounded-lg hidden">
+                <h2 class="text-xl font-semibold mb-2">📊 Result:</h2>
+                <p id="totalDeposit"></p>
+                <p id="totalInterest"></p>
+                <p id="maturityAmount" class="font-bold"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateDPS() {
+            const deposit = parseFloat(document.getElementById("deposit").value);
+            const years = parseFloat(document.getElementById("years").value);
+            const rate = parseFloat(document.getElementById("rate").value);
+
+            const months = years * 12;
+
+            if (isNaN(deposit) || isNaN(years) || isNaN(rate)) {
+                alert("Please fill all fields correctly.");
+                return;
+            }
+
+            const totalDeposit = deposit * months;
+            const interest = ((deposit * months * (months + 1)) / 2) * (rate / (12 * 100));
+            const maturity = totalDeposit + interest;
+
+            document.getElementById("totalDeposit").innerText = `Total Deposit: ৳${totalDeposit.toFixed(2)}`;
+            document.getElementById("totalInterest").innerText = `Total Interest: ৳${interest.toFixed(2)}`;
+            document.getElementById("maturityAmount").innerText = `Maturity Amount: ৳${maturity.toFixed(2)}`;
+
+            document.getElementById("result").classList.remove("hidden");
+        }
+
+        function clearForm() {
+            document.getElementById("deposit").value = '';
+            document.getElementById("years").value = '';
+            document.getElementById("rate").value = '';
+            document.getElementById("result").classList.add("hidden");
+        }
+    </script>
+</body>
+
+</html>

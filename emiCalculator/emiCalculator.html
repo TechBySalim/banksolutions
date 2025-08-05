@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="emiCalculatorStyle.css">
+    <title>Loan EMI Calculator</title>
+
+</head>
+
+<body>
+    <!-- Navigation Bar with Gradient Colors -->
+    <nav class="navbar">
+        <h1>Bank Solutions</h1>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Calculator Card -->
+        <div class="calculator-card">
+            <h2>Calculate Your Loan EMI</h2>
+
+            <!-- Input Form -->
+            <form id="emiCalculator">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="loanAmount">Disburse Amount (৳)</label>
+                        <input type="number" id="loanAmount" placeholder="Enter loan amount" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="interestRate">Interest Rate (% p.a.)</label>
+                        <input type="number" step="0.01" id="interestRate" placeholder="Enter interest rate" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="loanTenure">Loan Tenure</label>
+                    <select id="loanTenure" required>
+                        <option value="" disabled selected>Select loan tenure</option>
+                        <option value="1">1 Year</option>
+                        <option value="2">2 Years</option>
+                        <option value="3">3 Years</option>
+                        <option value="4">4 Years</option>
+                        <option value="5">5 Years</option>
+                        <option value="6">6 Years</option>
+                        <option value="7">7 Years</option>
+                        <option value="8">8 Years</option>
+                        <option value="9">9 Years</option>
+                        <option value="10">10 Years</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Calculate EMI</button>
+                    <button type="button" class="btn" id="clearFormBtn"
+                        style="background: linear-gradient(135deg, #e74c3c, #c0392b);">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Section (shown below form) -->
+        <div class="results" id="results">
+            <h2>Loan Summary</h2>
+
+            <div class="result-item">
+                <span class="result-label">Loan Amount:</span>
+                <span class="result-value" id="resultAmount">৳0</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Interest Rate:</span>
+                <span class="result-value" id="resultRate">0%</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Loan Tenure:</span>
+                <span class="result-value" id="resultTenure">0 Years</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Monthly EMI:</span>
+                <span class="result-value" id="resultEMI">৳0</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Total Interest:</span>
+                <span class="result-value" id="resultInterest">৳0</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Total Payment:</span>
+                <span class="result-value" id="resultTotal">৳0</span>
+            </div>
+
+            <button class="btn print-btn" id="printBtn">Print Summary</button>
+            <button class="btn" id="viewDetailsBtn" style="margin-top: 0.5rem;">View Amortization Details</button>
+        </div>
+    </div>
+
+    <!-- Modal/Popup for Amortization Details -->
+    <div class="modal" id="amortizationModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Amortization Schedule</h2>
+            <div id="amortizationTable"></div>
+            <button class="btn print-btn" id="printAmortization" style="margin-top: 1rem;">Print Schedule</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const emiForm = document.getElementById('emiCalculator');
+        const resultsSection = document.getElementById('results');
+        const printBtn = document.getElementById('printBtn');
+        const viewDetailsBtn = document.getElementById('viewDetailsBtn');
+        const amortizationModal = document.getElementById('amortizationModal');
+        const closeModal = document.getElementById('closeModal');
+        const amortizationTable = document.getElementById('amortizationTable');
+        const printAmortizationBtn = document.getElementById('printAmortization');
+        const clearFormBtn = document.getElementById('clearFormBtn');
+
+        // Event Listeners
+        emiForm.addEventListener('submit', calculateEMI);
+        printBtn.addEventListener('click', printSummary);
+        viewDetailsBtn.addEventListener('click', showAmortizationDetails);
+        closeModal.addEventListener('click', () => amortizationModal.style.display = 'none');
+        printAmortizationBtn.addEventListener('click', printAmortizationSchedule);
+
+        clearFormBtn.addEventListener('click', function () {
+            document.getElementById('loanAmount').value = '';
+            document.getElementById('interestRate').value = '';
+            document.getElementById('loanTenure').selectedIndex = 0;
+            document.getElementById('results').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === amortizationModal) {
+                amortizationModal.style.display = 'none';
+            }
+        });
+
+        // Function to calculate EMI
+        function calculateEMI(e) {
+            e.preventDefault();
+
+            // Get input values
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTenure = parseInt(document.getElementById('loanTenure').value);
+
+            // Validate inputs
+            if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure)) {
+                alert('Please enter valid values for all fields');
+                return;
+            }
+
+            // Calculate monthly interest rate and number of payments
+            const monthlyInterestRate = interestRate / 12 / 100;
+            const numberOfPayments = loanTenure * 12;
+
+            // Calculate EMI using formula: P * r * (1+r)^n / ((1+r)^n - 1)
+            const emi = loanAmount * monthlyInterestRate *
+                Math.pow(1 + monthlyInterestRate, numberOfPayments) /
+                (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+
+            // Calculate total payment and total interest
+            const totalPayment = emi * numberOfPayments;
+            const totalInterest = totalPayment - loanAmount;
+
+            // Display results (use Taka sign)
+            document.getElementById('resultAmount').textContent = `৳${loanAmount.toLocaleString('en-BD')}`;
+            document.getElementById('resultRate').textContent = `${interestRate}%`;
+            document.getElementById('resultTenure').textContent = `${loanTenure} Years (${numberOfPayments} Months)`;
+            document.getElementById('resultEMI').textContent = `৳${emi.toFixed(2).toLocaleString('en-BD')}`;
+            document.getElementById('resultInterest').textContent = `৳${totalInterest.toFixed(2).toLocaleString('en-BD')}`;
+            document.getElementById('resultTotal').textContent = `৳${totalPayment.toFixed(2).toLocaleString('en-BD')}`;
+
+            // Show results section
+            resultsSection.style.display = 'block';
+
+            // Generate amortization data for the modal
+            generateAmortizationSchedule(loanAmount, interestRate, loanTenure, emi);
+        }
+
+        // Function to generate amortization schedule
+        function generateAmortizationSchedule(principal, annualRate, years, emi) {
+            const monthlyRate = annualRate / 12 / 100;
+            const months = years * 12;
+            let balance = principal;
+            let totalInterest = 0;
+
+            // Create table HTML
+            let tableHTML = `
+                <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Month</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Payment</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Principal</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Interest</th>
+                            <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            // Add rows for each month
+            for (let month = 1; month <= months; month++) {
+                const interest = balance * monthlyRate;
+                const principalPayment = emi - interest;
+                totalInterest += interest;
+                balance -= principalPayment;
+
+                // Ensure balance doesn't go below zero
+                if (balance < 0) balance = 0;
+
+                tableHTML += `
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 8px;">${month}</td>
+                        <td style="padding: 8px; text-align: right;">৳${emi.toFixed(2)}</td>
+                        <td style="padding: 8px; text-align: right;">৳${principalPayment.toFixed(2)}</td>
+                        <td style="padding: 8px; text-align: right;">৳${interest.toFixed(2)}</td>
+                        <td style="padding: 8px; text-align: right;">৳${balance.toFixed(2)}</td>
+                    </tr>
+                `;
+
+                // Break if loan is paid off
+                if (balance <= 0) break;
+            }
+
+            tableHTML += `
+                    </tbody>
+                </table>
+                <div style="margin-top: 1rem; font-weight: bold;">
+                    Total Interest Paid: ৳${totalInterest.toFixed(2)}
+                </div>
+            `;
+
+            amortizationTable.innerHTML = tableHTML;
+        }
+
+        // Function to show amortization details in modal
+        function showAmortizationDetails() {
+            amortizationModal.style.display = 'flex';
+        }
+
+        // Function to print summary (use table structure)
+        function printSummary() {
+            const printContent = `
+                <html>
+                    <head>
+                        <title>Loan EMI Summary</title>
+                        <style>
+                            body { font-family: Arial; padding: 20px; }
+                            h2 { color: #4b6cb7; text-align: center; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                            th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+                            .footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #666; }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>Loan EMI Summary</h2>
+                        <table>
+                            <tr>
+                                <th>Item</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr>
+                                <td>Loan Amount</td>
+                                <td>${document.getElementById('resultAmount').textContent}</td>
+                            </tr>
+                            <tr>
+                                <td>Interest Rate</td>
+                                <td>${document.getElementById('resultRate').textContent}</td>
+                            </tr>
+                            <tr>
+                                <td>Loan Tenure</td>
+                                <td>${document.getElementById('resultTenure').textContent}</td>
+                            </tr>
+                            <tr>
+                                <td>Monthly EMI</td>
+                                <td>${document.getElementById('resultEMI').textContent}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Interest</td>
+                                <td>${document.getElementById('resultInterest').textContent}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Payment</td>
+                                <td>${document.getElementById('resultTotal').textContent}</td>
+                            </tr>
+                        </table>
+                        <div class="footer">
+                            Generated by Loan EMI Calculator<br>
+                            ${new Date().toLocaleString()}
+                        </div>
+                    </body>
+                </html>
+            `;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 500);
+        }
+
+        // Function to print amortization schedule
+        function printAmortizationSchedule() {
+            // Only run if amortizationTable exists
+            if (document.getElementById('amortizationTable')) {
+                const amortizationTable = document.getElementById('amortizationTable');
+
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Loan Amortization Schedule</title>
+                            <style>
+                                body { font-family: Arial; padding: 20px; }
+                                h2 { color: #4b6cb7; text-align: center; }
+                                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                                th { background-color: #f2f2f2; text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+                                td { padding: 8px; border-bottom: 1px solid #ddd; }
+                                .right { text-align: right; }
+                                .footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #666; }
+                            </style>
+                        </head>
+                        <body>
+                            <h2>Loan Amortization Schedule</h2>
+                            ${amortizationTable.innerHTML}
+                            <div class="footer">
+                                Generated by Loan EMI Calculator<br>
+                                ${new Date().toLocaleString()}
+                            </div>
+                        </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.focus();
+                setTimeout(() => {
+                    printWindow.print();
+                    printWindow.close();
+                }, 500);
+            }
+        }
+    </script>
+</body>
+
+</html>

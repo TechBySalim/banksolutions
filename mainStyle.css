@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: 'Fira Code', monospace;
+
+}
+/* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            /* font-family: 'Roboto Slab', serif; */
+            background-color: #f8f8f2;
+            /* off-white */
+            
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background:  linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Simple About Me button style */
+.about-btn {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(52,152,219,0.08);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.about-btn:hover {
+    background: #217dbb;
+}
+
+        /* Buttons Section */
+        .button-container {
+            
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .button-container button {
+            margin-top: 1.5%;
+            color: black;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: #f0f0f0;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 20px;
+            border: 1px solid #4f4cec;
+        }
+
+        .button-container button:hover {
+            background-color: #fcfbfb;
+            border: red 2px dashed;
+            color: black;
+        }
+
+        /* Simple modal style */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.15);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 1.5rem 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    text-align: center;
+    max-width: 320px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Modal image with gradient border */
+.modal-content img {
+    width: 200px;
+    height: 200px;
+    /* border-radius: 50%; */
+    object-fit: cover;
+    margin-bottom: 0.8rem;
+    border: 4px solid;
+    border-image: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+    border-image-slice: 1;
+}
+
+/* Move close button inside modal area, below image */
+.close {
+    position: static;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #ec0909;
+    cursor: pointer;
+    align-self: flex-end;
+    background: none;
+    border: none;
+}
+.close:hover {
+    color: #e74c3c;
+}
+
+        @media (min-width: 600px) {
+            .button-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .button-container button {
+                width: 45%;
+            }
+        }

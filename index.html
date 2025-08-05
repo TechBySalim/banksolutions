@@ -2,71 +2,55 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheque Printing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soluations</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="mainStyle.css">
+
+    <!-- Js -->
+    <script src="mainScript.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <div class="header-title">Easy Cheque Print</div>
-        <button class="creator-btn" id="creatorBtn">About me</button>
-    </header>
 
-    <!-- Creator Modal -->
-    <div class="modal" id="creatorModal">
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="header-title">Bank Solutions</div>
+        <button class="about-btn" onclick="openModal()">About Me</button>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-container">
+        <button onclick="location.href='/fdr/fdrCalculator.html'">FDR Calculator</button>
+        <button onclick="location.href='/dps/dps.html'">DPS Calculator</button>
+        <button onclick="location.href='/emiCalculator/emiCalculator.html'">Loan EMI Calculator</button>
+        <button onclick="location.href='/dateCalculator/dateCalculator.html'">Date Calculator</button>
+        <button onclick="location.href='/chequePrint/chequePrint.html'">Cheque Print</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="aboutModal" class="modal">
         <div class="modal-content">
-            <div class="modal-image">
-                <!-- <i class="fas fa-user-tie"></i> -->
-                <img src="asset/image.png" alt="">
-            </div>
-            <div class="modal-info">
-                <span class="close-btn" id="closeModal">&times;</span>
-                <h2>Creator Information</h2>
-                <div class="info-item">
-                    <i class="fas fa-user"></i>
-                    <span>Salim Ahmed</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>salim11bd@gmail.com</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+8801739856638</span>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-building"></i>
-                    <span>Pubali Bank PLC.</span>
-                </div>
-            </div>
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="/assets/cart-image.jpg" alt="Profile">
+            <h3>Salim Ahmed</h3>
+            <p>Mobile: 01739856638</p>
+            <p>Email: saliim.dev@gmail.com</p>
         </div>
     </div>
 
-    <div class="main-content">
-        <!-- ===== INPUTS FOR CHEQUE DETAILS ===== -->
-        <div class="input-section">
-            <input type="text" id="name" placeholder="Enter Payee Name">
-            <input type="date" id="date" placeholder="Select Date">
-            <input type="number" id="amount" placeholder="Enter Amount (৳)">
-            <button id="generateBtn">Generate Cheque</button>
-            <button id="printBtn">Print Cheque</button>
-            <button id="clearBtn">Clear Data</button>
-        </div>
+    <!-- cursor -->
+    <div class="custom-cursor"></div>
 
-        <!-- ===== CHEQUE PREVIEW SECTION ===== -->
-        <div class="cheque" id="cheque">
-            <div class="cheque-date" id="cheque-date"></div>
-            <div class="cheque-name" id="cheque-name"></div>
-            <div class="cheque-words" id="cheque-words"></div>
-            <div class="cheque-amount" id="cheque-amount"></div>
-        </div>
-    </div>
+    <script>
 
-    <!-- ===== SCRIPT TO UPDATE CHEQUE ===== -->
-    <script src="script.js"></script>
+    </script>
+
 </body>
 
 </html>
