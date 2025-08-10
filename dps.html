@@ -6,13 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DPS Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="mainStyle.css">
     <link rel="stylesheet" href="dpsStyle.css">
 </head>
 
 <body class="bg-gray-100 text-gray-800">
-    <header>
-        <div class="header-title">Bank Solutions</div>
-    </header>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">Cheque Print</a>
+            </div>
+        </div>
+    </div>
+    
     <div class="max-w-xl mx-auto mt-10 bg-white shadow-xl p-8 rounded-2xl">
         <h1 class="text-2xl font-bold text-center mb-6">Bank DPS Calculator</h1>
 
@@ -82,6 +100,40 @@
             document.getElementById("rate").value = '';
             document.getElementById("result").classList.add("hidden");
         }
+
+        // Dropdown menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
     </script>
 </body>
 

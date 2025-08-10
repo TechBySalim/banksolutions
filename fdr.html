@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bank FDR Calculator</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mainStyle.css">
     <link rel="stylesheet" href="fdrStyle.css">
     <style>
         .result-table th {
@@ -68,15 +69,30 @@
             color: #000;
         }
     </style>
-
-    <div class="headerStyle">
-        <div class=" header-title">Bank Soluations</div>
-
-    </div>
 </head>
 
 <body>
-    <div class="container">
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">Cheque Print</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 30px;">
         <h2>Bank FDR Calculator</h2>
 
         <label for="principal">Deposit Amount (৳)</label>
@@ -233,7 +249,6 @@
             document.getElementById('tablePrincipal').textContent = `৳ ${principal.toFixed(2)}`;
             document.getElementById('tableRate').textContent = `${rate.toFixed(2)}%`;
             document.getElementById('tableMonths').textContent = `${months} Month`;
-
             document.getElementById('interestBefore').textContent = `৳ ${interest.toFixed(2)}`;
             document.getElementById('taxAmount').textContent = `৳ ${tax.toFixed(2)}`;
             document.getElementById('interestAfter').textContent = `৳ ${netInterest.toFixed(2)}`;
@@ -280,6 +295,40 @@
         function closeModal() {
             document.getElementById('summaryModal').style.display = 'none';
         }
+
+        // Dropdown menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
     </script>
 </body>
 

@@ -18,10 +18,27 @@
 
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <div class="header-title">Bank Solutions</div>
-        <button class="about-btn" onclick="openModal()">About Me</button>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="about-btn" onclick="openModal()">About Me</button>
+            <div class="dropdown-container">
+                <button class="dropdown-btn">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </button>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="fdr.html">FDR Calculator</a>
+                    <a href="dps.html">DPS Calculator</a>
+                    <a href="emi.html">Loan EMI Calculator</a>
+                    <a href="date.html">Date Calculator</a>
+                    <a href="cheque.html">Cheque Print</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Buttons -->
@@ -48,7 +65,39 @@
     <div class="custom-cursor"></div>
 
     <script>
+        // Dropdown menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
 
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
     </script>
 
 </body>

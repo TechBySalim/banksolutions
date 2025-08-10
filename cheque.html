@@ -6,14 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cheque Printing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mainStyle.css">
     <link rel="stylesheet" href="cheque-style.css">
 </head>
 
 <body>
-    <header>
-        <div class="header-title">Bank Solutions</div>
-        <button class="creator-btn" id="creatorBtn">About me</button>
-    </header>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">Cheque Print</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Creator Modal -->
     <div class="modal" id="creatorModal">
@@ -68,6 +84,42 @@
 
     <!-- ===== SCRIPT TO UPDATE CHEQUE ===== -->
     <script src="cheque-script.js"></script>
+
+    <!-- Dropdown menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
+    </script>
 </body>
 
 </html>

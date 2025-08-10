@@ -31,6 +31,108 @@
             font-weight: bold;
         }
 
+        /* Header with dropdown */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .header-title:hover {
+            opacity: 0.8;
+        }
+
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(52,152,219,0.08);
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .dropdown-btn:hover {
+            background: #217dbb;
+        }
+
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            margin: 2px 0;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.08);
+            z-index: 1000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            margin-top: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #222;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f7f7f7;
+        }
+
+        /* JavaScript-based dropdown behavior */
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content.hide {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+        }
+
         /* Simple About Me button style */
 .about-btn {
     background: #3498db;
