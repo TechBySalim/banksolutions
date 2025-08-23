@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debit/Credit Voucher Generator</title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="mainStyle.css">
+    
+    <!-- Js -->
+    <script src="mainScript.js" defer></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f8f8f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 16px;
+            font-weight: 500;
+            color: #444;
+            letter-spacing: 0.02em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 6px;
+            border: 1.5px solid #b3b3b3;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #f9fafc;
+            transition: border 0.2s;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            border: 1.5px solid #007bff;
+            background: #f1f7ff;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 13px 0;
+            background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .btn-action.preview {
+            background: linear-gradient(90deg, #28a745 60%, #218838 100%);
+        }
+
+        .btn-action i {
+            font-style: normal;
+            font-size: 18px;
+        }
+
+        /* Voucher print style */
+        @media print {
+            body * {
+                visibility: hidden;
+                margin-top: 0 !important;
+            }
+
+            #printArea,
+            #printArea * {
+                visibility: visible;
+            }
+
+            #printArea {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+            }
+        }
+
+        .voucher {
+            border: 1.5px solid #000;
+            padding: 18px 28px;
+            width: 8in;
+            height: 3.5in;
+            margin: 30px auto;
+            font-size: 15px;
+            font-weight: 500;
+            color: #000;
+            position: relative;
+            box-sizing: border-box;
+            background: #fff;
+            border-radius: 7px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .voucher-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+            position: relative;
+        }
+
+        .voucher-logo {
+            position: absolute;
+            left: 30%;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 40px;
+            width: auto;
+        }
+
+        .voucher-branch {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .voucher-row {
+            display: flex;
+            justify-content: flex-end;
+            border-bottom: 1px solid #bbb;
+            padding: 5px 0;
+            margin-bottom: 6px;
+
+        }
+
+        .voucher-line {
+            border-bottom: 1px solid #bbb;
+            padding: 5px 0;
+            margin-bottom: 6px;
+        }
+
+        .voucher-bottom {
+            position: absolute;
+            bottom: 18px;
+            left: 28px;
+            right: 28px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .voucher-branch-bottom {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .signatures {
+            margin-top: 30px;
+            margin-left: 100px;
+            font-size: small;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sign-box {
+            text-align: center;
+            width: 30%;
+        }
+
+        .small-text {
+            font-size: 11px;
+            color: #333;
+        }
+
+        /* Mobile responsive */
+        @media(max-width: 768px) {
+            .container {
+                margin: 12px;
+                padding: 10px;
+            }
+
+            .voucher {
+                width: 100%;
+                height: auto;
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="about-btn" onclick="openModal()">About Me</button>
+            <div class="dropdown-container">
+                <button class="dropdown-btn">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </button>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="fdr.html">FDR Calculator</a>
+                    <a href="dps.html">DPS Calculator</a>
+                    <a href="emi.html">Loan EMI Calculator</a>
+                    <a href="date.html">Date Calculator</a>
+                    <a href="cheque.html">Cheque Print</a>
+                    <a href="voucherprint.html">Voucher Generate & Print</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2> Voucher Generate & Print</h2>
+        <form id="voucherForm" onsubmit="return false;">
+            <label>Branch Name <input type="text" id="branch" autocomplete="off"
+                    placeholder="e.g. Bhola Branch"></label>
+            <label>Debit/Credit
+                <select id="debitOrCredit">
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+                </select>
+                <input type="text" id="debitCreditText" placeholder="e.g. Clearing House Adjustment" autocomplete="off">
+            </label>
+
+            <label>On account of <input type="text" id="accountOf" autocomplete="off"></label>
+            <label>Tk (Numeric Value) <input type="number" id="tkValue" min="0" autocomplete="off"></label>
+            <label>Date <input type="date" id="date"></label>
+        </form>
+
+        <div class="btn-row">
+            <button class="btn-action preview" type="button" onclick="previewVoucher()">
+                <i>👁️</i> Preview
+            </button>
+            <button class="btn-action" type="button" onclick="generateVoucher()">
+                <i>🖨️</i> Print
+            </button>
+        </div>
+    </div>
+
+    <!-- Voucher Print Layout -->
+    <div id="printArea" style="display:none;">
+        <div class="voucher">
+            <div class="voucher-header">
+                PUBALI BANK PLC.
+                <img src="Logo.png" alt="Pubali Bank Logo" class="voucher-logo">
+            </div>
+            <div class="voucher-branch" id="outBranchTop"></div>
+            <div class="voucher-row">
+                <div class="voucher-date"><b>Date:</b> <span id="outDate"></span></div>
+            </div>
+            <div class="voucher-line"><b id="outDebitLabel">:</b> <span id="outDebit"></span></div>
+            <div class="voucher-line"><b>Taka (in words):</b> <span id="outTakaWords"></span></div>
+            <div class="voucher-line"><b>On account of:</b> <span id="outAccountOf"></span></div>
+            <div class="voucher-line"><b>Tk:</b> <span id="outTkValue"></span></div>
+
+            <div class="signatures">
+                <div class="sign-box">Prepared by</div>
+                <div class="sign-box">Passed by<br>Authorised Officer</div>
+                <div class="sign-box">Passed by<br>Manager</div>
+            </div>
+
+            <div class="voucher-bottom">
+                <div class="small-text">CD-14</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="image.png" alt="Profile">
+            <h3>Salim Ahmed</h3>
+            <p>Mobile: 01739856638</p>
+            <p>Email: saliim.dev@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        // Dropdown menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
+
+        String.prototype.toTitleCase = function () {
+            return this.replace(/\b\w/g, function (c) {
+                return c.toUpperCase();
+            });
+        };
+
+        // Convert number to words (Bangladesh system: lakh, crore)
+        function numberToWords(num) {
+            if (num === null || num === undefined || isNaN(num) || num === 0) return "zero only";
+
+            const a = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+                "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+                "seventeen", "eighteen", "nineteen"];
+            const b = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+            function twoDigits(n) {
+                if (n < 20) return a[n];
+                return b[Math.floor(n / 10)] + (n % 10 ? " " + a[n % 10] : "");
+            }
+
+            function threeDigits(n) {
+                let str = "";
+                if (n >= 100) {
+                    str += a[Math.floor(n / 100)] + " hundred";
+                    if (n % 100) str += " " + twoDigits(n % 100);
+                } else {
+                    str += twoDigits(n);
+                }
+                return str;
+            }
+
+            let crore = Math.floor(num / 10000000);
+            num = num % 10000000;
+            let lakh = Math.floor(num / 100000);
+            num = num % 100000;
+            let thousand = Math.floor(num / 1000);
+            num = num % 1000;
+            let hundred = num;
+
+            let result = "";
+            if (crore) result += threeDigits(crore) + " crore ";
+            if (lakh) result += threeDigits(lakh) + " lakh ";
+            if (thousand) result += threeDigits(thousand) + " thousand ";
+            if (hundred) result += threeDigits(hundred) + " ";
+            return result.trim() + " Taka Only.";
+        }
+
+        function formatDate(dateStr) {
+            const months = ["January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"];
+            let d = new Date(dateStr);
+            if (isNaN(d)) return "";
+            return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        }
+
+        function fillVoucherFields() {
+            const branch = document.getElementById("branch").value;
+            const debit = document.getElementById("debitCreditText").value;
+            const accountOf = document.getElementById("accountOf").value;
+            const tkValue = document.getElementById("tkValue").value;
+            const date = document.getElementById("date").value;
+            const debitOrCredit = document.getElementById("debitOrCredit").value;
+
+            document.getElementById("outBranchTop").innerText = branch.toUpperCase();
+            document.getElementById("outDebit").innerText = debit.toTitleCase();
+            document.getElementById("outDebitLabel").innerText = debitOrCredit.toUpperCase() + ":";
+            document.getElementById("outAccountOf").innerText = accountOf.toTitleCase();
+            document.getElementById("outTkValue").innerText = tkValue + ".00";
+            document.getElementById("outDate").innerText = formatDate(date);
+
+            // Convert number to words (Bangladesh system)
+            document.getElementById("outTakaWords").innerText = numberToWords(parseInt(tkValue)).toTitleCase();
+        }
+
+        function previewVoucher() {
+            fillVoucherFields();
+            document.getElementById("printArea").style.display = "block";
+            // Scroll to preview
+            document.getElementById("printArea").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function generateVoucher() {
+            fillVoucherFields();
+            document.getElementById("printArea").style.display = "block";
+            window.print();
+        }
+    </script>
+
+</body>
+
+</html>
