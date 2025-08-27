@@ -193,7 +193,6 @@ header {
     bottom: 85px;
     font-size: 16px;
     font-weight: bold;
-    max-width: 120px;
     transform: rotate(-90deg);
 }
 
