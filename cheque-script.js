@@ -38,7 +38,7 @@ function generateCheque() {
 
     document.getElementById('cheque-name').innerText = name;
     document.getElementById('cheque-date').innerText = formattedDate;
-    document.getElementById('cheque-amount').innerText = "*" + parseFloat(amount).toFixed(2);
+    document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
 
     const amountInWords = numberToWords(amount) + " Taka Only";
     document.getElementById('cheque-words').innerText = amountInWords;
