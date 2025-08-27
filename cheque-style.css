@@ -201,9 +201,10 @@ header {
     position:absolute;
     padding: 0px;
     margin: 0px;
-    left: 40px;
-    bottom: 100px;
-    width: 500px;
+    left: -40px;
+    bottom: 280px;
+    width: 450px;
+    height: 100px;
     font-size: 15px;
     font-weight: bold;
     word-wrap: break-word;
