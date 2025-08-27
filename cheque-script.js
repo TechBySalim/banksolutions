@@ -38,28 +38,28 @@ function generateCheque() {
 
     document.getElementById('cheque-name').innerText = name;
     document.getElementById('cheque-date').innerText = formattedDate;
-    document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
+    document.getElementById('cheque-amount').innerText = "*" + parseFloat(amount).toFixed(2);
 
     const amountInWords = numberToWords(amount) + " Taka Only";
     document.getElementById('cheque-words').innerText = amountInWords;
 
-    adjustAmountPosition();
+    // adjustAmountPosition();
 }
 
-function adjustAmountPosition() {
-    const wordsElement = document.getElementById('cheque-words');
-    const amountElement = document.getElementById('cheque-amount');
+// function adjustAmountPosition() {
+//     const wordsElement = document.getElementById('cheque-words');
+//     const amountElement = document.getElementById('cheque-amount');
 
-    // wordsElement.style.right = '150px';
-    // amountElement.style.right = '170px';
+// wordsElement.style.right = '150px';
+// amountElement.style.right = '170px';
 
-    // const wordsHeight = wordsElement.offsetHeight;
-    // const wordsTop = parseInt(wordsElement.style.right);
+// const wordsHeight = wordsElement.offsetHeight;
+// const wordsTop = parseInt(wordsElement.style.right);
 
-    // if (wordsHeight > 24) {
-    //     amountElement.style.top = (wordsTop + wordsHeight - 24) + 'px';
-    // }
-}
+// if (wordsHeight > 24) {
+//     amountElement.style.top = (wordsTop + wordsHeight - 24) + 'px';
+// }
+// }
 
 function formatDate(dateString) {
     const date = new Date(dateString);

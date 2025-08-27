@@ -179,43 +179,48 @@ header {
 
 .cheque-date {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 11px;
+    left: 0px;
+    top: 80px;
+    font-size: 16px;
     font-weight: bold;
     text-align: right;
+    transform: rotate(-90deg);
 }
 
 .cheque-name {
     position: absolute;
-    left: 20px;
-    top: 80px;
-    font-size: 11px;
+    left: 40px;
+    bottom: 85px;
+    font-size: 16px;
     font-weight: bold;
     max-width: 120px;
+    transform: rotate(-90deg);
 }
 
 .cheque-words {
-    position: absolute;
-    left: 20px;
-    top: 110px;
-    width: 120px;
-    font-size: 9px;
+    position:absolute;
+    padding: 0px;
+    margin: 0px;
+    left: 40px;
+    bottom: 100px;
+    width: 500px;
+    font-size: 15px;
     font-weight: bold;
     word-wrap: break-word;
     white-space: pre-wrap;
-    line-height: 1.1;
+    line-height: 1.3;
+    transform: rotate(270deg);
 }
 
 .cheque-amount {
     position: absolute;
-    right: 20px;
+    left: 105px;
     top: 80px;
-    font-size: 11px;
+    font-size: 16px;
     font-weight: bold;
     text-align: right;
-    transform: rotate(90deg);
-    transform-origin: center;
+    transform: rotate(-90deg);
+    /* transform-origin: center; */
 }
 
 /* Print Settings */
@@ -247,9 +252,9 @@ header {
         position: absolute;
         top: 0 !important; /* Position at top */
         left: 50% !important; /* Center horizontally */
-        transform: translateX(-50%) !important; /* Perfect center */
+        transform: translateX(-50%) !important;  /*Perfect center*/
         margin: 0 !important;
-        padding: 20px;
+        /* padding: 20px; */
         width: 8.5cm; /* Keep original cheque size */
         height: 19cm; /* Keep original cheque size */
         background: white;
