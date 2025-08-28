@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Debit/Credit Voucher Generator</title>
-    
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="mainStyle.css">
-    
+
     <!-- Js -->
     <script src="mainScript.js" defer></script>
-    
+
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -152,10 +152,10 @@
 
         .voucher-logo {
             position: absolute;
-            left: 30%;
+            left: 27%;
             top: 50%;
             transform: translateY(-50%);
-            height: 40px;
+            height: 60px;
             width: auto;
         }
 
@@ -308,7 +308,7 @@
             </div>
 
             <div class="voucher-bottom">
-                <div class="small-text">CD-14</div>
+                <div id="voucherName" class="small-text"></div>
             </div>
         </div>
     </div>
@@ -326,33 +326,33 @@
 
     <script>
         // Dropdown menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const dropdownContainer = document.querySelector('.dropdown-container');
             const dropdownContent = document.querySelector('.dropdown-content');
             let timeoutId;
 
             // Show dropdown on mouse enter
-            dropdownContainer.addEventListener('mouseenter', function() {
+            dropdownContainer.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
                 dropdownContent.classList.remove('hide');
                 dropdownContent.classList.add('show');
             });
 
             // Hide dropdown on mouse leave with delay
-            dropdownContainer.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContainer.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200); // 200ms delay before hiding
             });
 
             // Keep dropdown open when hovering over content
-            dropdownContent.addEventListener('mouseenter', function() {
+            dropdownContent.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
             });
 
-            dropdownContent.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContent.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200);
@@ -422,16 +422,26 @@
             const date = document.getElementById("date").value;
             const debitOrCredit = document.getElementById("debitOrCredit").value;
 
+            //voucher number debit credit ways
+            if (debitOrCredit === "Debit") {
+                document.getElementById("voucherName").innerText = "CD-14";
+            }
+            else {
+                document.getElementById("voucherName").innerText = "CD-13";
+            }
+
+            // Update preview fields
             document.getElementById("outBranchTop").innerText = branch.toUpperCase();
             document.getElementById("outDebit").innerText = debit.toTitleCase();
             document.getElementById("outDebitLabel").innerText = debitOrCredit.toUpperCase() + ":";
             document.getElementById("outAccountOf").innerText = accountOf.toTitleCase();
             document.getElementById("outTkValue").innerText = tkValue + ".00";
             document.getElementById("outDate").innerText = formatDate(date);
-
             // Convert number to words (Bangladesh system)
             document.getElementById("outTakaWords").innerText = numberToWords(parseInt(tkValue)).toTitleCase();
         }
+
+
 
         function previewVoucher() {
             fillVoucherFields();
