@@ -185,6 +185,7 @@
             justify-content: center;
             gap: 20px;
             padding-top: 20px;
+            width: 100%;
         }
 
         .button-container button {
@@ -196,7 +197,8 @@
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            min-width: 150px;
+            flex: 1;
+            max-width: 200px;
         }
 
         #previewBtn {
@@ -245,11 +247,11 @@
 
         .header .logo {
             position: absolute;
-            left: 0;
-            top: 0;
-            height: 50px;
-            display: none;
-            /* Hide logo for cleaner preview */
+            left: 160px;
+            top: 0px;
+            height: 70px;
+            display: block;
+            /* Show logo on the left side */
         }
 
         .header .bangla-title {
@@ -511,7 +513,7 @@
 
     <div class="form-preview" id="formPreview">
         <div class="header">
-            <img class="logo" src="data:image/png;base64,..." alt="Bank Logo">
+            <img class="logo" src="Logo.png" alt="Bank Logo">
             <h1 class="bangla-title">পূবালী ব্যাংক পিএলসি.</h1>
             <p class="branch-name-center" id="previewMyBranchName"></p>
         </div>
@@ -642,10 +644,12 @@
             const chequeNumber = document.getElementById('chequeNumber').value;
             const drawnOn = document.getElementById('drawnOn').value;
 
-            // Format date
+            // Format date to dd/mm/yyyy format
             const dateObj = new Date(dateInput);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const formattedDate = dateObj.toLocaleDateString('en-GB', options);
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            const formattedDate = `${day}/${month}/${year}`;
 
             // Populate preview section
             document.getElementById('previewMyBranchName').textContent = myBranchName;
