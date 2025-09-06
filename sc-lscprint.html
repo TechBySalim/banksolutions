@@ -180,47 +180,41 @@
         }
 
         /* Button Styles */
-        .button-container {
+        .btn-row {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding-top: 20px;
-            width: 100%;
+            gap: 12px;
+            margin-top: 24px;
         }
 
-        .button-container button {
-            padding: 15px 30px;
+        .btn-action {
+            flex: 1;
+            padding: 13px 0;
+            background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+            color: #fff;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            flex: 1;
-            max-width: 200px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        #previewBtn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
+        .btn-action:active {
+            transform: scale(0.98);
         }
 
-        #previewBtn:hover {
-            background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .btn-action.preview {
+            background: linear-gradient(90deg, #28a745 60%, #218838 100%);
         }
 
-        #printBtn {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-            color: white;
-        }
-
-        #printBtn:hover {
-            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .btn-action i {
+            font-style: normal;
+            font-size: 18px;
         }
 
         /* Preview Section */
@@ -505,9 +499,13 @@
                 <input type="text" id="drawnOn" placeholder="Enter Drawn On Details">
             </div>
         </div>
-        <div class="button-container">
-            <button id="previewBtn" type="button"> <i>👁️</i> Preview</button>
-            <button id="printBtn" type="button"><i>🖨️</i> Print</button>
+        <div class="btn-row">
+            <button class="btn-action preview" type="button" id="previewBtn">
+                <i>👁️</i> Preview
+            </button>
+            <button class="btn-action" type="button" id="printBtn">
+                <i>🖨️</i> Print
+            </button>
         </div>
     </div>
 
