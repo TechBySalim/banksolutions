@@ -152,9 +152,8 @@
 
         .voucher-logo {
             position: absolute;
-            margin-top: 5px;
-            left: 190px;
-            top: 22px;
+            left: 27%;
+            top: 50%;
             transform: translateY(-50%);
             height: 60px;
             width: auto;
@@ -401,7 +400,7 @@
 
             let result = "";
             if (crore) result += threeDigits(crore) + " crore ";
-            if (lakh) result += threeDigits(lakh) + " lac ";
+            if (lakh) result += threeDigits(lakh) + " lakh ";
             if (thousand) result += threeDigits(thousand) + " thousand ";
             if (hundred) result += threeDigits(hundred) + " ";
             return result.trim() + " Taka Only.";

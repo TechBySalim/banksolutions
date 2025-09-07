@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('clearBtn').addEventListener('click', clearData);
     document.getElementById('creatorBtn').addEventListener('click', openModal);
     document.getElementById('closeModal').addEventListener('click', closeModal);
+    
 
     // Close modal when clicking outside
     window.addEventListener('click', function (event) {
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             closeModal();
         }
     });
+
 });
 
 function openModal() {
@@ -65,8 +67,14 @@ function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day} - ${month} - ${year}`;
+    const year = date.getFullYear().toString();
+    
+    // Convert each digit to individual characters with spaces
+    const daySpaced = day.split('').join(' ');
+    const monthSpaced = month.split('').join(' ');
+    const yearSpaced = year.split('').join(' ');
+    
+    return `${daySpaced} ${monthSpaced} ${yearSpaced}`;
 }
 
 function printCheque() {
@@ -141,6 +149,7 @@ function numberToWords(num) {
     if (num % 10000000 !== 0) str += ' ' + numberToWords(num % 10000000);
     return str;
 }
+
 
 
 function clearData() {

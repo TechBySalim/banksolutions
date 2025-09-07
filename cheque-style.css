@@ -142,6 +142,7 @@ header {
     border: none;
 }
 
+
 .input-section input {
     background: white;
     color: #000000;
@@ -182,20 +183,26 @@ header {
     top: 95px;
     font-size: 14px;
     font-weight: bold;
-    transform: rotate(270deg);
+    transform: rotate(-90deg);
     border: 1px solid red;
 }
 
 .cheque-name {
     position: absolute;
-    left: 95px;
-    bottom: 85px;
+    right: -96px;
+    bottom: 340px;
     font-size: 14px;
     font-weight: bold;
-    transform: rotate(270deg);
+    transform: rotate(-90deg);
     padding: 0px;
     margin: 0px;
-    border: 1px solid red;
+    border: 1px solid rgb(128, 2, 245);
+    width: 600px;
+    height: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.2;
+    overflow-wrap: break-word;
 }
 .cheque-amount {
     position: absolute;
@@ -205,6 +212,12 @@ header {
     font-weight: bold;
     transform: rotate(270deg);
     border: 1px solid red;
+    width: 150px;
+    height: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.2;
+    overflow-wrap: break-word;
     /* transform-origin: center; */
 }
 
