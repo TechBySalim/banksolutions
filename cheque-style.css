@@ -180,7 +180,7 @@ header {
 
 .cheque-date {
     position: absolute;
-    right: 155px;
+    right: 165px;
     top: 105px;
     width: 190px;
     font-size: 15px;
@@ -210,7 +210,7 @@ header {
 .cheque-amount {
     position: absolute;
     left: 75px;
-    top: 110px;
+    top: 100px;
     font-size: 16px;
     font-weight: bold;
     transform: rotate(270deg);
@@ -228,9 +228,9 @@ header {
     position:absolute;
     padding: 0px;
     margin: 0px;
-    left: -25px;
+    left: -20px;
     bottom: 260px;
-    width: 380px;
+    width: 370px;
     height: 50px;
     font-size: 12px;
     font-weight: bold;
