@@ -180,8 +180,8 @@ header {
 
 .cheque-date {
     position: absolute;
-    right: 165px;
-    top: 108px;
+    right: 163px;
+    top: 115px;
     width: 190px;
     font-size: 15px;
     font-weight: bold;
@@ -282,7 +282,9 @@ header {
     .print-details {
         display: none !important;
     }
-
+    .cheque{
+        border: none !important;
+    }
     #cheque {
         position: absolute;
         top: 0 !important; /* Position at top */
@@ -293,7 +295,6 @@ header {
         width: 8.5cm; /* Keep original cheque size */
         height: 19cm; /* Keep original cheque size */
         background: white;
-        border: 1px solid #35eb08;
         box-shadow: none;
     }
 }
