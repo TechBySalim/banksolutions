@@ -177,6 +177,15 @@ header {
 
     
 }
+.not-over-tk {
+    position: absolute;
+    left: -100px;
+    top: 300px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(-90deg);
+    width: 220px;
+}
 
 .cheque-date {
     position: absolute;

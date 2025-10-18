@@ -36,11 +36,20 @@ function generateCheque() {
         return;
     }
 
+//Title Case function
+String.prototype.toTitleCase = function () {
+    return this.replace(/\b\w/g, function (c) {
+        return c.toUpperCase();
+    });
+};
+
+
     const formattedDate = formatDate(date);
 
-    document.getElementById('cheque-name').innerText = name;
+    document.getElementById('cheque-name').innerText = name.toTitleCase();
     document.getElementById('cheque-date').innerText = formattedDate;
     document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
+    document.getElementById('not-over-tk').innerText = 'NOT OVER TK. '+ parseFloat(amount).toFixed(2);
 
     const amountInWords = numberToWords(amount) + " Taka Only";
     document.getElementById('cheque-words').innerText = amountInWords;
@@ -163,6 +172,7 @@ function clearData() {
     document.getElementById('cheque-date').innerText = '';
     document.getElementById('cheque-words').innerText = '';
     document.getElementById('cheque-amount').innerText = '';
+    document.getElementById('not-over-tk').innerText = '';
 }
 
 
