@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Debit/Credit Voucher Generator</title>
-    <link rel="icon" type="image/x-icon" href="LogoOfBanksolutions.png">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
@@ -124,10 +123,6 @@
                 left: 0;
                 width: 100vw;
             }
-            .voucher-logo{
-                padding-top: 15px;
-            }
-            
         }
 
         .voucher {
@@ -136,7 +131,7 @@
             width: 8in;
             height: 3.5in;
             margin: 30px auto;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 500;
             color: #000;
             position: relative;
@@ -157,7 +152,6 @@
 
         .voucher-logo {
             position: absolute;
-            margin-top: 5px;
             left: 27%;
             top: 50%;
             transform: translateY(-50%);
@@ -175,14 +169,14 @@
         .voucher-row {
             display: flex;
             justify-content: flex-end;
-            border-bottom: 1px solid #8d8d8d;
+            border-bottom: 1px solid #bbb;
             padding: 5px 0;
             margin-bottom: 6px;
 
         }
 
         .voucher-line {
-            border-bottom: 1px solid #8d8d8d;
+            border-bottom: 1px solid #bbb;
             padding: 5px 0;
             margin-bottom: 6px;
         }
@@ -256,7 +250,7 @@
                     <a href="dps.html">DPS Calculator</a>
                     <a href="emi.html">Loan EMI Calculator</a>
                     <a href="date.html">Date Calculator</a>
-                    <a href="cheque.html">Payment Order Print</a>
+                    <a href="cheque.html">Cheque Print</a>
                     <a href="voucherprint.html">Voucher Generate & Print</a>
                 </div>
             </div>
@@ -296,7 +290,7 @@
         <div class="voucher">
             <div class="voucher-header">
                 PUBALI BANK PLC.
-                <img src="Logo.png" alt="Pubali Bank Logo" class="voucher-logo" id="voucherLogo">
+                <img src="Logo.png" alt="Pubali Bank Logo" class="voucher-logo">
             </div>
             <div class="voucher-branch" id="outBranchTop"></div>
             <div class="voucher-row">
@@ -406,7 +400,7 @@
 
             let result = "";
             if (crore) result += threeDigits(crore) + " crore ";
-            if (lakh) result += threeDigits(lakh) + " lac ";
+            if (lakh) result += threeDigits(lakh) + " lakh ";
             if (thousand) result += threeDigits(thousand) + " thousand ";
             if (hundred) result += threeDigits(hundred) + " ";
             return result.trim() + " Taka Only.";

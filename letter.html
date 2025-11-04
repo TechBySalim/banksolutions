@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IT Support Request</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+            font-family: "Times New Roman", serif;
+            }
+
+        body {
+
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #000000;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            background: white;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color:black;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color:  #1faf3f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color:  #10c538;
+        }
+
+        .clear-btn {
+            background-color: #dc3545;
+        }
+
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+
+        .preview {
+            display: none;
+            background: white;
+            padding: 40px;
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            width: 210mm;
+            /* A4 width */
+            min-height: 297mm;
+            /* A4 height */
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0px;
+        }
+
+        .letter-header img {
+            width: 300px;
+            height: auto;
+        }
+
+        hr {
+            border: 1px solid black;
+            margin: 10px 0;
+        }
+
+        .letter-body {
+            white-space: pre-line;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .date-line {
+            text-align: right;
+            margin-bottom: -50px;
+            font-size: 17px;
+        }
+
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            font-weight: bold;
+        }
+
+        @media print {
+            @page {
+        size: A4; /* A4 page size */
+        margin: 0mm 0mm 0mm 0mm !important;
+    }
+
+    body {
+        background: transparent;
+        width: 210mm; /* A4 width */
+        height: 297mm; /* A4 height */
+        margin: 0 !important;
+        padding: 0 !important;
+        position: relative;
+    }
+
+            body {
+                background: white;
+            }
+
+            .container,
+            .buttons,
+            .header-container,
+            .header-title,
+            .dropdown-container,
+            .dropdown-btn,
+            .dropdown-content,
+            .dropdown-content a,
+            .dropdown-content a:hover {
+                display: none !important;
+            }
+
+            .preview {
+                display: block;
+                box-shadow: none;
+                border: none;
+                min-height: auto !important;
+                height: auto !important;
+                max-height: 297mm;
+                page-break-inside: avoid;
+                page-break-after: avoid;
+            }
+        }
+
+        /* Header Styles */
+    .header-container {
+        background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .header-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    
+    /* Header with dropdown */
+    .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .header-title:hover {
+            opacity: 0.8;
+        }
+
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(52,152,219,0.08);
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .dropdown-btn:hover {
+            background: #217dbb;
+        }
+
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            margin: 2px 0;
+            transition: 0.3s;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.08);
+            z-index: 1000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            margin-top: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #222;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f7f7f7;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content.hide {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">Payment Order Print</a>
+                <a href="voucherprint.html">Debit/Credit Voucher & Print</a>
+                <a href="sc-lscprint.html">SC/LSC Form Print (Non MICR Cheque)</a>
+            </div>
+        </div>
+    </div>
+
+<body>
+    <div class="container">
+        <h1>IT Support Letter Generator</h1>
+
+        <label for="branchName">Branch Name:</label>
+        <select id="branchName">
+            <option value="">-- Select Branch --</option>
+            <option value="Banglabazar Sub Branch">Banglabazar Sub Branch</option>
+            <option value="Borhanuddin Branch">Borhanuddin Branch</option>
+            <option value="Kunjerhat Sub Branch">Kunjerhat Sub Branch</option>
+            <option value="Lalmohan Branch">Lalmohan Branch</option>
+            <option value="Charfashin Branch">Charfashin Branch</option>
+            <option value="Dularhat Sub Branch">Dularhat Sub Branch</option>
+            <option value="Shashibhushan Sub Branch">Shashibhushan Sub Branch</option>
+        </select>
+
+        <label for="date">Date:</label>
+        <input type="date" id="date">
+
+        <label for="problem">Problem Description:</label>
+        <textarea id="problem" rows="4" placeholder="e.g., Network outage, printer not working, etc."></textarea>
+
+        <div class="buttons">
+            <button onclick="generatePreview()" type="button"><i>👁️</i> Preview</button>
+            <button onclick="window.print()"><i>🖨️</i> Print</button>
+            <button onclick="clearForm()" class="clear-btn"><i>🧹</i> Clear Form</button>
+        </div>
+    </div>
+
+    <div class="preview" id="previewSection">
+        <div class="letter-header">
+            <img src="full-logo.png"
+                alt="Pubali Bank Logo">
+            <div>
+                <div id="previewBranchName" style="font-weight: bold; font-size: 18px;"></div>
+                <div style="text-align: right; font-size: 12px;">www.pubalibankbd.com</div>
+                <div style="text-align: right; font-size: 12px;">www.pubalibangla.com</div>
+            </div>
+        </div>
+        <hr>
+        <div class="date-line" id="previewDate"></div>
+        <div class="letter-body" id="letterContent"></div>
+        <div class="signature-section">
+            <div>Head of Branch</div>
+            <div>Authorized Officer</div>
+        </div>
+    </div>
+
+    <script>
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            if (isNaN(date)) return "";
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        function generatePreview() {
+            const branch = document.getElementById("branchName").value;
+            const dateInput = document.getElementById("date").value;
+            const problem = document.getElementById("problem").value.trim();
+            const preview = document.getElementById("previewSection");
+            const previewBranchName = document.getElementById("previewBranchName");
+            const letterContent = document.getElementById("letterContent");
+            const previewDate = document.getElementById("previewDate");
+
+            if (!branch || !dateInput || !problem) {
+                alert("⚠️ Please fill in all fields before previewing.");
+                return;
+            }
+
+            const dateFormatted = formatDate(dateInput);
+
+            previewBranchName.textContent = branch;
+            previewDate.textContent = `Date: ${dateFormatted}`;
+
+            const letter = `
+The Manager
+Pubali Bank PLC.
+Bhola Branch
+Bhola Sadar, Bhola.
+
+Subject: Urgent IT Support Required at ${branch}
+
+Dear Sir,
+
+With due respect, I would like to inform you that our branch is currently facing ${problem} that require immediate IT support. We kindly request you to send an IT engineer from your department to visit our branch and resolve the technical issues at the earliest possible time.
+
+Your cooperation in this regard will be highly appreciated.
+
+Thank you for your kind attention and support.
+
+Yours sincerely,
+      `;
+
+            letterContent.textContent = letter;
+            preview.style.display = "block";
+            window.scrollTo({ top: preview.offsetTop, behavior: 'smooth' });
+        }
+
+        function clearForm() {
+            document.getElementById("branchName").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("problem").value = "";
+            document.getElementById("previewSection").style.display = "none";
+        }
+
+        // Dropdown menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
+    </script>
+</body>
+
+</html>
