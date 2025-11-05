@@ -119,8 +119,8 @@
         }
 
         .container {
-            width: 100%;
-            max-width: 500px;
+            width: 80%;
+            max-width: 1050px;
             background-color: #fff;
             padding: 25px;
             border-radius: 10px;
@@ -130,8 +130,9 @@
 
         /* Input Section */
         .input-section {
+            max-width: 600px;
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 500px 500px;
             gap: 20px;
             padding-bottom: 20px;
         }
@@ -483,21 +484,33 @@
                 <label for="branchName">Branch Name (None MICR Cheque's Branch Name)</label>
                 <input type="text" id="branchName" placeholder="Enter Branch Name">
             </div>
-            <div class="input-group">
-                <label for="amount">Amount (Numeric Value)</label>
-                <input type="number" id="amount" placeholder="Enter Amount">
-            </div>
-            <div class="input-group">
-                <label for="scNumber">SC/LSC No.</label>
-                <input type="text" id="scNumber" placeholder="Enter SC/LSC Number">
-            </div>
-            <div class="input-group">
-                <label for="chequeNumber">None MICR Cheque's No.</label>
-                <input type="text" id="chequeNumber" placeholder="Enter Cheque Number">
-            </div>
-            <div class="input-group">
-                <label for="drawnOn">Drawn On</label>
-                <input type="text" id="drawnOn" placeholder="Enter Drawn On Details">
+        </div>
+        <div class="input-group">
+            <label>Items (add multiple lines)</label>
+            <div class="table-container" style="margin-top: 8px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">SC/LSC No.</th>
+                            <th style="width: 25%;">Cheque/PO No.</th>
+                            <th style="width: 25%;">Drawn on</th>
+                            <th style="width: 20%;">Amount</th>
+                            <th style="width: 10%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        <tr class="item-row">
+                            <td><input type="text" class="scNo" placeholder="SC/LSC No."></td>
+                            <td><input type="text" class="chequeNo" placeholder="Cheque/PO No."></td>
+                            <td><input type="text" class="drawnOn" placeholder="Drawn on"></td>
+                            <td><input type="number" step="0.01" class="amount" placeholder="0.00"></td>
+                            <td><button type="button" class="removeRowBtn" style="color: rgb(255, 0, 51);">✖</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-row" style="margin-top: 12px;">
+                    <button type="button" id="addRowBtn" class="btn-action" style="">＋ Add line (If you have more cheque or PO)</button>
+                </div>
             </div>
         </div>
         <div class="btn-row">
@@ -550,14 +563,14 @@
         </div>
 
         <p class="paragraph-text" style="margin-top:5px;">
-            <span style="border-bottom: 1px dotted #000;"></span>১ টি চেক/ড্রাফট/পিও/বিল, এর সমূহ মূল্য সংগ্রহে জন্য সংযোজন
+            <span style="border-bottom: 1px dotted #000;"></span><span id="previewCountText">১</span> টি চেক/ড্রাফট/পিও/বিল, এর সমূহ মূল্য সংগ্রহে জন্য সংযোজন
             করা হইল। সংগ্রহীত মূল্য ডি, ডি/পিও/নগদ টাকা, আকারে আমাদের নিকট প্রেরণ করার/আপনার ব্যাংকে রক্ষিত আমাদের হিসাবে জমা করার
             জন্য অনুরোধ করা হইল।
         </p>
 
         <div class="signature-section">
             <p class="paragraph-text" style="margin-top: 5px;">
-                সংযুক্ত: <span style="border-bottom: 1px dotted #000; padding: 0 50px;">১ টি</span>
+                সংযুক্ত: <span style="border-bottom: 1px dotted #000; padding: 0 50px;"><span id="previewCountSignature">১</span> টি</span>
             </p>
             <p class="paragraph-text" style="margin-top: 5px;">অফিসার</p>
             <p class="paragraph-text" style="margin-top: 5px;">ব্যবস্থাপক</p>
@@ -574,14 +587,7 @@
                         <th style="width: 20%;">টাকার পরিমান</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td id="previewTableScNo"></td>
-                        <td id="previewTableChequeNo"></td>
-                        <td id="previewTableDrawnOn"></td>
-                        <td id="previewTableAmount"></td>
-                    </tr>
-                </tbody>
+                <tbody id="previewTbody"></tbody>
             </table>
         </div>
 
@@ -631,6 +637,40 @@
             return toTitleCase(str.trim());
         }
 
+        function toBengaliDigits(s) {
+            const m = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+            return String(s).replace(/[0-9]/g, d => m[d]);
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, m => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'
+            }[m]));
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.id === 'addRowBtn') {
+                const body = document.getElementById('itemsBody');
+                const tr = document.createElement('tr');
+                tr.className = 'item-row';
+                tr.innerHTML = `
+                    <td><input type="text" class="scNo" placeholder="SC/LSC No."></td>
+                    <td><input type="text" class="chequeNo" placeholder="Cheque/PO No."></td>
+                    <td><input type="text" class="drawnOn" placeholder="Drawn on"></td>
+                    <td><input type="number" step="0.01" class="amount" placeholder="0.00"></td>
+                    <td><button type="button" class="removeRowBtn">✖</button></td>
+                `;
+                body.appendChild(tr);
+            }
+            if (e.target && e.target.classList.contains('removeRowBtn')) {
+                const row = e.target.closest('tr');
+                const body = document.getElementById('itemsBody');
+                if (body.querySelectorAll('tr.item-row').length > 1) {
+                    row.remove();
+                }
+            }
+        });
+
         // Event listener for the Preview button
         document.getElementById('previewBtn').addEventListener('click', function () {
             // Get input values
@@ -638,10 +678,17 @@
             const dateInput = document.getElementById('date').value;
             const bankName = document.getElementById('bankName').value;
             const branchName = document.getElementById('branchName').value;
-            const amount = parseFloat(document.getElementById('amount').value).toFixed(2);
-            const scNumber = document.getElementById('scNumber').value;
-            const chequeNumber = document.getElementById('chequeNumber').value;
-            const drawnOn = document.getElementById('drawnOn').value;
+            // Collect item rows
+            const rows = Array.from(document.querySelectorAll('#itemsBody tr.item-row'));
+            const items = rows.map(r => {
+                const sc = r.querySelector('input.scNo')?.value?.trim() || '';
+                const ch = r.querySelector('input.chequeNo')?.value?.trim() || '';
+                const dr = r.querySelector('input.drawnOn')?.value?.trim() || '';
+                const amtStr = r.querySelector('input.amount')?.value;
+                const amtNum = amtStr === '' || amtStr === null ? 0 : parseFloat(amtStr);
+                const amt = isNaN(amtNum) ? 0 : parseFloat(amtNum.toFixed(2));
+                return { sc, ch, dr, amt };
+            }).filter(x => x.sc || x.ch || x.dr || x.amt);
 
             // Format date to dd/mm/yyyy format
             const dateObj = new Date(dateInput);
@@ -650,18 +697,39 @@
             const year = dateObj.getFullYear();
             const formattedDate = `${day}/${month}/${year}`;
 
-            // Populate preview section
+            // Compute total and count
+            const total = items.reduce((s, x) => s + x.amt, 0);
+            const count = items.length;
+
+            // Populate header/summary
             document.getElementById('previewMyBranchName').textContent = myBranchName;
             document.getElementById('previewDate').textContent = formattedDate;
             document.getElementById('previewBankName').textContent = bankName;
             document.getElementById('previewBranchName').textContent = branchName;
-            document.getElementById('previewAmount').textContent = amount;
-            document.getElementById('previewAmountWords').textContent = amountToWords(amount) + ' Only';
-            document.getElementById('previewSCNo').textContent = scNumber;
-            document.getElementById('previewTableScNo').textContent = scNumber;
-            document.getElementById('previewTableChequeNo').textContent = chequeNumber;
-            document.getElementById('previewTableDrawnOn').textContent = toTitleCase(drawnOn);
-            document.getElementById('previewTableAmount').textContent = amount;
+            document.getElementById('previewAmount').textContent = total.toFixed(2);
+            document.getElementById('previewAmountWords').textContent = amountToWords(total) + ' Only';
+            document.getElementById('previewSCNo').textContent = '';
+            const countStr = toBengaliDigits(String(count || 0));
+            const countText = document.getElementById('previewCountText');
+            const countSig = document.getElementById('previewCountSignature');
+            if (countText) countText.textContent = countStr;
+            if (countSig) countSig.textContent = countStr;
+
+            // Build preview table body
+            const tbody = document.getElementById('previewTbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                items.forEach(it => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${escapeHtml(it.sc)}</td>
+                        <td>${escapeHtml(it.ch)}</td>
+                        <td>${escapeHtml(toTitleCase(it.dr))}</td>
+                        <td style="font-family: 'Roboto Mono', monospace;">${it.amt.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
 
             // Show preview and scroll
             const previewSection = document.getElementById('formPreview');
