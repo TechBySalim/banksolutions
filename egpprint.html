@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Order Printing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mainStyle.css">
+    <link rel="stylesheet" href="egp-style.css">
+    <link rel="icon" type="image/x-icon" href="LogoOfBanksolutions.png">
+</head>
+
+<body>
+    <!-- Header with Dropdown -->
+     <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">Payment Order Print</a>
+                <a href="voucherprint.html">Debit/Credit Voucher Print</a>
+                <a href="sc-lscprint.html">SC/LSC Form Print (Non MICR Cheque)</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Creator Modal -->
+    <div class="modal" id="creatorModal">
+        <div class="modal-content">
+            <div class="modal-image">
+                <!-- <i class="fas fa-user-tie"></i> -->
+                <img src="image.png" alt="Salim Ahmed">
+            </div>
+            <div class="modal-info">
+                <span class="close-btn" id="closeModal">&times;</span>
+                <h2>Creator Information</h2>
+                <div class="info-item">
+                    <i class="fas fa-user"></i>
+                    <span>Salim Ahmed</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>salim11bd@gmail.com</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+8801739856638</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-building"></i>
+                    <span>Pubali Bank PLC.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Cheque Print Notice -->
+ <div>
+    <p class="print-details">
+       <b>*Important Details*</b>
+       <br>
+        Use Google Chrome
+        <br>
+        Page size: A4
+        <br>
+        Margins: Default
+        <br>
+        Scale: Default  
+        <br>
+        <img src="how_to_set_po_at-printer.png" alt="How To Set PO in Printer">
+    </p>
+    
+ </div>
+
+
+    <div class="main-content">
+        <!-- ===== INPUTS FOR CHEQUE DETAILS ===== -->
+        <div class="input-section">
+            <input type="text" id="name" placeholder="Enter Payee Name">
+            <input type="date" id="date" placeholder="Select Date">
+            <input type="number" id="amount" placeholder="Enter Amount (৳)">
+            <button id="generateBtn">Generate Payment Order</button>
+            <button id="printBtn">Print Payment Order</button>
+            <button id="clearBtn">Clear Data</button>
+        </div>
+
+        <!-- ===== CHEQUE PREVIEW SECTION ===== -->
+        <div class="cheque" id="cheque">
+            <div class="not-over-tk"  id="not-over-tk"></div>
+            <div class="cheque-date" id="cheque-date"></div>
+            <div class="cheque-name" id="cheque-name"></div>
+            <div class="cheque-amount" id="cheque-amount"></div>
+            <div class="cheque-words" id="cheque-words"></div>
+
+        </div>
+    </div>
+
+    <!-- ===== SCRIPT TO UPDATE CHEQUE ===== -->
+    <script src="egp-script.js"></script>
+
+    <!-- Dropdown menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownContainer = document.querySelector('.dropdown-container');
+            const dropdownContent = document.querySelector('.dropdown-content');
+            let timeoutId;
+
+            // Show dropdown on mouse enter
+            dropdownContainer.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove('hide');
+                dropdownContent.classList.add('show');
+            });
+
+            // Hide dropdown on mouse leave with delay
+            dropdownContainer.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200); // 200ms delay before hiding
+            });
+
+            // Keep dropdown open when hovering over content
+            dropdownContent.addEventListener('mouseenter', function() {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener('mouseleave', function() {
+                timeoutId = setTimeout(function() {
+                    dropdownContent.classList.remove('show');
+                    dropdownContent.classList.add('hide');
+                }, 200);
+            });
+        });
+    </script>
+</body>
+
+</html>
