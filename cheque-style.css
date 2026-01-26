@@ -152,7 +152,6 @@ header {
 .input-section button {
     background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
     color: white;
-    font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
 }
