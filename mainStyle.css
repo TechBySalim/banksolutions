@@ -166,7 +166,7 @@
             margin-top: 1.5%;
             color: black;
             cursor: pointer;
-            transition: 0.3s;
+            /* transition: 0.3s; */
             background-color: #f0f0f0;
             padding: 12px;
             font-size: 1em;
@@ -184,7 +184,7 @@
 
         .button-container button:hover {
             background-color: #fcfbfb;
-            border: red 2px dashed;
+            border: red 1px dashed;
             color: black;
         }
 
