@@ -26,22 +26,24 @@ function closeModal() {
     document.getElementById('creatorModal').style.display = 'none';
 }
 
-function generateCheque() {
-    const name = document.getElementById('name').value;
-    const date = document.getElementById('date').value;
-    const amount = document.getElementById('amount').value;
-
-    if (!name || !date || !amount) {
-        alert('Please fill all fields');
-        return;
-    }
-
 //Title Case function
 String.prototype.toTitleCase = function () {
     return this.replace(/\b\w/g, function (c) {
         return c.toUpperCase();
     });
 };
+
+function generateCheque() {
+    const name = document.getElementById('name').value;
+    const date = document.getElementById('date').value;
+    const amount = document.getElementById('amount').value;
+    const dealNumber = document.getElementById('deal').value;
+    const emNumber = document.getElementById('em').value;
+
+    if (!name || !date || !amount) {
+        alert('Please fill all fields');
+        return;
+    }
 
 
     const formattedDate = formatDate(date);
@@ -51,8 +53,11 @@ String.prototype.toTitleCase = function () {
     document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
     document.getElementById('not-over-tk').innerText = 'NOT OVER TK. '+ parseFloat(amount).toFixed(2);
 
-    const amountInWords = numberToWords(amount) + " Taka Only";
+    const amountInWords = numberToWords(amount) + " Taka Only.";
     document.getElementById('cheque-words').innerText = amountInWords;
+
+    document.getElementById('deal-number').innerText = "Deal No = "+ dealNumber;
+    document.getElementById('em-number').innerText = "EM No = "+ emNumber;
 
     // adjustAmountPosition();
 }
@@ -166,6 +171,8 @@ function clearData() {
     document.getElementById('name').value = '';
     document.getElementById('date').value = '';
     document.getElementById('amount').value = '';
+    document.getElementById('deal').value = '';
+    document.getElementById('em').value = '';
 
     // Clear cheque preview
     document.getElementById('cheque-name').innerText = '';
@@ -173,6 +180,8 @@ function clearData() {
     document.getElementById('cheque-words').innerText = '';
     document.getElementById('cheque-amount').innerText = '';
     document.getElementById('not-over-tk').innerText = '';
+    document.getElementById('deal-number').innerText = '';
+    document.getElementById('em-number').innerText = '';    
 }
 
 

@@ -87,10 +87,16 @@
         <div class="input-section">
             <input type="text" id="name" placeholder="Enter Payee Name">
             <input type="date" id="date" placeholder="Select Date">
-            <div>
-                <input type="number" id="amount" placeholder="Enter Amount (৳)">
-                <button id="addmore-amount">+ Add More Amount</button>
+            <div class="deal-em-number">
+                <input type="number" id="deal" placeholder="Enter Deal Number">
+                <input type="number" id="em" placeholder="Enter EM Number">
             </div>
+            <div class="amount-inputand-button">
+                <input type="number" id="amount" placeholder="Enter Amount (৳)">
+                <button id="addmore-amount">➕</button>
+                <button id="remove-amount">❌</button>
+            </div>
+
             <button id="generateBtn">Generate Payment Order</button>
             <button id="printBtn">Print Payment Order</button>
             <button id="clearBtn">Clear Data</button>
@@ -103,6 +109,8 @@
             <div class="cheque-name" id="cheque-name"></div>
             <div class="cheque-amount" id="cheque-amount"></div>
             <div class="cheque-words" id="cheque-words"></div>
+            <div class="deal-number" id="deal-number"></div>
+            <div class="em-number" id="em-number"></div>
 
         </div>
     </div>
