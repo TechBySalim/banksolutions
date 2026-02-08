@@ -272,14 +272,25 @@ header {
     /* border: 1px solid red; */
 }
 
-.deal-number {
+.id-number {
     position: absolute;
-    width: 180px;
-    left: 117px;
-    top: 454px;
-    font-size: 14px;
+    width: 150px;
+    left: 131px;
+    top: 545px;
+    font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
+    /* border: 1px solid red; */
+}
+.deal-number {
+    position: absolute;
+    width: 150px;
+    left: 131px;
+    top: 397px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(270deg);
+    /* border: 1px solid rgb(30, 231, 23); */
 }
 
 .em-number {
@@ -287,9 +298,10 @@ header {
     width: 180px;
     left: 118px;
     top: 239px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
+    /* border: 1px solid rgb(89, 15, 226); */
 }
 .print-details{
     position: absolute;

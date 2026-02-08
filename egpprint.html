@@ -88,13 +88,17 @@
             <input type="text" id="name" placeholder="Enter Payee Name">
             <input type="date" id="date" placeholder="Select Date">
             <div class="deal-em-number">
+                <input type="number" id="id" placeholder="Enter ID Number">
                 <input type="number" id="deal" placeholder="Enter Deal Number">
                 <input type="number" id="em" placeholder="Enter EM Number">
             </div>
             <div class="amount-inputand-button">
                 <input type="number" id="amount" placeholder="Enter Amount (৳)">
-                <button id="addmore-amount">➕</button>
-                <button id="remove-amount">❌</button>
+                <button id="addmore-amount" onclick="addInput()">➕</button>
+                <!-- <button id="remove-amount">❌</button> -->
+            </div>
+            <div id="more-amount-inputand-button">
+
             </div>
 
             <button id="generateBtn">Generate Payment Order</button>
@@ -109,6 +113,7 @@
             <div class="cheque-name" id="cheque-name"></div>
             <div class="cheque-amount" id="cheque-amount"></div>
             <div class="cheque-words" id="cheque-words"></div>
+            <div class="id-number" id="id-number"></div>
             <div class="deal-number" id="deal-number"></div>
             <div class="em-number" id="em-number"></div>
 

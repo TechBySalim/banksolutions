@@ -37,6 +37,7 @@ function generateCheque() {
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
     const amount = document.getElementById('amount').value;
+    const idNumber = document.getElementById('id').value;
     const dealNumber = document.getElementById('deal').value;
     const emNumber = document.getElementById('em').value;
 
@@ -56,6 +57,7 @@ function generateCheque() {
     const amountInWords = numberToWords(amount) + " Taka Only.";
     document.getElementById('cheque-words').innerText = amountInWords;
 
+    document.getElementById('id-number').innerText = "ID No = "+ idNumber;
     document.getElementById('deal-number').innerText = "Deal No = "+ dealNumber;
     document.getElementById('em-number').innerText = "EM No = "+ emNumber;
 
@@ -164,6 +166,27 @@ function numberToWords(num) {
     return str;
 }
 
+// add more amount function
+function addInput() {
+    const div = document.createElement("div");
+
+    const input = document.createElement("input");
+    input.type = "number";
+
+    const btn = document.createElement("button");
+    btn.innerHTML = "❌";
+    btn.onclick = function () {
+      div.remove();
+    };
+
+    div.appendChild(input);
+    div.appendChild(btn);
+
+    document.getElementById('more-amount-inputand-button').appendChild(div);
+  }
+
+
+
 
 
 function clearData() {
@@ -181,7 +204,8 @@ function clearData() {
     document.getElementById('cheque-amount').innerText = '';
     document.getElementById('not-over-tk').innerText = '';
     document.getElementById('deal-number').innerText = '';
-    document.getElementById('em-number').innerText = '';    
+    document.getElementById('em-number').innerText = ''; 
+    document.getElementById('id-number').innerText = '';
 }
 
 
