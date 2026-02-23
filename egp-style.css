@@ -162,6 +162,15 @@ header {
     width: 10%;
 
 }
+.extra-amount{
+    width: 80%;
+    gap: 10px;
+}
+
+.extra-amount-button {
+    width: 10%;
+    margin: 8px;
+}
 
 .deal-em-number {
     display: flex;
@@ -218,14 +227,14 @@ header {
 
 .cheque-date {
     position: absolute;
-    right: 163px;
-    top: 115px;
-    width: 190px;
-    font-size: 15px;
-    font-weight: bold;
+    right: 163px !important;
+    top: 115px !important;
+    width: 190px !important;
+    font-size: 15px !important; 
+    font-weight: bold !important; 
     transform: rotate(-90deg);
     /* border: 1px solid red; */
-    letter-spacing: 0.22em;
+    letter-spacing: 0.22em !important;
 }
 
 .cheque-name {
@@ -281,8 +290,8 @@ header {
 
 .id-number {
     position: absolute;
-    width: 150px;
-    left: 131px;
+    width: 121px;
+    left: 129px;
     top: 545px;
     font-size: 12px;
     font-weight: bold;
@@ -292,8 +301,8 @@ header {
 .deal-number {
     position: absolute;
     width: 150px;
-    left: 131px;
-    top: 397px;
+    left: 116px;
+    top: 239px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
@@ -302,9 +311,9 @@ header {
 
 .em-number {
     position: absolute;
-    width: 180px;
-    left: 118px;
-    top: 239px;
+    width: 172px;
+    left: 104px;
+    top: 397px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);

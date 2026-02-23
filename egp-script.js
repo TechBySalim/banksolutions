@@ -68,7 +68,7 @@ function generateCheque() {
         const amountInWords = numberToWords(amount) + " Taka Only.";
         chequeEl.querySelector('.cheque-words').innerText = amountInWords;
 
-        chequeEl.querySelector('.id-number').innerText = "ID No = " + idNumber;
+        chequeEl.querySelector('.id-number').innerText = "A/C No = " + idNumber;
         chequeEl.querySelector('.deal-number').innerText = "Deal No = " + dealNumber;
         chequeEl.querySelector('.em-number').innerText = "EM No = " + emNumber;
 
@@ -168,6 +168,7 @@ function addInput() {
     input.className = "extra-amount";
 
     const btn = document.createElement("button");
+    btn.className = "extra-amount-button";
     btn.innerHTML = "❌";
     btn.onclick = function () {
       div.remove();
