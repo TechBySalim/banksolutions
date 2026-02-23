@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('printBtn').addEventListener('click', printCheque);
     // Add clear button listener
     document.getElementById('clearBtn').addEventListener('click', clearData);
-    document.getElementById('creatorBtn').addEventListener('click', openModal);
-    document.getElementById('closeModal').addEventListener('click', closeModal);
+    const creatorBtn = document.getElementById('creatorBtn');
+    if (creatorBtn) creatorBtn.addEventListener('click', openModal);
+    const closeModalBtn = document.getElementById('closeModal');
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     
 
     // Close modal when clicking outside
@@ -36,30 +38,42 @@ String.prototype.toTitleCase = function () {
 function generateCheque() {
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
-    const amount = document.getElementById('amount').value;
     const idNumber = document.getElementById('id').value;
     const dealNumber = document.getElementById('deal').value;
     const emNumber = document.getElementById('em').value;
 
-    if (!name || !date || !amount) {
-        alert('Please fill all fields');
+    const amounts = getAllAmounts();
+    if (!name || !date || amounts.length === 0) {
+        alert('Please fill Payee Name, Date, and at least one Amount');
         return;
     }
 
 
     const formattedDate = formatDate(date);
 
-    document.getElementById('cheque-name').innerText = name.toTitleCase();
-    document.getElementById('cheque-date').innerText = formattedDate;
-    document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
-    document.getElementById('not-over-tk').innerText = 'NOT OVER TK. '+ parseFloat(amount).toFixed(2);
+    const container = document.getElementById('chequeContainer');
+    const template = document.getElementById('chequeTemplate');
+    container.innerHTML = '';
 
-    const amountInWords = numberToWords(amount) + " Taka Only.";
-    document.getElementById('cheque-words').innerText = amountInWords;
+    for (const amount of amounts) {
+        const chequeEl = template.cloneNode(true);
+        chequeEl.id = '';
+        chequeEl.style.display = '';
 
-    document.getElementById('id-number').innerText = "ID No = "+ idNumber;
-    document.getElementById('deal-number').innerText = "Deal No = "+ dealNumber;
-    document.getElementById('em-number').innerText = "EM No = "+ emNumber;
+        chequeEl.querySelector('.cheque-name').innerText = name.toTitleCase();
+        chequeEl.querySelector('.cheque-date').innerText = formattedDate;
+        chequeEl.querySelector('.cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
+        chequeEl.querySelector('.not-over-tk').innerText = 'NOT OVER TK. ' + parseFloat(amount).toFixed(2);
+
+        const amountInWords = numberToWords(amount) + " Taka Only.";
+        chequeEl.querySelector('.cheque-words').innerText = amountInWords;
+
+        chequeEl.querySelector('.id-number').innerText = "ID No = " + idNumber;
+        chequeEl.querySelector('.deal-number').innerText = "Deal No = " + dealNumber;
+        chequeEl.querySelector('.em-number').innerText = "EM No = " + emNumber;
+
+        container.appendChild(chequeEl);
+    }
 
     // adjustAmountPosition();
 }
@@ -94,35 +108,13 @@ function formatDate(dateString) {
 }
 
 function printCheque() {
-    if (!document.getElementById('cheque-name').innerText) {
-        alert('Please generate a cheque first');
+    const container = document.getElementById('chequeContainer');
+    if (!container || container.children.length === 0) {
+        alert('Please generate cheque preview(s) first');
         return;
     }
 
-    // Create a print-specific stylesheet
-    // const printStyle = document.createElement('style');
-    // printStyle.innerHTML = `
-    //     @page {
-    //       size: 19cm 8.5cm;
-    //       margin: 0;
-    //     }
-    //     body {
-    //       width: 19cm;
-    //       height: 8.5cm;
-    //     }
-    //     #cheque {
-    //       width: 19cm;
-    //       height: 8.5cm;
-    //     }
-    //   `;
-    // document.head.appendChild(printStyle);
-
     window.print();
-
-    // Remove the print styles after printing
-    setTimeout(() => {
-        document.head.removeChild(printStyle);
-    }, 1000);
 }
 
 function numberToWords(num) {
@@ -172,6 +164,8 @@ function addInput() {
 
     const input = document.createElement("input");
     input.type = "number";
+    input.placeholder = "Enter Amount (৳)";
+    input.className = "extra-amount";
 
     const btn = document.createElement("button");
     btn.innerHTML = "❌";
@@ -194,18 +188,36 @@ function clearData() {
     document.getElementById('name').value = '';
     document.getElementById('date').value = '';
     document.getElementById('amount').value = '';
+    document.getElementById('id').value = '';
     document.getElementById('deal').value = '';
     document.getElementById('em').value = '';
 
-    // Clear cheque preview
-    document.getElementById('cheque-name').innerText = '';
-    document.getElementById('cheque-date').innerText = '';
-    document.getElementById('cheque-words').innerText = '';
-    document.getElementById('cheque-amount').innerText = '';
-    document.getElementById('not-over-tk').innerText = '';
-    document.getElementById('deal-number').innerText = '';
-    document.getElementById('em-number').innerText = ''; 
-    document.getElementById('id-number').innerText = '';
+    // Clear extra amount inputs
+    document.getElementById('more-amount-inputand-button').innerHTML = '';
+
+    // Clear cheque preview(s)
+    const container = document.getElementById('chequeContainer');
+    if (container) container.innerHTML = '';
+}
+
+function getAllAmounts() {
+    const amounts = [];
+
+    const mainAmount = document.getElementById('amount')?.value;
+    if (mainAmount !== undefined && mainAmount !== null && String(mainAmount).trim() !== '') {
+        const n = parseFloat(mainAmount);
+        if (!Number.isNaN(n) && n > 0) amounts.push(n);
+    }
+
+    const extraInputs = document.querySelectorAll('#more-amount-inputand-button input');
+    extraInputs.forEach((el) => {
+        const v = el.value;
+        if (v === undefined || v === null || String(v).trim() === '') return;
+        const n = parseFloat(v);
+        if (!Number.isNaN(n) && n > 0) amounts.push(n);
+    });
+
+    return amounts;
 }
 
 

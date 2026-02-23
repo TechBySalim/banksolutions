@@ -199,6 +199,13 @@ header {
 
     
 }
+
+.cheque-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
 .not-over-tk {
     position: absolute;
     left: -103px;
@@ -347,17 +354,23 @@ header {
     .cheque{
         border: none !important;
     }
-    #cheque {
-        position: absolute;
-        top: 0 !important; /* Position at top */
-        left: 50% !important; /* Center horizontally */
-        transform: translateX(-50%) !important;  /*Perfect center*/
-        margin: 0 !important;
-        /* padding: 20px; */
+    #chequeTemplate {
+        display: none !important;
+    }
+
+    #chequeContainer {
+        display: block !important;
+    }
+
+    #chequeContainer .cheque {
+        display: block;
+        margin: 0 auto !important;
         width: 8.5cm; /* Keep original cheque size */
         height: 19cm; /* Keep original cheque size */
         background: white;
         box-shadow: none;
+        page-break-after: always;
+        break-after: page;
     }
 }
 /* responsive */
