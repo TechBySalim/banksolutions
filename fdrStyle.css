@@ -29,7 +29,6 @@ body{
 
 .header-title {
     font-size: 1.5rem;
-    font-weight: bold;
 }
 .container {
     max-width: 480px;
@@ -76,6 +75,7 @@ body{
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            margin-bottom: 20px;
         }
 
         .calculate-btn {
