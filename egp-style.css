@@ -3,7 +3,7 @@
     padding: 0;
     border: 0;
     box-sizing: border-box;
-    font-family: 'Times New Roman';
+    font-family: 'Fira Code', monospace;
 }
 
 body {
@@ -162,6 +162,9 @@ header {
     width: 10%;
 
 }
+/* .addmore-amount{
+    color: white;
+} */
 .extra-amount{
     width: 80%;
     gap: 10px;
