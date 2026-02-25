@@ -98,34 +98,58 @@
     <div class="container" style="margin-top: 30px;">
         <h2>Bank FDR Calculator</h2>
 
-        <label for="principal">Deposit Amount (৳)</label>
-        <input type="number" id="principal" placeholder="Enter amount">
-
-        <label for="rate">Interest Rate (Annual %)</label>
-        <input type="number" id="rate" placeholder="e.g. 10">
-
-        <label for="months">Duration (Months)</label>
-        <select id="months">
-            <option value="1">01 Months</option>
-            <option value="3">03 Months</option>
-            <option value="6">06 Months</option>
-            <option value="12">12 Months</option>
-            <option value="24">24 Months</option>
-            <option value="36">36 Months</option>
-            <option value="48">48 Months</option>
-            <option value="60">60 Months</option>
-        </select>
-
-        <label for="tax">Tax Deduction on Interest</label>
-        <select id="tax">
-            <option value="0">No Tax</option>
-            <option value="10">10%</option>
-            <option value="15">15%</option>
-        </select>
+        <table class="result-table" style="width:100%; margin-bottom: 15px;">
+            <tr>
+                <th style="width:40%;">FD Amount (TK.) :</th>
+                <td>
+                    <input type="number" id="principal" placeholder="Enter amount" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <th>Rate of Interest (%)</th>
+                <td>
+                    <input type="number" id="rate" placeholder="e.g. 10" style="width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <th>FD Period</th>
+                <td>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="periodValue" placeholder="Enter period" style="flex: 1;">
+                        <select id="periodUnit" style="flex: 1;">
+                            <option value="years">Years</option>
+                            <option value="months">Months</option>
+                            <option value="days">Days</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Compounding Frequency</th>
+                <td>
+                    <select id="compoundFrequencySelect" style="width: 100%;">
+                        <option value="1">Yearly</option>
+                        <option value="2">Half-yearly</option>
+                        <option value="4">Quarterly</option>
+                        <option value="12">Monthly</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Tax Deduction on Interest</th>
+                <td>
+                    <select id="tax" style="width: 100%;">
+                        <option value="0">No Tax</option>
+                        <option value="10">10%</option>
+                        <option value="15">15%</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
 
         <div class="btn-group">
             <button class="calculate-btn" onclick="calculateFDR()">Calculate</button>
-            <button class="clear-btn" onclick="clearForm()">Clear</button>
+            <button class="clear-btn" onclick="clearForm()">Reset</button>
             <button class="print-btn" onclick="window.print()">Print</button>
         </div>
 
@@ -225,33 +249,40 @@
         function calculateFDR() {
             const principal = parseFloat(document.getElementById('principal').value);
             const rate = parseFloat(document.getElementById('rate').value);
-            const months = parseInt(document.getElementById('months').value);
-            const taxRate = parseFloat(document.getElementById('tax').value);
+            const periodValue = parseFloat(document.getElementById('periodValue').value);
+            const periodUnit = document.getElementById('periodUnit').value;
+            const compoundFrequencySelect = document.getElementById('compoundFrequencySelect').value;
+            const n = compoundFrequencySelect ? parseInt(compoundFrequencySelect) : 1; // compounding times per year
 
-            if (isNaN(principal) || isNaN(rate) || isNaN(months) || principal <= 0 || rate <= 0 || months <= 0) {
+            if (isNaN(principal) || isNaN(rate) || isNaN(periodValue) ||
+                principal <= 0 || rate <= 0 || periodValue <= 0 || isNaN(n) || n <= 0) {
                 alert("Please enter valid values in all fields.");
                 return;
             }
 
-            // Determine compounding frequency based on months
-            let n;
-            if (months === 1) n = 12;
-            else if (months === 3) n = 3;
-            else if (months === 6) n = 6;
-            else n = 1;
-
-            const t = months / 12;
+            // convert period to years for compounding formula
+            let t;
+            if (periodUnit === 'years') {
+                t = periodValue;
+            } else if (periodUnit === 'months') {
+                t = periodValue / 12;
+            } else {
+                t = periodValue / 365;
+            }
 
             const amount = principal * Math.pow((1 + (rate / (n * 100))), n * t);
             const interest = amount - principal;
+            const taxRate = parseFloat(document.getElementById('tax').value) || 0;
             const tax = interest * (taxRate / 100);
             const netInterest = interest - tax;
             const netMaturity = principal + netInterest;
             const totalBeforeTax = principal + interest;
 
+            const durationText = `${periodValue} ${periodUnit.charAt(0).toUpperCase() + periodUnit.slice(1)}`;
+
             document.getElementById('tablePrincipal').textContent = `৳ ${principal.toFixed(2)}`;
             document.getElementById('tableRate').textContent = `${rate.toFixed(2)}%`;
-            document.getElementById('tableMonths').textContent = `${months} Month`;
+            document.getElementById('tableMonths').textContent = durationText;
             document.getElementById('interestBefore').textContent = `৳ ${interest.toFixed(2)}`;
             document.getElementById('taxAmount').textContent = `৳ ${tax.toFixed(2)}`;
             document.getElementById('interestAfter').textContent = `৳ ${netInterest.toFixed(2)}`;
@@ -269,13 +300,15 @@
             document.getElementById('result').style.display = 'block';
 
             // Show popup modal with summary
-            showModal(principal, rate, months, interest, tax, netInterest, netMaturity, totalBeforeTax);
+            showModal(principal, rate, durationText, interest, tax, netInterest, netMaturity, totalBeforeTax);
         }
 
         function clearForm() {
             document.getElementById('principal').value = '';
             document.getElementById('rate').value = '';
-            document.getElementById('months').value = '1';
+            document.getElementById('periodValue').value = '';
+            document.getElementById('periodUnit').value = 'years';
+            document.getElementById('compoundFrequencySelect').value = '1';
             document.getElementById('tax').value = '0';
             document.getElementById('result').style.display = 'none';
             document.getElementById('printHeader').style.display = "none";
@@ -283,10 +316,10 @@
             document.getElementById('printLine').style.display = "none";
         }
 
-        function showModal(principal, rate, months, interest, tax, netInterest, netMaturity, totalBeforeTax) {
+        function showModal(principal, rate, durationText, interest, tax, netInterest, netMaturity, totalBeforeTax) {
             document.getElementById('modalPrincipal').textContent = `৳ ${principal.toFixed(2)}`;
             document.getElementById('modalRate').textContent = `${rate.toFixed(2)}%`;
-            document.getElementById('modalMonths').textContent = `${months} Month`;
+            document.getElementById('modalMonths').textContent = durationText;
             document.getElementById('modalInterestBefore').textContent = `৳ ${interest.toFixed(2)}`;
             document.getElementById('modalTaxAmount').textContent = `৳ ${tax.toFixed(2)}`;
             document.getElementById('modalInterestAfter').textContent = `৳ ${netInterest.toFixed(2)}`;
