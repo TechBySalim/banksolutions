@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pubali Bank Form Generator</title>
+    <style>
+        :root {
+            --border-color: #333;
+            --ui-border: #d0d7de;
+            --ui-bg: #ffffff;
+            --ui-muted: #57606a;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-container {
+            background: white;
+            width: 800px;
+            padding: 30px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .bank-name {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .branch-info {
+            color: #5d2e8e; /* Purple tint as seen in stamp */
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .form-title {
+            text-decoration: underline;
+            font-weight: bold;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .date-section {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .input-row {
+            margin: 10px 0;
+            display: flex;
+            align-items: flex-end;
+        }
+        .line-input {
+            border: none;
+            border-bottom: 1px dotted #000;
+            flex-grow: 1;
+            padding: 2px 5px;
+            outline: none;
+        }
+        .grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .grid-table th, .grid-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: center;
+        }
+        .amount-cell {
+            display: flex;
+            padding: 0 !important;
+            height: 100%;
+        }
+        .digit-box {
+            border-right: 1px solid #ccc;
+            width: 20px;
+            height: 30px;
+            flex-grow: 1;
+        }
+        .digit-box:last-child { border-right: none; }
+        
+        .footer-sig {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sig-box {
+            border-top: 1px dotted #000;
+            width: 200px;
+            text-align: center;
+            font-size: 12px;
+            padding-top: 5px;
+        }
+
+        .controls {
+            width: 800px;
+            margin-bottom: 16px;
+            background: var(--ui-bg);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--ui-border);
+            box-shadow: 0 0 10px rgba(0,0,0,0.06);
+            box-sizing: border-box;
+        }
+        .controls h2 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+        }
+        .controls .hint {
+            color: var(--ui-muted);
+            font-size: 12px;
+            margin-top: 6px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 12px;
+        }
+        .field label {
+            display: block;
+            font-size: 12px;
+            color: #111;
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .field input, .field textarea {
+            width: 100%;
+            border: 1px solid var(--ui-border);
+            border-radius: 8px;
+            padding: 10px 10px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            box-sizing: border-box;
+        }
+        .field textarea {
+            min-height: 40px;
+            resize: vertical;
+        }
+        .field.full {
+            grid-column: 1 / -1;
+        }
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .btn-gen { background: #28a745; color: white; }
+        .btn-clear { background: #dc3545; color: white; }
+        .btn-print { background: #007bff; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+
+        .preview-wrap {
+            width: 800px;
+            display: none;
+        }
+        .preview-wrap.show { display: block; }
+        .preview-title {
+            width: 800px;
+            margin: 8px 0 10px 0;
+            color: #111;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .preview-title span {
+            color: var(--ui-muted);
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .fill-line {
+            display: inline-block;
+            border-bottom: 1px dotted #000;
+            min-width: 80px;
+            padding: 0 4px 2px 4px;
+            vertical-align: bottom;
+        }
+        .fill-line.w150 { min-width: 150px; }
+        .fill-line.w220 { min-width: 220px; }
+        .fill-line.w300 { min-width: 300px; }
+        .fill-line.w420 { min-width: 420px; }
+        .fill-line.block {
+            display: block;
+            width: 100%;
+            min-height: 18px;
+            box-sizing: border-box;
+        }
+
+        .po-box {
+            border: 1px solid var(--border-color);
+            width: 260px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .po-label {
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 18px;
+        }
+
+        .digits {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .digit {
+            flex: 1;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .digit:last-child { border-right: none; }
+
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        @media print {
+            .controls { display: none; }
+            .preview-title { display: none; }
+            body { background: white; padding: 0; }
+            .form-container { box-shadow: none; border: none; }
+            .preview-wrap { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <h2>PO Voucher Input</h2>
+        <div class="form-grid">
+            <div class="field">
+                <label for="in_date">Date</label>
+                <input id="in_date" type="date">
+            </div>
+            <div class="field">
+                <label for="in_amount">Amount</label>
+                <input id="in_amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 15000">
+                <div class="hint" id="amount_words_hint"></div>
+            </div>
+            <div class="field">
+                <label for="in_branch">Branch Name</label>
+                <input id="in_branch" type="text" placeholder="e.g. Bhola Branch">
+            </div>
+            <div class="field">
+                <label for="in_po">PO Number</label>
+                <input id="in_po" type="text" placeholder="e.g. PO-12345">
+            </div>
+            <div class="field">
+                <label for="in_applicant">Name of the applicant</label>
+                <input id="in_applicant" type="text" placeholder="Applicant name">
+            </div>
+            <div class="field">
+                <label for="in_address">Address</label>
+                <input id="in_address" type="text" placeholder="Address line">
+            </div>
+            <div class="field full">
+                <label for="in_favour">In favour of</label>
+                <textarea id="in_favour" placeholder="Beneficiary name / details"></textarea>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn-gen" onclick="generate()">Generate</button>
+            <button class="btn-clear" onclick="clearForm()">Clear</button>
+            <button class="btn-print" onclick="window.print()">Print</button>
+            <button class="btn-secondary" onclick="scrollToPreview()">Go to Preview</button>
+        </div>
+        <div class="hint">Generate will show a read-only preview like the bank form image.</div>
+    </div>
+
+
+
+    <div class="preview-wrap" id="previewWrap">
+        <div class="form-container" id="bankForm">
+            <div class="header">
+                <h1 class="bank-name">PUBALI BANK LIMITED</h1>
+                <div class="branch-info" id="pv_branch_top">Bhola Branch</div>
+                <div class="date-section">Date: <span class="fill-line w150" id="pv_date"></span></div>
+            </div>
+
+            <div class="form-title">DD/MT/PO APPLICATION FORM</div>
+
+            <div class="input-row">
+                Please issue a DD/MT/PO for Tk. <span class="fill-line w220" id="pv_amount"></span>
+            </div>
+            <div class="input-row">
+                Taka (in Words) <span class="fill-line w420" id="pv_amount_words"></span>
+            </div>
+            <div class="input-row">
+                on your <span class="fill-line w300" id="pv_branch_line"></span> Branch
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 22px;">
+                <div style="width: 30%;">
+                    <div class="po-label">Issued DD/MT/PO No.</div>
+                    <div class="po-box" id="pv_po">—</div>
+                </div>
+                <div style="width: 60%; text-align: right;">
+                    <div style="text-align: center; width: 100%;">
+                        <div style="height: 60px;"></div>
+                        <div class="sig-box">Signature of the Applicant</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 18px;">
+                        <div style="width: 100%;">
+                            <div class="input-row">Name of the Applicant: <span class="fill-line block" id="pv_applicant"></span></div>
+                            <div class="input-row">Address: <span class="fill-line block" id="pv_address"></span></div>
+                            <div class="input-row"><span class="fill-line block" id="pv_address2"></span></div>
+                        </div>
+        
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th width="40%">In favour of</th>
+                        <th>Amount</th>
+                        <th>Commission</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="height: 100px;">
+                        <td style="text-align:left; vertical-align: top; padding: 8px;">
+                            <div id="pv_favour" style="white-space: pre-wrap;"></div>
+                        </td>
+                        <td class="amount-cell">
+                            <div class="digits" id="pv_amount_digits"></div>
+                        </td>
+                        <td class="amount-cell">
+                            <div class="digits" id="pv_comm_digits"></div>
+                        </td>
+                        <td class="amount-cell">
+                            <div class="digits" id="pv_total_digits"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer-sig">
+                <div class="sig-box">Cashier</div>
+                <div class="sig-box">Officer</div>
+                <div class="sig-box">Signature of the Receiver</div>
+            </div>
+
+            <div style="font-size: 10px; margin-top: 20px;">
+                GF-13 <br>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function clearForm() {
+            const ids = ["in_date","in_amount","in_branch","in_po","in_applicant","in_address","in_favour"];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = "";
+            });
+            document.getElementById("amount_words_hint").textContent = "";
+            document.getElementById("previewWrap").classList.remove("show");
+            document.getElementById("previewTitle").style.display = "none";
+        }
+
+        function escapeText(s) {
+            return (s ?? "").toString().trim();
+        }
+
+        function formatDateISOToDMY(iso) {
+            if (!iso) return "";
+            const [y, m, d] = iso.split("-").map(Number);
+            if (!y || !m || !d) return iso;
+            return `${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}/${y}`;
+        }
+
+        function numberToWordsBDInt(n) {
+            const ones = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+            const tens = ["","", "Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+
+            function twoDigits(num) {
+                if (num === 0) return "";
+                if (num < 20) return ones[num];
+                const t = Math.floor(num / 10);
+                const o = num % 10;
+                return tens[t] + (o ? " " + ones[o] : "");
+            }
+
+            function threeDigits(num) {
+                const h = Math.floor(num / 100);
+                const r = num % 100;
+                let out = "";
+                if (h) out += ones[h] + " Hundred";
+                const tail = twoDigits(r);
+                if (tail) out += (out ? " " : "") + tail;
+                return out;
+            }
+
+            if (n === 0) return "Zero";
+            let out = [];
+            const crore = Math.floor(n / 10000000);
+            n = n % 10000000;
+            const lakh = Math.floor(n / 100000);
+            n = n % 100000;
+            const thousand = Math.floor(n / 1000);
+            n = n % 1000;
+            const rest = n;
+
+            if (crore) out.push(threeDigits(crore) + " Crore");
+            if (lakh) out.push(threeDigits(lakh) + " Lakh");
+            if (thousand) out.push(threeDigits(thousand) + " Thousand");
+            if (rest) out.push(threeDigits(rest));
+
+            return out.join(" ").replace(/\s+/g, " ").trim();
+        }
+
+        function amountToWords(amount) {
+            if (amount === "" || amount == null) return "";
+            const num = Number(amount);
+            if (!Number.isFinite(num) || num < 0) return "";
+            const taka = Math.floor(num + 1e-9);
+            const paisa = Math.round((num - taka) * 100);
+            let words = numberToWordsBDInt(taka) + " Taka";
+            if (paisa) words += " and " + numberToWordsBDInt(paisa) + " Paisa";
+            return words + " Only";
+        }
+
+        function buildDigits(container, text, boxes) {
+            container.innerHTML = "";
+            const clean = (text ?? "").toString().replace(/[^\d]/g, "");
+            const padded = clean.length > boxes ? clean.slice(-boxes) : clean.padStart(boxes, " ");
+            for (let i = 0; i < boxes; i++) {
+                const d = document.createElement("div");
+                d.className = "digit";
+                d.textContent = padded[i] === " " ? "" : padded[i];
+                container.appendChild(d);
+            }
+        }
+
+        function generate() {
+            const dateIso = escapeText(document.getElementById("in_date").value);
+            const amountRaw = escapeText(document.getElementById("in_amount").value);
+            const branch = escapeText(document.getElementById("in_branch").value) || "Bhola Branch";
+            const po = escapeText(document.getElementById("in_po").value) || "—";
+            const applicant = escapeText(document.getElementById("in_applicant").value);
+            const address = escapeText(document.getElementById("in_address").value);
+            const favour = escapeText(document.getElementById("in_favour").value);
+
+            const amountWords = amountToWords(amountRaw);
+
+            const effectiveDateIso = dateIso || new Date().toISOString().slice(0, 10);
+            document.getElementById("pv_date").textContent = formatDateISOToDMY(effectiveDateIso);
+            document.getElementById("pv_amount").textContent = amountRaw ? amountRaw : "";
+            document.getElementById("pv_amount_words").textContent = amountWords;
+            document.getElementById("pv_branch_top").textContent = branch;
+            document.getElementById("pv_branch_line").textContent = branch;
+            document.getElementById("pv_po").textContent = po;
+            document.getElementById("pv_applicant").textContent = applicant;
+            document.getElementById("pv_address").textContent = address;
+            document.getElementById("pv_address2").textContent = "";
+            document.getElementById("pv_favour").textContent = favour;
+
+            buildDigits(document.getElementById("pv_amount_digits"), amountRaw, 9);
+            buildDigits(document.getElementById("pv_comm_digits"), "", 7);
+            buildDigits(document.getElementById("pv_total_digits"), amountRaw, 9);
+
+            document.getElementById("previewWrap").classList.add("show");
+            document.getElementById("previewTitle").style.display = "block";
+            scrollToPreview();
+        }
+
+        function scrollToPreview() {
+            const el = document.getElementById("previewWrap");
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        (function init() {
+            const dateEl = document.getElementById("in_date");
+            const amountEl = document.getElementById("in_amount");
+            const hintEl = document.getElementById("amount_words_hint");
+            const update = () => {
+                const words = amountToWords(amountEl.value);
+                hintEl.textContent = words ? ("Amount in words: " + words) : "";
+            };
+            amountEl.addEventListener("input", update);
+            update();
+
+            if (dateEl && !dateEl.value) {
+                dateEl.value = new Date().toISOString().slice(0, 10);
+            }
+        })();
+    </script>
+</body>
+</html>
