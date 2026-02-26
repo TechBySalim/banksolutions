@@ -16,7 +16,7 @@ body{
 
 
 /* Header Styles */
-.headerStyle {
+/* .headerStyle {
     background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
     color: white;
     padding: 10px 20px;
@@ -25,11 +25,11 @@ body{
     align-items: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-}
+} */
 
-.header-title {
+/* .header-title {
     font-size: 1.5rem;
-}
+} */
 .container {
     max-width: 480px;
     margin: auto;
@@ -57,7 +57,7 @@ body{
             margin-top: 6px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .btn-group {
