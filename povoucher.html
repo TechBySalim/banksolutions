@@ -11,6 +11,12 @@
             --ui-bg: #ffffff;
             --ui-muted: #57606a;
         }
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Times New Roman', Times, serif;
             background-color: #f0f0f0;
@@ -19,7 +25,8 @@
             align-items: center;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            /* min-height: 100vh; */
+
         }
         .form-container {
             background: white;
@@ -172,6 +179,8 @@
         .preview-wrap {
             width: 800px;
             display: none;
+            text-align: center;
+            margin: 0 auto;
         }
         .preview-wrap.show { display: block; }
         .preview-title {
@@ -217,7 +226,7 @@
             margin-top: 6px;
         }
         .po-label {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             margin-top: 18px;
         }
@@ -237,6 +246,36 @@
             font-size: 14px;
         }
         .digit:last-child { border-right: none; }
+
+        .scroll-number {
+            border: 1px solid var(--border-color);
+            width: 100px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 6px; 
+        }
+        .scroll-number1 {
+            border: 1px solid var(--border-color);
+            width: 100px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .bank-logo {
+            position: absolute;
+            left: 27%;
+            top: 3%;
+            /* transform: translateY(-50%); */
+            height: 60px;
+            width: auto;
+        }
 
         @page {
             size: A4;
@@ -309,7 +348,10 @@
     <div class="preview-wrap" id="previewWrap">
         <div class="form-container" id="bankForm">
             <div class="header">
-                <h1 class="bank-name">PUBALI BANK PLC.</h1>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <img src="Logo.png" alt="Pubali Bank Logo" class="bank-logo">
+                    <h1 class="bank-name">PUBALI BANK PLC.</h1>
+                </div>
                 <div class="branch-info" id="pv_branch_top">Bhola Branch</div>
                 <div class="date-section">Date: <span class="fill-line w30" id="pv_date"></span></div>
             </div>
@@ -326,7 +368,7 @@
                <div>
                 on your <span class="fill-line w300" id="pv_branch_line"></span> Branch
                </div>
-                <div style="text-align: center; width: 20%; margin-left: 180px">
+                <div style="text-align: center; width: 20%; margin-left: 140px">
                     <div style="height: 10px;"></div>
                     <div class="sig-box">Signature of the Applicant</div>
                 </div>
@@ -341,8 +383,8 @@
                     
                     <div style="display: flex; justify-content: space-between;">
                         <div style="width: 100%;">
-                            <div class="input-row">Name of the Applicant: <span class="fill-line block" id="pv_applicant"></span></div>
-                            <div class="input-row">Address: <span class="fill-line block" id="pv_address"></span></div>
+                            <div class="input-row">Name of the Applicant: <span class="fill-line block" id="pv_applicant" style="text-align: center;"></span></div>
+                            <div class="input-row">Address: <span class="fill-line block" id="pv_address" style="text-align: center;"></span></div>
                         </div>
         
                     </div>
@@ -374,14 +416,21 @@
                     </tr>
                 </tbody>
             </table>
+            <div style="display: flex; justify-content: space-between; margin-top: 2px;">
+                <div>
+                    <div class="scroll-number" id="pv_po" style="font-weight: 300;">Scroll No.</div>
+                    <div class="scroll-number1" id="pv_po"></div>
+                </div>
+                <p style="text-align: right; font-weight: 400; font-weight: bold;" >Received the DD/PO, as above.</p>
+            </div>
 
             <div class="footer-sig">
                 <div class="sig-box">Cashier</div>
                 <div class="sig-box">Officer</div>
-                <div class="sig-box">Signature of the Receiver</div>
+                <div class="sig-box" style="font-weight: bold;">Signature of the Receiver</div>
             </div>
 
-            <div style="font-size:10px;margin-top: 20px;">
+            <div style="font-size:12px; margin-top: 20px; text-align: left;">
                 GF-13 <br>
             </div>
         </div>
@@ -445,7 +494,7 @@
             const rest = n;
 
             if (crore) out.push(threeDigits(crore) + " Crore");
-            if (lakh) out.push(threeDigits(lakh) + " Lakh");
+            if (lakh) out.push(threeDigits(lakh) + " Lac");
             if (thousand) out.push(threeDigits(thousand) + " Thousand");
             if (rest) out.push(threeDigits(rest));
 
@@ -479,7 +528,7 @@
             const dateIso = escapeText(document.getElementById("in_date").value);
             const amountRaw = escapeText(document.getElementById("in_amount").value);
             const commissionMode = (document.getElementById("in_commission") || {}).value || "No";
-            const branch = escapeText(document.getElementById("in_branch").value) || "Bhola Branch";
+            const branch = escapeText(document.getElementById("in_branch").value);
             const po = escapeText(document.getElementById("in_po").value) || "—";
             const applicant = escapeText(document.getElementById("in_applicant").value);
             const address = escapeText(document.getElementById("in_address").value);
@@ -503,7 +552,7 @@
             document.getElementById("pv_date").textContent = formatDateISOToDMY(effectiveDateIso);
             document.getElementById("pv_amount").textContent = amountRaw ? amountRaw : "";
             document.getElementById("pv_amount_words").textContent = amountWords;
-            document.getElementById("pv_branch_top").textContent = branch;
+            document.getElementById("pv_branch_top").textContent = branch + " Branch";
             document.getElementById("pv_branch_line").textContent = branch;
             document.getElementById("pv_po").textContent = po;
             document.getElementById("pv_applicant").textContent = applicant;
