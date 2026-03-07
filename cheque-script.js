@@ -5,9 +5,19 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('printBtn').addEventListener('click', printCheque);
     // Add clear button listener
     document.getElementById('clearBtn').addEventListener('click', clearData);
-    document.getElementById('creatorBtn').addEventListener('click', openModal);
+    var creatorBtn = document.getElementById('creatorBtn');
+    if (creatorBtn) creatorBtn.addEventListener('click', openModal);
     document.getElementById('closeModal').addEventListener('click', closeModal);
-    
+
+    // Amount in words below buttons (like PO voucher, with paisa)
+    var amountEl = document.getElementById('amount');
+    var amountWordsEl = document.getElementById('amount-in-words');
+    function updateAmountWordsHint() {
+        var w = amountToWords(amountEl.value);
+        amountWordsEl.textContent = w ? ('Amount in words: ' + w) : '';
+    }
+    amountEl.addEventListener('input', updateAmountWordsHint);
+    updateAmountWordsHint();
 
     // Close modal when clicking outside
     window.addEventListener('click', function (event) {
@@ -51,7 +61,7 @@ String.prototype.toTitleCase = function () {
     document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
     document.getElementById('not-over-tk').innerText = 'NOT OVER TK. '+ parseFloat(amount).toFixed(2);
 
-    const amountInWords = numberToWords(amount) + " Taka Only";
+    const amountInWords = amountToWords(amount);
     document.getElementById('cheque-words').innerText = amountInWords;
 
     // adjustAmountPosition();
@@ -118,6 +128,58 @@ function printCheque() {
     }, 1000);
 }
 
+// Amount in words with paisa (like PO voucher)
+function numberToWordsBDInt(n) {
+    var ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    var tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+    function twoDigits(num) {
+        if (num === 0) return "";
+        if (num < 20) return ones[num];
+        var t = Math.floor(num / 10);
+        var o = num % 10;
+        return tens[t] + (o ? " " + ones[o] : "");
+    }
+
+    function threeDigits(num) {
+        var h = Math.floor(num / 100);
+        var r = num % 100;
+        var out = "";
+        if (h) out += ones[h] + " Hundred";
+        var tail = twoDigits(r);
+        if (tail) out += (out ? " " : "") + tail;
+        return out;
+    }
+
+    if (n === 0) return "Zero";
+    var out = [];
+    var crore = Math.floor(n / 10000000);
+    n = n % 10000000;
+    var lakh = Math.floor(n / 100000);
+    n = n % 100000;
+    var thousand = Math.floor(n / 1000);
+    n = n % 1000;
+    var rest = n;
+
+    if (crore) out.push(threeDigits(crore) + " Crore");
+    if (lakh) out.push(threeDigits(lakh) + " Lac");
+    if (thousand) out.push(threeDigits(thousand) + " Thousand");
+    if (rest) out.push(threeDigits(rest));
+
+    return out.join(" ").replace(/\s+/g, " ").trim();
+}
+
+function amountToWords(amount) {
+    if (amount === "" || amount == null) return "";
+    var num = Number(amount);
+    if (!Number.isFinite(num) || num < 0) return "";
+    var taka = Math.floor(num + 1e-9);
+    var paisa = Math.round((num - taka) * 100);
+    var words = numberToWordsBDInt(taka) + " Taka";
+    if (paisa) words += " and " + numberToWordsBDInt(paisa) + " Paisa";
+    return words + " Only";
+}
+
 function numberToWords(num) {
     if (!num || isNaN(num)) return "";
     num = parseFloat(num);
@@ -173,6 +235,7 @@ function clearData() {
     document.getElementById('cheque-words').innerText = '';
     document.getElementById('cheque-amount').innerText = '';
     document.getElementById('not-over-tk').innerText = '';
+    document.getElementById('amount-in-words').textContent = '';
 }
 
 

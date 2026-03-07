@@ -313,3 +313,10 @@ header {
       display: block;
     }
   }
+
+/* Amount in words hint below buttons - no layout change to existing elements */
+.amount-in-words-hint {
+    margin-top: 8px;
+    color: #555;
+    font-size: 0.95rem;
+}
