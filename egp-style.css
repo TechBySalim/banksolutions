@@ -233,17 +233,18 @@ header {
     right: 163px !important;
     top: 115px !important;
     width: 190px !important;
-    font-size: 15px !important; 
+    font-size: 12px !important; 
     font-weight: bold !important; 
     transform: rotate(-90deg);
+    text-align: right;
     /* border: 1px solid red; */
-    letter-spacing: 0.22em !important;
+    /* letter-spacing: 0.22em !important; */
 }
 
 .cheque-name {
     position: absolute;
     right: -99px;
-    bottom: 340px;
+    bottom: 360px;
     font-size: 14px;
     font-weight: bold;
     transform: rotate(-90deg);
@@ -279,7 +280,7 @@ header {
     padding: 0px;
     margin: 0px;
     left: -20px;
-    bottom: 260px;
+    bottom: 290px;
     width: 370px;
     height: 50px;
     font-size: 12px;
@@ -293,9 +294,9 @@ header {
 
 .id-number {
     position: absolute;
-    width: 121px;
-    left: 129px;
-    top: 545px;
+    width: 106px;
+    left: 137px;
+    top: 535px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
@@ -305,7 +306,7 @@ header {
     position: absolute;
     width: 150px;
     left: 116px;
-    top: 239px;
+    top: 291px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
@@ -314,9 +315,9 @@ header {
 
 .em-number {
     position: absolute;
-    width: 172px;
-    left: 104px;
-    top: 397px;
+    width: 117px;
+    left: 132px;
+    top: 426px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(270deg);
@@ -328,7 +329,7 @@ header {
     margin-left: 50px;
     padding: 10px;
     background-color: #faf0f0;
-    border: 1px solid red;
+    /*border: 1px solid red; */
     height: 428px;
     width: 210px;
     line-height: 1.8;

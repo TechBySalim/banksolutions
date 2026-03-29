@@ -95,16 +95,17 @@ function generateCheque() {
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    if (Number.isNaN(date.getTime())) return '';
+
+    const day = date.getDate().toString(); // no leading zero (e.g., 3 not 03)
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const monthName = monthNames[date.getMonth()];
     const year = date.getFullYear().toString();
-    
-    // Convert each digit to individual characters with spaces
-    const daySpaced = day.split('').join(' ');
-    const monthSpaced = month.split('').join(' ');
-    const yearSpaced = year.split('').join(' ');
-    
-    return `${daySpaced} ${monthSpaced} ${yearSpaced}`;
+
+    return `${day} ${monthName} ${year}`;
 }
 
 function printCheque() {
