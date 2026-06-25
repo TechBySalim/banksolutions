@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instant Debit Card Form</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Times New Roman", serif;
+    background:#f5f5f5;
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.input-panel{
+    background:#fff;
+    padding:20px;
+    border:1px solid #ddd;
+    margin-bottom:20px;
+}
+
+.input-panel h2{
+    margin-bottom:15px;
+}
+
+.form-group{
+    margin-bottom:10px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:4px;
+    font-weight:bold;
+}
+
+.form-group input{
+    width:100%;
+    padding:8px;
+}
+
+.row{
+    display:flex;
+    gap:15px;
+}
+
+.col{
+    flex:1;
+}
+
+.buttons{
+    margin-top:15px;
+}
+
+button{
+    padding:10px 20px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+/* Printable Form */
+
+.print-area{
+    background:#fff;
+    padding:30px;
+    border:1px solid #ccc;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:20px;
+}
+
+.bank{
+    color:#2f5d24;
+}
+
+.bank h1{
+    font-size:30px;
+}
+
+.bank h2{
+    font-size:24px;
+}
+
+.title{
+    color:#2f5d24;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.branch-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.date-boxes{
+    display:flex;
+}
+
+.date-boxes span{
+    width:38px;
+    height:35px;
+    border:1px solid #666;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#8eb76b;
+    font-size:20px;
+}
+
+.section-title{
+    background:#bfd4ae;
+    border:1px solid #444;
+    text-align:center;
+    font-weight:bold;
+    font-size:20px;
+    padding:4px;
+    margin:15px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:20px;
+}
+
+th,td{
+    border:1px solid #444;
+}
+
+th{
+    background:#bfd4ae;
+    padding:5px;
+    font-size:18px;
+}
+
+td{
+    height:45px;
+    text-align:center;
+    padding:4px 8px;
+    vertical-align:middle;
+}
+
+.application{
+    margin:20px 0;
+    font-size:18px;
+}
+
+.checkbox{
+    display:inline-block;
+    width:28px;
+    height:28px;
+    border:2px solid #7caf58;
+    margin:0 10px;
+    vertical-align:middle;
+}
+
+.signature-box{
+    width:350px;
+    height:55px;
+    border:2px solid #7caf58;
+    margin-top:10px;
+}
+
+.signature-text{
+    margin-top:5px;
+    font-size:18px;
+}
+
+.branch-use{
+    margin-top:20px;
+}
+
+.card-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:15px 0;
+    font-size:18px;
+}
+
+.card-id-box{
+    width:310px;
+    height:32px;
+    border:2px solid #7caf58;
+    display:inline-flex;
+    align-items:center;
+    padding:0 8px;
+    vertical-align:middle;
+    margin-left:10px;
+    line-height:1.2;
+}
+
+.verify{
+    font-size:18px;
+    margin:15px 0;
+}
+
+.footer-sign{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.sign-box{
+    width:360px;
+    height:70px;
+    border:2px solid #7caf58;
+}
+
+.sign-label{
+    text-align:center;
+    margin-top:10px;
+    font-size:18px;
+}
+
+.seal{
+    width:140px;
+    height:105px;
+    border:2px solid #7caf58;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#999;
+    font-size:18px;
+}
+
+@media print{
+
+    @page{
+        size:210mm 148.5mm;
+        margin:4mm;
+    }
+
+    .input-panel,
+    .buttons{
+        display:none;
+    }
+
+    body{
+        background:#fff;
+        padding:0;
+        margin:0;
+    }
+
+    .container{
+        max-width:none;
+    }
+
+    .print-area{
+        border:none;
+        padding:4mm 6mm;
+        width:210mm;
+        max-height:148.5mm;
+        overflow:hidden;
+        font-size:11px;
+    }
+
+    .bank h1{
+        font-size:18px;
+    }
+
+    .title{
+        font-size:16px;
+    }
+
+    .branch-row{
+        font-size:12px;
+        margin-bottom:8px;
+    }
+
+    .date-boxes span{
+        width:22px;
+        height:20px;
+        font-size:12px;
+    }
+
+    .section-title{
+        font-size:12px;
+        padding:2px;
+        margin:6px 0;
+    }
+
+    th{
+        font-size:11px;
+        padding:2px;
+    }
+
+    td{
+        height:24px;
+        font-size:11px;
+    }
+
+    .application{
+        font-size:11px;
+        margin:6px 0;
+    }
+
+    .checkbox{
+        width:16px;
+        height:16px;
+        margin:0 6px;
+    }
+
+    .signature-box{
+        width:200px;
+        height:30px;
+    }
+
+    .signature-text{
+        font-size:11px;
+    }
+
+    .card-row{
+        font-size:11px;
+        margin:6px 0;
+    }
+
+    .card-id-box{
+        width:180px;
+        height:22px;
+    }
+
+    .verify{
+        font-size:11px;
+        margin:6px 0;
+    }
+
+    .sign-box{
+        width:180px;
+        height:40px;
+    }
+
+    .sign-label{
+        font-size:10px;
+        margin-top:4px;
+    }
+
+    .seal{
+        width:80px;
+        height:60px;
+        font-size:10px;
+    }
+
+    .header{
+        margin-bottom:8px;
+    }
+
+    table{
+        margin-bottom:8px;
+    }
+
+    .branch-use{
+        margin-top:8px;
+    }
+
+    .footer-sign{
+        margin-top:8px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- INPUT FORM -->
+    <div class="input-panel">
+        <h2>Fill Information</h2>
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Branch Name</label>
+                <input type="text" id="branchName">
+            </div>
+
+            <div class="col form-group">
+                <label>Date</label>
+                <input type="date" id="date">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Account Name</label>
+                <input type="text" id="accountName">
+            </div>
+
+            <div class="col form-group">
+                <label>Account Type</label>
+                <input type="text" id="accountType">
+            </div>
+
+            <div class="col form-group">
+                <label>Account Number</label>
+                <input type="text" id="accountNumber">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Card ID</label>
+                <input type="text" id="cardId">
+            </div>
+
+            <div class="col form-group">
+                <label>Card Type</label>
+                <input type="text" id="cardType">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button onclick="generateForm()">Generate</button>
+            <button onclick="generateForm(); window.print();">Print</button>
+            <button onclick="clearForm()">Clear</button>
+        </div>
+    </div>
+
+    <!-- PRINT FORM -->
+    <div class="print-area">
+
+        <div class="header">
+            <div class="bank">
+                <h1>PUBALI BANK PLC.</h1>
+            </div>
+
+            <div class="title">
+                Application Form For Instant Debit Card
+            </div>
+        </div>
+
+        <div class="branch-row">
+            <div>
+                Branch Name:
+                <strong id="pBranch"></strong>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+                Date:
+                <div class="date-boxes" id="pDate"></div>
+            </div>
+        </div>
+
+        <div class="section-title">
+            Account Information
+        </div>
+
+        <table>
+            <tr>
+                <th>Account Name</th>
+                <th>Account Type</th>
+                <th>Account Number</th>
+            </tr>
+            <tr>
+                <td id="pAccountName"></td>
+                <td id="pAccountType"></td>
+                <td id="pAccountNumber"></td>
+            </tr>
+        </table>
+
+        <div class="application">
+            Application for:
+            <span class="checkbox"></span> New Card
+            &nbsp;&nbsp;&nbsp;
+            <span class="checkbox"></span> Replacement Card
+        </div>
+
+        <div class="application">
+            I do hereby declare that the above information is correct.
+        </div>
+
+        <div class="signature-box"></div>
+        <div class="signature-text">Signature of the Applicant</div>
+
+        <div class="section-title">
+            For Branch Use Only
+        </div>
+
+        <div class="card-row">
+            <div>
+                Card ID:
+                <span class="card-id-box" id="pCardId"></span>
+            </div>
+
+            <div>
+                Card Type:
+                <span id="pCardType"></span>
+            </div>
+        </div>
+
+        <div class="verify">
+            The above information and Signature have been verified and found correct:
+        </div>
+
+        <div class="footer-sign">
+
+            <div>
+                <div class="sign-box"></div>
+                <div class="sign-label">
+                    Authorized Signature & Date:
+                </div>
+            </div>
+
+            <div class="seal">
+                Branch<br>Seal
+            </div>
+
+            <div>
+                <div class="sign-box"></div>
+                <div class="sign-label">
+                    Branch Manager Signature & Date:
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function formatDateBoxes(dateValue){
+    const pDate = document.getElementById("pDate");
+    pDate.innerHTML = "";
+
+    if(!dateValue){
+        for(let i = 0; i < 8; i++){
+            const box = document.createElement("span");
+            box.textContent = " ";
+            pDate.appendChild(box);
+        }
+        return;
+    }
+
+    const d = new Date(dateValue + "T00:00:00");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const yyyy = String(d.getFullYear());
+    const chars = (dd + mm + yyyy).split("");
+
+    chars.forEach(ch => {
+        const box = document.createElement("span");
+        box.textContent = ch;
+        pDate.appendChild(box);
+    });
+}
+
+function generateForm(){
+    document.getElementById("pBranch").innerText =
+        document.getElementById("branchName").value.trim();
+
+    formatDateBoxes(document.getElementById("date").value);
+
+    document.getElementById("pAccountName").innerText =
+        document.getElementById("accountName").value.trim();
+
+    document.getElementById("pAccountType").innerText =
+        document.getElementById("accountType").value.trim();
+
+    document.getElementById("pAccountNumber").innerText =
+        document.getElementById("accountNumber").value.trim();
+
+    document.getElementById("pCardId").innerText =
+        document.getElementById("cardId").value.trim();
+
+    document.getElementById("pCardType").innerText =
+        document.getElementById("cardType").value.trim();
+}
+
+function clearForm(){
+    document.querySelectorAll("input").forEach(input => {
+        input.value = "";
+    });
+
+    document.getElementById("pBranch").innerText = "";
+    formatDateBoxes("");
+    document.getElementById("pAccountName").innerText = "";
+    document.getElementById("pAccountType").innerText = "";
+    document.getElementById("pAccountNumber").innerText = "";
+    document.getElementById("pCardId").innerText = "";
+    document.getElementById("pCardType").innerText = "";
+}
+
+document.querySelectorAll(".input-panel input").forEach(input => {
+    input.addEventListener("input", generateForm);
+});
+
+window.addEventListener("beforeprint", generateForm);
+
+formatDateBoxes("");
+</script>
+
+</body>
+</html>
