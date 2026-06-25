@@ -44,7 +44,8 @@ body{
     font-weight:bold;
 }
 
-.form-group input{
+.form-group input,
+.form-group select{
     width:100%;
     padding:8px;
 }
@@ -87,12 +88,10 @@ button{
     color:#2f5d24;
 }
 
-.bank h1{
-    font-size:30px;
-}
-
-.bank h2{
-    font-size:24px;
+.bank-logo{
+    height:100px;
+    width:auto;
+    display:block;
 }
 
 .title{
@@ -274,8 +273,8 @@ td{
         font-size:11px;
     }
 
-    .bank h1{
-        font-size:18px;
+    .bank-logo{
+        height:36px;
     }
 
     .title{
@@ -406,7 +405,11 @@ td{
 
             <div class="col form-group">
                 <label>Account Type</label>
-                <input type="text" id="accountType">
+                <select id="accountType">
+                    <option value="Savings Account - (SB)" selected>Savings Account - (SB)</option>
+                    <option value="Current Account - (CD)">Current Account - (CD)</option>
+                    <option value="Special Notice Deposit - (SND)">Special Notice Deposit - (SND)</option>
+                </select>
             </div>
 
             <div class="col form-group">
@@ -423,7 +426,11 @@ td{
 
             <div class="col form-group">
                 <label>Card Type</label>
-                <input type="text" id="cardType">
+                <select id="cardType">
+                    <option value="">Select card type</option>
+                    <option value="VISA">VISA</option>
+                    <option value="TakaPay" selected>TakaPay</option>
+                </select>
             </div>
         </div>
 
@@ -439,7 +446,7 @@ td{
 
         <div class="header">
             <div class="bank">
-                <h1>PUBALI BANK PLC.</h1>
+                <img src="Pubali-long-logo.png" alt="Pubali Bank" class="bank-logo">
             </div>
 
             <div class="title">
@@ -537,6 +544,18 @@ td{
 </div>
 
 <script>
+function getTodayDate(){
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function setTodayDate(){
+    document.getElementById("date").value = getTodayDate();
+}
+
 function formatDateBoxes(dateValue){
     const pDate = document.getElementById("pDate");
     pDate.innerHTML = "";
@@ -590,22 +609,32 @@ function clearForm(){
         input.value = "";
     });
 
-    document.getElementById("pBranch").innerText = "";
-    formatDateBoxes("");
-    document.getElementById("pAccountName").innerText = "";
-    document.getElementById("pAccountType").innerText = "";
-    document.getElementById("pAccountNumber").innerText = "";
-    document.getElementById("pCardId").innerText = "";
-    document.getElementById("pCardType").innerText = "";
+    document.querySelectorAll("select").forEach(select => {
+        if(select.id === "cardType"){
+            select.value = "TakaPay";
+        } else if(select.id === "accountType"){
+            select.value = "Savings Account - (SB)";
+        } else {
+            select.selectedIndex = 0;
+        }
+    });
+
+    setTodayDate();
+    generateForm();
 }
 
 document.querySelectorAll(".input-panel input").forEach(input => {
     input.addEventListener("input", generateForm);
 });
 
+document.querySelectorAll(".input-panel select").forEach(select => {
+    select.addEventListener("change", generateForm);
+});
+
 window.addEventListener("beforeprint", generateForm);
 
-formatDateBoxes("");
+setTodayDate();
+generateForm();
 </script>
 
 </body>
