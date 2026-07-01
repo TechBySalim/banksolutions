@@ -1,641 +1,807 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instant Debit Card Form</title>
-
-<style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:"Times New Roman", serif;
-    background:#f5f5f5;
-    padding:20px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-}
-
-.input-panel{
-    background:#fff;
-    padding:20px;
-    border:1px solid #ddd;
-    margin-bottom:20px;
-}
-
-.input-panel h2{
-    margin-bottom:15px;
-}
-
-.form-group{
-    margin-bottom:10px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:4px;
-    font-weight:bold;
-}
-
-.form-group input,
-.form-group select{
-    width:100%;
-    padding:8px;
-}
-
-.row{
-    display:flex;
-    gap:15px;
-}
-
-.col{
-    flex:1;
-}
-
-.buttons{
-    margin-top:15px;
-}
-
-button{
-    padding:10px 20px;
-    cursor:pointer;
-    margin-right:10px;
-}
-
-/* Printable Form */
-
-.print-area{
-    background:#fff;
-    padding:30px;
-    border:1px solid #ccc;
-}
-
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:20px;
-}
-
-.bank{
-    color:#2f5d24;
-}
-
-.bank-logo{
-    height:100px;
-    width:auto;
-    display:block;
-}
-
-.title{
-    color:#2f5d24;
-    font-size:28px;
-    font-weight:bold;
-}
-
-.branch-row{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
-    font-size:18px;
-}
-
-.date-boxes{
-    display:flex;
-}
-
-.date-boxes span{
-    width:38px;
-    height:35px;
-    border:1px solid #666;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#8eb76b;
-    font-size:20px;
-}
-
-.section-title{
-    background:#bfd4ae;
-    border:1px solid #444;
-    text-align:center;
-    font-weight:bold;
-    font-size:20px;
-    padding:4px;
-    margin:15px 0;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-bottom:20px;
-}
-
-th,td{
-    border:1px solid #444;
-}
-
-th{
-    background:#bfd4ae;
-    padding:5px;
-    font-size:18px;
-}
-
-td{
-    height:45px;
-    text-align:center;
-    padding:4px 8px;
-    vertical-align:middle;
-}
-
-.application{
-    margin:20px 0;
-    font-size:18px;
-}
-
-.checkbox{
-    display:inline-block;
-    width:28px;
-    height:28px;
-    border:2px solid #7caf58;
-    margin:0 10px;
-    vertical-align:middle;
-}
-
-.signature-box{
-    width:350px;
-    height:55px;
-    border:2px solid #7caf58;
-    margin-top:10px;
-}
-
-.signature-text{
-    margin-top:5px;
-    font-size:18px;
-}
-
-.branch-use{
-    margin-top:20px;
-}
-
-.card-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:15px 0;
-    font-size:18px;
-}
-
-.card-id-box{
-    width:310px;
-    height:32px;
-    border:2px solid #7caf58;
-    display:inline-flex;
-    align-items:center;
-    padding:0 8px;
-    vertical-align:middle;
-    margin-left:10px;
-    line-height:1.2;
-}
-
-.verify{
-    font-size:18px;
-    margin:15px 0;
-}
-
-.footer-sign{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:20px;
-}
-
-.sign-box{
-    width:360px;
-    height:70px;
-    border:2px solid #7caf58;
-}
-
-.sign-label{
-    text-align:center;
-    margin-top:10px;
-    font-size:18px;
-}
-
-.seal{
-    width:140px;
-    height:105px;
-    border:2px solid #7caf58;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#999;
-    font-size:18px;
-}
-
-@media print{
-
-    @page{
-        size:210mm 148.5mm;
-        margin:4mm;
-    }
-
-    .input-panel,
-    .buttons{
-        display:none;
-    }
-
-    body{
-        background:#fff;
-        padding:0;
-        margin:0;
-    }
-
-    .container{
-        max-width:none;
-    }
-
-    .print-area{
-        border:none;
-        padding:4mm 6mm;
-        width:210mm;
-        max-height:148.5mm;
-        overflow:hidden;
-        font-size:11px;
-    }
-
-    .bank-logo{
-        height:36px;
-    }
-
-    .title{
-        font-size:16px;
-    }
-
-    .branch-row{
-        font-size:12px;
-        margin-bottom:8px;
-    }
-
-    .date-boxes span{
-        width:22px;
-        height:20px;
-        font-size:12px;
-    }
-
-    .section-title{
-        font-size:12px;
-        padding:2px;
-        margin:6px 0;
-    }
-
-    th{
-        font-size:11px;
-        padding:2px;
-    }
-
-    td{
-        height:24px;
-        font-size:11px;
-    }
-
-    .application{
-        font-size:11px;
-        margin:6px 0;
-    }
-
-    .checkbox{
-        width:16px;
-        height:16px;
-        margin:0 6px;
-    }
-
-    .signature-box{
-        width:200px;
-        height:30px;
-    }
-
-    .signature-text{
-        font-size:11px;
-    }
-
-    .card-row{
-        font-size:11px;
-        margin:6px 0;
-    }
-
-    .card-id-box{
-        width:180px;
-        height:22px;
-    }
-
-    .verify{
-        font-size:11px;
-        margin:6px 0;
-    }
-
-    .sign-box{
-        width:180px;
-        height:40px;
-    }
-
-    .sign-label{
-        font-size:10px;
-        margin-top:4px;
-    }
-
-    .seal{
-        width:80px;
-        height:60px;
-        font-size:10px;
-    }
-
-    .header{
-        margin-bottom:8px;
-    }
-
-    table{
-        margin-bottom:8px;
-    }
-
-    .branch-use{
-        margin-top:8px;
-    }
-
-    .footer-sign{
-        margin-top:8px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Debit Card Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto 0;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .header-title:hover {
+            opacity: 0.8;
+        }
+
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-btn {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.08);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .dropdown-btn:hover {
+            background: #217dbb;
+        }
+
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+            margin: 2px 0;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            margin-top: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #222;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f7f7f7;
+        }
+
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content.hide {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .input-panel {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-panel h2 {
+            margin-bottom: 15px;
+            text-align: center;
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .buttons {
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        /* Printable Form */
+
+        .print-area {
+            background: #fff;
+            padding: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .bank {
+            color: #2f5d24;
+        }
+
+        .bank-logo {
+            height: 100px;
+            width: auto;
+            display: block;
+        }
+
+        .title {
+            color: #2f5d24;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .branch-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .date-boxes {
+            display: flex;
+        }
+
+        .date-boxes span {
+            width: 38px;
+            height: 35px;
+            border: 1px solid #666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #8eb76b;
+            font-size: 20px;
+        }
+
+        .section-title {
+            background: #bfd4ae;
+            border: 1px solid #444;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 4px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #444;
+        }
+
+        th {
+            background: #bfd4ae;
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        td {
+            height: 45px;
+            text-align: center;
+            padding: 4px 8px;
+            vertical-align: middle;
+        }
+
+        .application {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        .checkbox {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 2px solid #7caf58;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+
+        .signature-box {
+            width: 350px;
+            height: 55px;
+            border: 2px solid #7caf58;
+            margin-top: 10px;
+        }
+
+        .signature-text {
+            margin-top: 5px;
+            font-size: 18px;
+        }
+
+        .branch-use {
+            margin-top: 20px;
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        .card-id-box {
+            width: 310px;
+            height: 32px;
+            border: 2px solid #7caf58;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 8px;
+            vertical-align: middle;
+            margin-left: 10px;
+            line-height: 1.2;
+        }
+
+        .verify {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .footer-sign {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .sign-box {
+            width: 360px;
+            height: 70px;
+            border: 2px solid #7caf58;
+        }
+
+        .sign-label {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .seal {
+            width: 140px;
+            height: 105px;
+            border: 2px solid #7caf58;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #999;
+            font-size: 18px;
+        }
+
+        @media print {
+
+            @page {
+                size: 210mm 148.5mm portrait;
+                margin: 4mm;
+            }
+
+            .header-container,
+            .input-panel,
+            .buttons {
+                display: none;
+            }
+
+            body {
+                background: #fff;
+                padding: 0;
+                margin: 0;
+            }
+
+            .container {
+                max-width: none;
+            }
+
+            .print-area {
+                border: none;
+                padding: 4mm 6mm;
+                width: 210mm;
+                max-height: 148.5mm;
+                overflow: hidden;
+                font-size: 11px;
+            }
+
+            .bank-logo {
+                height: 36px;
+            }
+
+            .title {
+                font-size: 16px;
+            }
+
+            .branch-row {
+                font-size: 12px;
+                margin-bottom: 8px;
+            }
+
+            .date-boxes span {
+                width: 22px;
+                height: 20px;
+                font-size: 12px;
+            }
+
+            .section-title {
+                font-size: 12px;
+                padding: 2px;
+                margin: 6px 0;
+            }
+
+            th {
+                font-size: 11px;
+                padding: 2px;
+            }
+
+            td {
+                height: 24px;
+                font-size: 11px;
+            }
+
+            .application {
+                font-size: 11px;
+                margin: 6px 0;
+            }
+
+            .checkbox {
+                width: 16px;
+                height: 16px;
+                margin: 0 6px;
+            }
+
+            .signature-box {
+                width: 200px;
+                height: 30px;
+            }
+
+            .signature-text {
+                font-size: 11px;
+            }
+
+            .card-row {
+                font-size: 11px;
+                margin: 6px 0;
+            }
+
+            .card-id-box {
+                width: 180px;
+                height: 22px;
+            }
+
+            .verify {
+                font-size: 11px;
+                margin: 6px 0;
+            }
+
+            .sign-box {
+                width: 180px;
+                height: 40px;
+            }
+
+            .sign-label {
+                font-size: 10px;
+                margin-top: 4px;
+            }
+
+            .seal {
+                width: 80px;
+                height: 60px;
+                font-size: 10px;
+            }
+
+            .header {
+                margin-bottom: 8px;
+            }
+
+            table {
+                margin-bottom: 8px;
+            }
+
+            .branch-use {
+                margin-top: 8px;
+            }
+
+            .footer-sign {
+                margin-top: 8px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
-
-    <!-- INPUT FORM -->
-    <div class="input-panel">
-        <h2>Fill Information</h2>
-
-        <div class="row">
-            <div class="col form-group">
-                <label>Branch Name</label>
-                <input type="text" id="branchName">
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div class="dropdown-container">
+            <button class="dropdown-btn">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+            <div class="dropdown-content">
+                <a href="index.html">Home</a>
+                <a href="fdr.html">FDR Calculator</a>
+                <a href="dps.html">DPS Calculator</a>
+                <a href="emi.html">Loan EMI Calculator</a>
+                <a href="date.html">Date Calculator</a>
+                <a href="cheque.html">PO/Cheque Print</a>
+                <a href="voucherprint.html">Debit/Credit Voucher Print</a>
+                <a href="sc-lscprint.html">SC/LSC Form Print (Non MICR Cheque)</a>
             </div>
-
-            <div class="col form-group">
-                <label>Date</label>
-                <input type="date" id="date">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col form-group">
-                <label>Account Name</label>
-                <input type="text" id="accountName">
-            </div>
-
-            <div class="col form-group">
-                <label>Account Type</label>
-                <select id="accountType">
-                    <option value="Savings Account - (SB)" selected>Savings Account - (SB)</option>
-                    <option value="Current Account - (CD)">Current Account - (CD)</option>
-                    <option value="Special Notice Deposit - (SND)">Special Notice Deposit - (SND)</option>
-                </select>
-            </div>
-
-            <div class="col form-group">
-                <label>Account Number</label>
-                <input type="text" id="accountNumber">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col form-group">
-                <label>Card ID</label>
-                <input type="text" id="cardId">
-            </div>
-
-            <div class="col form-group">
-                <label>Card Type</label>
-                <select id="cardType">
-                    <option value="">Select card type</option>
-                    <option value="VISA">VISA</option>
-                    <option value="TakaPay" selected>TakaPay</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="buttons">
-            <button onclick="generateForm()">Generate</button>
-            <button onclick="generateForm(); window.print();">Print</button>
-            <button onclick="clearForm()">Clear</button>
         </div>
     </div>
 
-    <!-- PRINT FORM -->
-    <div class="print-area">
+    <div class="container">
 
-        <div class="header">
-            <div class="bank">
-                <img src="Pubali-long-logo.png" alt="Pubali Bank" class="bank-logo">
-            </div>
+        <!-- INPUT FORM -->
+        <div class="input-panel">
+            <h2>Fill Information</h2>
 
-            <div class="title">
-                Application Form For Instant Debit Card
-            </div>
-        </div>
+            <div class="row">
+                <div class="col form-group">
+                    <label>Branch Name</label>
+                    <input type="text" id="branchName">
+                </div>
 
-        <div class="branch-row">
-            <div>
-                Branch Name:
-                <strong id="pBranch"></strong>
-            </div>
-
-            <div style="display:flex;align-items:center;gap:6px;">
-                Date:
-                <div class="date-boxes" id="pDate"></div>
-            </div>
-        </div>
-
-        <div class="section-title">
-            Account Information
-        </div>
-
-        <table>
-            <tr>
-                <th>Account Name</th>
-                <th>Account Type</th>
-                <th>Account Number</th>
-            </tr>
-            <tr>
-                <td id="pAccountName"></td>
-                <td id="pAccountType"></td>
-                <td id="pAccountNumber"></td>
-            </tr>
-        </table>
-
-        <div class="application">
-            Application for:
-            <span class="checkbox"></span> New Card
-            &nbsp;&nbsp;&nbsp;
-            <span class="checkbox"></span> Replacement Card
-        </div>
-
-        <div class="application">
-            I do hereby declare that the above information is correct.
-        </div>
-
-        <div class="signature-box"></div>
-        <div class="signature-text">Signature of the Applicant</div>
-
-        <div class="section-title">
-            For Branch Use Only
-        </div>
-
-        <div class="card-row">
-            <div>
-                Card ID:
-                <span class="card-id-box" id="pCardId"></span>
-            </div>
-
-            <div>
-                Card Type:
-                <span id="pCardType"></span>
-            </div>
-        </div>
-
-        <div class="verify">
-            The above information and Signature have been verified and found correct:
-        </div>
-
-        <div class="footer-sign">
-
-            <div>
-                <div class="sign-box"></div>
-                <div class="sign-label">
-                    Authorized Signature & Date:
+                <div class="col form-group">
+                    <label>Date</label>
+                    <input type="date" id="date">
                 </div>
             </div>
 
-            <div class="seal">
-                Branch<br>Seal
+            <div class="row">
+                <div class="col form-group">
+                    <label>Account Name</label>
+                    <input type="text" id="accountName">
+                </div>
+
+                <div class="col form-group">
+                    <label>Account Type</label>
+                    <select id="accountType">
+                        <option value="Savings Account - (SB)" selected>Savings Account - (SB)</option>
+                        <option value="Current Account - (CD)">Current Account - (CD)</option>
+                        <option value="Special Notice Deposit - (SND)">Special Notice Deposit - (SND)</option>
+                    </select>
+                </div>
+
+                <div class="col form-group">
+                    <label>Account Number</label>
+                    <input type="text" id="accountNumber">
+                </div>
             </div>
 
-            <div>
-                <div class="sign-box"></div>
-                <div class="sign-label">
-                    Branch Manager Signature & Date:
+            <div class="row">
+                <div class="col form-group">
+                    <label>Card ID</label>
+                    <input type="text" id="cardId">
                 </div>
+
+                <div class="col form-group">
+                    <label>Card Type</label>
+                    <select id="cardType">
+                        <option value="">Select card type</option>
+                        <option value="VISA">VISA</option>
+                        <option value="TakaPay" selected>TakaPay</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button onclick="generateForm()">Generate</button>
+                <button onclick="generateForm(); window.print();">Print</button>
+                <button onclick="clearForm()">Clear</button>
+            </div>
+        </div>
+
+        <!-- PRINT FORM -->
+        <div class="print-area">
+
+            <div class="header">
+                <div class="bank">
+                    <img src="Pubali-long-logo.png" alt="Pubali Bank" class="bank-logo">
+                </div>
+
+                <div class="title">
+                    Application Form For Instant Debit Card
+                </div>
+            </div>
+
+            <div class="branch-row">
+                <div>
+                    Branch Name:
+                    <strong id="pBranch"></strong>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:6px;">
+                    Date:
+                    <div class="date-boxes" id="pDate"></div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                Account Information
+            </div>
+
+            <table>
+                <tr>
+                    <th>Account Name</th>
+                    <th>Account Type</th>
+                    <th>Account Number</th>
+                </tr>
+                <tr>
+                    <td id="pAccountName"></td>
+                    <td id="pAccountType"></td>
+                    <td id="pAccountNumber"></td>
+                </tr>
+            </table>
+
+            <div class="application">
+                Application for:
+                <span class="checkbox"></span> New Card
+                &nbsp;&nbsp;&nbsp;
+                <span class="checkbox"></span> Replacement Card
+            </div>
+
+            <div class="application">
+                I do hereby declare that the above information is correct.
+            </div>
+
+            <div class="signature-box"></div>
+            <div class="signature-text">Signature of the Applicant</div>
+
+            <div class="section-title">
+                For Branch Use Only
+            </div>
+
+            <div class="card-row">
+                <div>
+                    Card ID:
+                    <span class="card-id-box" id="pCardId"></span>
+                </div>
+
+                <div>
+                    Card Type:
+                    <span id="pCardType"></span>
+                </div>
+            </div>
+
+            <div class="verify">
+                The above information and Signature have been verified and found correct:
+            </div>
+
+            <div class="footer-sign">
+
+                <div>
+                    <div class="sign-box"></div>
+                    <div class="sign-label">
+                        Authorized Signature & Date:
+                    </div>
+                </div>
+
+                <div class="seal">
+                    Branch<br>Seal
+                </div>
+
+                <div>
+                    <div class="sign-box"></div>
+                    <div class="sign-label">
+                        Branch Manager Signature & Date:
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-</div>
-
-<script>
-function getTodayDate(){
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const dd = String(today.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-}
-
-function setTodayDate(){
-    document.getElementById("date").value = getTodayDate();
-}
-
-function formatDateBoxes(dateValue){
-    const pDate = document.getElementById("pDate");
-    pDate.innerHTML = "";
-
-    if(!dateValue){
-        for(let i = 0; i < 8; i++){
-            const box = document.createElement("span");
-            box.textContent = " ";
-            pDate.appendChild(box);
+    <script>
+        function getTodayDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, "0");
+            const dd = String(today.getDate()).padStart(2, "0");
+            return `${yyyy}-${mm}-${dd}`;
         }
-        return;
-    }
 
-    const d = new Date(dateValue + "T00:00:00");
-    const dd = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const yyyy = String(d.getFullYear());
-    const chars = (dd + mm + yyyy).split("");
-
-    chars.forEach(ch => {
-        const box = document.createElement("span");
-        box.textContent = ch;
-        pDate.appendChild(box);
-    });
-}
-
-function generateForm(){
-    document.getElementById("pBranch").innerText =
-        document.getElementById("branchName").value.trim();
-
-    formatDateBoxes(document.getElementById("date").value);
-
-    document.getElementById("pAccountName").innerText =
-        document.getElementById("accountName").value.trim();
-
-    document.getElementById("pAccountType").innerText =
-        document.getElementById("accountType").value.trim();
-
-    document.getElementById("pAccountNumber").innerText =
-        document.getElementById("accountNumber").value.trim();
-
-    document.getElementById("pCardId").innerText =
-        document.getElementById("cardId").value.trim();
-
-    document.getElementById("pCardType").innerText =
-        document.getElementById("cardType").value.trim();
-}
-
-function clearForm(){
-    document.querySelectorAll("input").forEach(input => {
-        input.value = "";
-    });
-
-    document.querySelectorAll("select").forEach(select => {
-        if(select.id === "cardType"){
-            select.value = "TakaPay";
-        } else if(select.id === "accountType"){
-            select.value = "Savings Account - (SB)";
-        } else {
-            select.selectedIndex = 0;
+        function setTodayDate() {
+            document.getElementById("date").value = getTodayDate();
         }
-    });
 
-    setTodayDate();
-    generateForm();
-}
+        function formatDateBoxes(dateValue) {
+            const pDate = document.getElementById("pDate");
+            pDate.innerHTML = "";
 
-document.querySelectorAll(".input-panel input").forEach(input => {
-    input.addEventListener("input", generateForm);
-});
+            if (!dateValue) {
+                for (let i = 0; i < 8; i++) {
+                    const box = document.createElement("span");
+                    box.textContent = " ";
+                    pDate.appendChild(box);
+                }
+                return;
+            }
 
-document.querySelectorAll(".input-panel select").forEach(select => {
-    select.addEventListener("change", generateForm);
-});
+            const d = new Date(dateValue + "T00:00:00");
+            const dd = String(d.getDate()).padStart(2, "0");
+            const mm = String(d.getMonth() + 1).padStart(2, "0");
+            const yyyy = String(d.getFullYear());
+            const chars = (dd + mm + yyyy).split("");
 
-window.addEventListener("beforeprint", generateForm);
+            chars.forEach(ch => {
+                const box = document.createElement("span");
+                box.textContent = ch;
+                pDate.appendChild(box);
+            });
+        }
 
-setTodayDate();
-generateForm();
-</script>
+        function generateForm() {
+            document.getElementById("pBranch").innerText =
+                document.getElementById("branchName").value.trim();
+
+            formatDateBoxes(document.getElementById("date").value);
+
+            document.getElementById("pAccountName").innerText =
+                document.getElementById("accountName").value.trim();
+
+            document.getElementById("pAccountType").innerText =
+                document.getElementById("accountType").value.trim();
+
+            document.getElementById("pAccountNumber").innerText =
+                document.getElementById("accountNumber").value.trim();
+
+            document.getElementById("pCardId").innerText =
+                document.getElementById("cardId").value.trim();
+
+            document.getElementById("pCardType").innerText =
+                document.getElementById("cardType").value.trim();
+        }
+
+        function clearForm() {
+            document.querySelectorAll("input").forEach(input => {
+                input.value = "";
+            });
+
+            document.querySelectorAll("select").forEach(select => {
+                if (select.id === "cardType") {
+                    select.value = "TakaPay";
+                } else if (select.id === "accountType") {
+                    select.value = "Savings Account - (SB)";
+                } else {
+                    select.selectedIndex = 0;
+                }
+            });
+
+            setTodayDate();
+            generateForm();
+        }
+
+        document.querySelectorAll(".input-panel input").forEach(input => {
+            input.addEventListener("input", generateForm);
+        });
+
+        document.querySelectorAll(".input-panel select").forEach(select => {
+            select.addEventListener("change", generateForm);
+        });
+
+        window.addEventListener("beforeprint", generateForm);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownContainer = document.querySelector(".dropdown-container");
+            const dropdownContent = document.querySelector(".dropdown-content");
+            let timeoutId;
+
+            dropdownContainer.addEventListener("mouseenter", function () {
+                clearTimeout(timeoutId);
+                dropdownContent.classList.remove("hide");
+                dropdownContent.classList.add("show");
+            });
+
+            dropdownContainer.addEventListener("mouseleave", function () {
+                timeoutId = setTimeout(function () {
+                    dropdownContent.classList.remove("show");
+                    dropdownContent.classList.add("hide");
+                }, 200);
+            });
+
+            dropdownContent.addEventListener("mouseenter", function () {
+                clearTimeout(timeoutId);
+            });
+
+            dropdownContent.addEventListener("mouseleave", function () {
+                timeoutId = setTimeout(function () {
+                    dropdownContent.classList.remove("show");
+                    dropdownContent.classList.add("hide");
+                }, 200);
+            });
+        });
+
+        setTodayDate();
+        generateForm();
+    </script>
 
 </body>
+
 </html>
