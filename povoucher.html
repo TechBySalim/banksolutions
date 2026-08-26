@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PO Form Generator</title>
     <link rel="icon" type="image/x-icon" href="LogoOfBanksolutions.png">
     <!-- Js -->
+    <script src="stop-number-scroll.js" defer></script>
     <script src="mainScript.js" defer></script>
     <style>
         :root {
@@ -14,12 +16,14 @@
             --ui-bg: #ffffff;
             --ui-muted: #57606a;
         }
+
         * {
             margin: 0;
             padding: 0;
             border: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Times New Roman', Times, serif;
             background-color: #f0f0f0;
@@ -28,12 +32,13 @@
             /* min-height: 100vh; */
 
         }
-         /* Navbar */
+
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background:  linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
             padding: 10px 20px;
             color: white;
         }
@@ -78,7 +83,7 @@
             font-size: 1rem;
             font-weight: 400;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(52,152,219,0.08);
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.08);
             cursor: pointer;
             transition: background 0.2s;
             display: flex;
@@ -106,7 +111,7 @@
             right: 0;
             background-color: #fff;
             min-width: 200px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08);
             z-index: 1000;
             border-radius: 12px;
             overflow: hidden;
@@ -146,115 +151,127 @@
         }
 
         /* Simple About Me button style */
-.about-btn {
-    background: #3498db;
-    color: #fff;
-    border: none;
-    padding: 0.7rem 1.6rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 6px rgba(52,152,219,0.08);
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.about-btn:hover {
-    background: #217dbb;
-}
+        .about-btn {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.08);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
- /* Simple modal style */
- .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.15);
-    justify-content: center;
-    align-items: center;
-}
+        .about-btn:hover {
+            background: #217dbb;
+        }
 
-.modal-content {
-    background: #fff;
-    padding: 1.5rem 1.2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    text-align: center;
-    max-width: 320px;
-    margin: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Simple modal style */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            justify-content: center;
+            align-items: center;
+        }
 
-/* Modal image with gradient border */
-.modal-content img {
-    width: 200px;
-    height: 200px;
-    /* border-radius: 50%; */
-    object-fit: cover;
-    margin-bottom: 0.8rem;
-    border: 4px solid;
-    border-image: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
-    border-image-slice: 1;
-}
+        .modal-content {
+            background: #fff;
+            padding: 1.5rem 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+            text-align: center;
+            max-width: 320px;
+            margin: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-/* Move close button inside modal area, below image */
-.close {
-    position: static;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-    color: #ec0909;
-    cursor: pointer;
-    align-self: flex-end;
-    background: none;
-    border: none;
-}
-.close:hover {
-    color: #e74c3c;
-}
+        /* Modal image with gradient border */
+        .modal-content img {
+            width: 200px;
+            height: 200px;
+            /* border-radius: 50%; */
+            object-fit: cover;
+            margin-bottom: 0.8rem;
+            border: 4px solid;
+            border-image: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            border-image-slice: 1;
+        }
+
+        /* Move close button inside modal area, below image */
+        .close {
+            position: static;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            color: #ec0909;
+            cursor: pointer;
+            align-self: flex-end;
+            background: none;
+            border: none;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+        }
 
         .form-container {
             background: white;
             width: 800px;
             padding: 30px;
             border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
         }
+
         .header {
             text-align: center;
             /* margin-bottom: 20px; */
         }
+
         .bank-name {
             font-size: 24px;
             font-weight: bold;
             letter-spacing: 1px;
             margin: 0;
         }
+
         .branch-info {
-            color: #000000; /* Purple tint as seen in stamp */
+            color: #000000;
+            /* Purple tint as seen in stamp */
             font-weight: bold;
             font-size: 18px;
         }
+
         .form-title {
             text-decoration: underline;
             font-weight: bold;
             margin: 15px 0;
             text-align: center;
         }
+
         .date-section {
             text-align: right;
             /* margin-bottom: 10px; */
         }
+
         .input-row {
             margin: 10px 0;
             display: flex;
             align-items: flex-end;
         }
+
         .line-input {
             border: none;
             border-bottom: 1px dotted #000;
@@ -262,35 +279,44 @@
             padding: 2px 5px;
             outline: none;
         }
+
         .grid-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 5px;
             border: 1px solid var(--border-color);
         }
-        .grid-table th, .grid-table td {
+
+        .grid-table th,
+        .grid-table td {
             border: 1px solid var(--border-color);
             padding: 8px;
             text-align: center;
         }
+
         .amount-cell {
             display: flex;
             padding: 0 !important;
             height: 100%;
         }
+
         .digit-box {
             border-right: 1px solid #ccc;
             width: 20px;
             height: 30px;
             flex-grow: 1;
         }
-        .digit-box:last-child { border-right: none; }
-        
+
+        .digit-box:last-child {
+            border-right: none;
+        }
+
         .footer-sig {
             margin-top: 50px;
             display: flex;
             justify-content: space-between;
         }
+
         .sig-box {
             border-top: 1px dotted #000;
             width: 200px;
@@ -306,23 +332,27 @@
             padding: 16px;
             border-radius: 10px;
             border: 1px solid var(--ui-border);
-            box-shadow: 0 0 10px rgba(0,0,0,0.06);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
             box-sizing: border-box;
         }
+
         .controls h2 {
             margin: 0 0 12px 0;
             font-size: 16px;
         }
+
         .controls .hint {
             color: var(--ui-muted);
             font-size: 12px;
             margin-top: 6px;
         }
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px 12px;
         }
+
         .field label {
             display: block;
             font-size: 12px;
@@ -330,7 +360,10 @@
             margin-bottom: 4px;
             font-weight: 700;
         }
-        .field input, .field textarea, .field select {
+
+        .field input,
+        .field textarea,
+        .field select {
             width: 100%;
             border: 1px solid var(--ui-border);
             border-radius: 8px;
@@ -340,19 +373,23 @@
             background: #fff;
             box-sizing: border-box;
         }
+
         .field textarea {
             min-height: 40px;
             resize: vertical;
         }
+
         .field.full {
             grid-column: 1 / -1;
         }
+
         .btn-row {
             display: flex;
             gap: 10px;
             margin-top: 12px;
             flex-wrap: wrap;
         }
+
         button {
             padding: 10px 20px;
             cursor: pointer;
@@ -360,10 +397,26 @@
             border-radius: 4px;
             /* font-weight: bold; */
         }
-        .btn-gen { background: #28a745; color: white; }
-        .btn-clear { background: #dc3545; color: white; }
-        .btn-print { background: #007bff; color: white; }
-        .btn-secondary { background: #6c757d; color: white; }
+
+        .btn-gen {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-clear {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-print {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
 
         .preview-wrap {
             width: 800px;
@@ -371,7 +424,11 @@
             text-align: center;
             margin: 0 auto;
         }
-        .preview-wrap.show { display: block; }
+
+        .preview-wrap.show {
+            display: block;
+        }
+
         .preview-title {
             width: 800px;
             margin: 8px 0 10px 0;
@@ -379,6 +436,7 @@
             font-weight: 800;
             font-size: 14px;
         }
+
         .preview-title span {
             color: var(--ui-muted);
             font-weight: 600;
@@ -392,10 +450,23 @@
             padding: 0 4px 2px 4px;
             vertical-align: bottom;
         }
-        .fill-line.w150 { min-width: 150px; }
-        .fill-line.w220 { min-width: 220px; }
-        .fill-line.w300 { min-width: 300px; }
-        .fill-line.w420 { min-width: 420px; }
+
+        .fill-line.w150 {
+            min-width: 150px;
+        }
+
+        .fill-line.w220 {
+            min-width: 220px;
+        }
+
+        .fill-line.w300 {
+            min-width: 300px;
+        }
+
+        .fill-line.w420 {
+            min-width: 420px;
+        }
+
         .fill-line.block {
             display: block;
             width: 100%;
@@ -414,6 +485,7 @@
             letter-spacing: 1px;
             margin-top: 6px;
         }
+
         .po-label {
             font-size: 14px;
             font-weight: 700;
@@ -425,6 +497,7 @@
             width: 100%;
             height: 100%;
         }
+
         .digit {
             flex: 1;
             border-right: 1px solid var(--border-color);
@@ -434,7 +507,10 @@
             font-weight: 700;
             font-size: 14px;
         }
-        .digit:last-child { border-right: none; }
+
+        .digit:last-child {
+            border-right: none;
+        }
 
         .scroll-number {
             border: 1px solid var(--border-color);
@@ -445,8 +521,9 @@
             justify-content: center;
             font-weight: 700;
             letter-spacing: 1px;
-            margin-top: 6px; 
+            margin-top: 6px;
         }
+
         .scroll-number1 {
             border: 1px solid var(--border-color);
             width: 100px;
@@ -457,6 +534,7 @@
             font-weight: 700;
             letter-spacing: 1px;
         }
+
         .bank-logo {
             position: absolute;
             left: 27%;
@@ -466,8 +544,8 @@
             width: auto;
         }
 
-        .input-container{
-            margin-top: 20px;   
+        .input-container {
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -478,59 +556,80 @@
             margin: 0mm;
             padding: 10px;
         }
+
         @media print {
+
             .navbar,
-            .header-vabbar { display: none !important; }
-            .controls { display: none; }
-            .preview-title { display: none; }
-            body { background: white; padding: 0; }
-            .form-container { box-shadow: none; border: none; }
-            .preview-wrap { display: block !important; }
+            .header-vabbar {
+                display: none !important;
+            }
+
+            .controls {
+                display: none;
+            }
+
+            .preview-title {
+                display: none;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .form-container {
+                box-shadow: none;
+                border: none;
+            }
+
+            .preview-wrap {
+                display: block !important;
+            }
         }
     </style>
 
 </head>
 <nav class="header-vabbar">
-           <!-- Header with Dropdown -->
-           <div class="header-container">
-            <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button class="about-btn" onclick="openModal()">About Me</button>
-                <div class="dropdown-container">
-                    <button class="dropdown-btn">
-                        <div class="hamburger-line"></div>
-                        <div class="hamburger-line"></div>
-                        <div class="hamburger-line"></div>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="index.html">Home</a>
-                        <a href="fdr.html">FDR Calculator</a>
-                        <a href="dps.html">DPS Calculator</a>
-                        <a href="emi.html">Loan EMI Calculator</a>
-                        <a href="date.html">Date Calculator</a>
-                        <a href="cheque.html">PO/Cheque Print</a>
-                        <a href="voucherprint.html">Debit/Credit Voucher Print</a>
-                    </div>
+    <!-- Header with Dropdown -->
+    <div class="header-container">
+        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="about-btn" onclick="openModal()">About Me</button>
+            <div class="dropdown-container">
+                <button class="dropdown-btn">
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                    <div class="hamburger-line"></div>
+                </button>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="fdr.html">FDR Calculator</a>
+                    <a href="dps.html">DPS Calculator</a>
+                    <a href="emi.html">Loan EMI Calculator</a>
+                    <a href="date.html">Date Calculator</a>
+                    <a href="cheque.html">PO/Cheque Print</a>
+                    <a href="voucherprint.html">Debit/Credit Voucher Print</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal -->
-        <div id="aboutModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <img src="image.png" alt="Profile">
-                <h3>Salim Ahmed</h3>
-                <p>Mobile: 01739856638</p>
-                <p>Email: saliim.dev@gmail.com</p>
-            </div>
+    <!-- Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="image.png" alt="Profile">
+            <h3>Salim Ahmed</h3>
+            <p>Mobile: 01739856638</p>
+            <p>Email: saliim.dev@gmail.com</p>
         </div>
-        
-    </nav>
+    </div>
+
+</nav>
 
 
 <body>
-        
+
 
     <div class="input-container">
         <div class="controls">
@@ -542,7 +641,8 @@
                 </div>
                 <div class="field">
                     <label for="in_amount">Amount</label>
-                    <input id="in_amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="e.g. 15000">
+                    <input id="in_amount" type="number" inputmode="decimal" min="0" step="0.01"
+                        placeholder="e.g. 15000">
                     <div class="hint" id="amount_words_hint"></div>
                 </div>
                 <div class="field">
@@ -573,7 +673,7 @@
                     <textarea id="in_favour" placeholder="Beneficiary name / details"></textarea>
                 </div>
             </div>
-    
+
             <div class="btn-row">
                 <button class="btn-gen" onclick="generate()">Generate</button>
                 <button class="btn-clear" onclick="clearForm()">Clear</button>
@@ -609,9 +709,9 @@
                 Taka (in Words) <span class="fill-line w420" id="pv_amount_words"></span>
             </div>
             <div class="input-row">
-               <div>
-                on your <span class="fill-line w300" id="pv_branch_line"></span> Branch
-               </div>
+                <div>
+                    on your <span class="fill-line w300" id="pv_branch_line"></span> Branch
+                </div>
                 <div style="text-align: center; width: 20%; margin-left: 140px">
                     <div style="height: 10px;"></div>
                     <div class="sig-box">Signature of the Applicant</div>
@@ -624,13 +724,15 @@
                     <div class="po-box" id="pv_po">—</div>
                 </div>
                 <div style="width: 60%; text-align: right;">
-                    
+
                     <div style="display: flex; justify-content: space-between;">
                         <div style="width: 100%;">
-                            <div class="input-row">Name of the Applicant: <span class="fill-line block" id="pv_applicant" style="text-align: center;"></span></div>
-                            <div class="input-row">Address: <span class="fill-line block" id="pv_address" style="text-align: center;"></span></div>
+                            <div class="input-row">Name of the Applicant: <span class="fill-line block"
+                                    id="pv_applicant" style="text-align: center;"></span></div>
+                            <div class="input-row">Address: <span class="fill-line block" id="pv_address"
+                                    style="text-align: center;"></span></div>
                         </div>
-        
+
                     </div>
                 </div>
 
@@ -665,7 +767,7 @@
                     <div class="scroll-number" id="pv_po" style="font-weight: 300;">Scroll No.</div>
                     <div class="scroll-number1" id="pv_po"></div>
                 </div>
-                <p style="text-align: right; font-weight: 400; font-weight: bold;" >Received the DD/PO, as above.</p>
+                <p style="text-align: right; font-weight: 400; font-weight: bold;">Received the DD/PO, as above.</p>
             </div>
 
             <div class="footer-sig">
@@ -682,7 +784,7 @@
 
     <script>
         function clearForm() {
-            const ids = ["in_date","in_amount","in_branch","in_po","in_applicant","in_address","in_favour"];
+            const ids = ["in_date", "in_amount", "in_branch", "in_po", "in_applicant", "in_address", "in_favour"];
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = "";
@@ -702,12 +804,12 @@
             if (!iso) return "";
             const [y, m, d] = iso.split("-").map(Number);
             if (!y || !m || !d) return iso;
-            return `${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}/${y}`;
+            return `${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}/${y}`;
         }
 
         function numberToWordsBDInt(n) {
-            const ones = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
-            const tens = ["","", "Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+            const ones = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+            const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
             function twoDigits(num) {
                 if (num === 0) return "";
@@ -802,7 +904,7 @@
             document.getElementById("pv_applicant").textContent = applicant;
             document.getElementById("pv_address").textContent = address;
             document.getElementById("pv_favour").textContent = favour;
-            
+
 
             document.getElementById("pv_amount_cell").textContent = amountRaw || "";
             document.getElementById("pv_comm_cell").textContent = commission ? String(commission) : "";
@@ -835,4 +937,5 @@
         })();
     </script>
 </body>
+
 </html>

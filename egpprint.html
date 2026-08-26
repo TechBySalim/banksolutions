@@ -13,7 +13,7 @@
 
 <body>
     <!-- Header with Dropdown -->
-     <div class="header-container">
+    <div class="header-container">
         <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
         <div class="dropdown-container">
             <button class="dropdown-btn">
@@ -63,23 +63,23 @@
             </div>
         </div>
     </div>
-<!-- Cheque Print Notice -->
- <div>
-    <p class="print-details">
-       <b>*Important Details*</b>
-       <br>
-        Use Google Chrome
-        <br>
-        Page size: A4
-        <br>
-        Margins: Default
-        <br>
-        Scale: Default  
-        <br>
-        <img src="how_to_set_po_at-printer.png" alt="How To Set PO in Printer">
-    </p>
-    
- </div>
+    <!-- Cheque Print Notice -->
+    <div>
+        <p class="print-details">
+            <b>*Important Details*</b>
+            <br>
+            Use Google Chrome
+            <br>
+            Page size: A4
+            <br>
+            Margins: Default
+            <br>
+            Scale: Default
+            <br>
+            <img src="how_to_set_po_at-printer.png" alt="How To Set PO in Printer">
+        </p>
+
+    </div>
 
 
     <div class="main-content">
@@ -123,37 +123,38 @@
     </div>
 
     <!-- ===== SCRIPT TO UPDATE CHEQUE ===== -->
+    <script src="stop-number-scroll.js"></script>
     <script src="egp-script.js"></script>
 
     <!-- Dropdown menu functionality -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const dropdownContainer = document.querySelector('.dropdown-container');
             const dropdownContent = document.querySelector('.dropdown-content');
             let timeoutId;
 
             // Show dropdown on mouse enter
-            dropdownContainer.addEventListener('mouseenter', function() {
+            dropdownContainer.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
                 dropdownContent.classList.remove('hide');
                 dropdownContent.classList.add('show');
             });
 
             // Hide dropdown on mouse leave with delay
-            dropdownContainer.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContainer.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200); // 200ms delay before hiding
             });
 
             // Keep dropdown open when hovering over content
-            dropdownContent.addEventListener('mouseenter', function() {
+            dropdownContent.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
             });
 
-            dropdownContent.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContent.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200);
