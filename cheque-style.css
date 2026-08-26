@@ -150,6 +150,37 @@ header {
     border: 1px solid #ddd;
 }
 
+.amount-inputand-button {
+    display: flex;
+    gap: 10px;
+}
+
+.amount-inputand-button input,
+.extra-amount {
+    flex: 1;
+}
+
+.amount-inputand-button button,
+.extra-amount-button {
+    width: 48px;
+    flex: 0 0 48px;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.extra-amount-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cheque-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+}
+
 .input-section button {
     background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
     color: white;
@@ -291,20 +322,27 @@ header {
     .print-details {
         display: none !important;
     }
-    .cheque{
+    .cheque {
         border: none !important;
     }
-    #cheque {
-        position: absolute;
-        top: 0 !important; /* Position at top */
-        left: 50% !important; /* Center horizontally */
-        transform: translateX(-50%) !important;  /*Perfect center*/
-        margin: 0 !important;
-        /* padding: 20px; */
+
+    #chequeTemplate {
+        display: none !important;
+    }
+
+    #chequeContainer {
+        display: block !important;
+    }
+
+    #chequeContainer .cheque {
+        display: block;
+        margin: 0 auto !important;
         width: 8.5cm; /* Keep original cheque size */
         height: 19cm; /* Keep original cheque size */
         background: white;
         box-shadow: none;
+        page-break-after: always;
+        break-after: page;
     }
 }
 /* responsive */

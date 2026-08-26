@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('printBtn').addEventListener('click', printCheque);
     // Add clear button listener
     document.getElementById('clearBtn').addEventListener('click', clearData);
+    document.getElementById('addmore-amount').addEventListener('click', addInput);
     var creatorBtn = document.getElementById('creatorBtn');
     if (creatorBtn) creatorBtn.addEventListener('click', openModal);
     document.getElementById('closeModal').addEventListener('click', closeModal);
@@ -39,30 +40,39 @@ function closeModal() {
 function generateCheque() {
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
-    const amount = document.getElementById('amount').value;
+    const amounts = getAllAmounts();
 
-    if (!name || !date || !amount) {
-        alert('Please fill all fields');
+    if (!name || !date || amounts.length === 0) {
+        alert('Please fill Payee Name, Date, and at least one Amount');
         return;
     }
 
-//Title Case function
-String.prototype.toTitleCase = function () {
-    return this.replace(/\b\w/g, function (c) {
-        return c.toUpperCase();
-    });
-};
+    //Title Case function
+    String.prototype.toTitleCase = function () {
+        return this.replace(/\b\w/g, function (c) {
+            return c.toUpperCase();
+        });
+    };
 
 
     const formattedDate = formatDate(date);
 
-    document.getElementById('cheque-name').innerText = name.toTitleCase();
-    document.getElementById('cheque-date').innerText = formattedDate;
-    document.getElementById('cheque-amount').innerText = "=" + parseFloat(amount).toFixed(2);
-    document.getElementById('not-over-tk').innerText = 'NOT OVER TK. '+ parseFloat(amount).toFixed(2);
+    const container = document.getElementById('chequeContainer');
+    const template = document.getElementById('chequeTemplate');
+    container.innerHTML = '';
 
-    const amountInWords = amountToWords(amount);
-    document.getElementById('cheque-words').innerText = amountInWords;
+    for (const amount of amounts) {
+        const cheque = template.cloneNode(true);
+        cheque.id = '';
+        cheque.style.display = '';
+        cheque.querySelector('.cheque-name').innerText = name.toTitleCase();
+        cheque.querySelector('.cheque-date').innerText = formattedDate;
+        const formattedAmount = formatAmount(amount);
+        cheque.querySelector('.cheque-amount').innerText = '=' + formattedAmount;
+        cheque.querySelector('.not-over-tk').innerText = 'NOT OVER TK. ' + formattedAmount;
+        cheque.querySelector('.cheque-words').innerText = amountToWords(amount);
+        container.appendChild(cheque);
+    }
 
     // adjustAmountPosition();
 }
@@ -87,45 +97,44 @@ function formatDate(dateString) {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString();
-    
+
     // Convert each digit to individual characters with spaces
     const daySpaced = day.split('').join(' ');
     const monthSpaced = month.split('').join(' ');
     const yearSpaced = year.split('').join(' ');
-    
+
     return `${daySpaced} ${monthSpaced} ${yearSpaced}`;
 }
 
 function printCheque() {
-    if (!document.getElementById('cheque-name').innerText) {
-        alert('Please generate a cheque first');
+    const container = document.getElementById('chequeContainer');
+    if (!container || container.children.length === 0) {
+        alert('Please generate cheque preview(s) first');
         return;
     }
-
-    // Create a print-specific stylesheet
-    // const printStyle = document.createElement('style');
-    // printStyle.innerHTML = `
-    //     @page {
-    //       size: 19cm 8.5cm;
-    //       margin: 0;
-    //     }
-    //     body {
-    //       width: 19cm;
-    //       height: 8.5cm;
-    //     }
-    //     #cheque {
-    //       width: 19cm;
-    //       height: 8.5cm;
-    //     }
-    //   `;
-    // document.head.appendChild(printStyle);
-
     window.print();
+}
 
-    // Remove the print styles after printing
-    setTimeout(() => {
-        document.head.removeChild(printStyle);
-    }, 1000);
+function addInput() {
+    const row = document.createElement('div');
+    row.className = 'extra-amount-row';
+    row.innerHTML = '<input type="number" class="extra-amount" placeholder="Enter Amount (৳)">' +
+        '<button type="button" class="extra-amount-button" aria-label="Remove amount">-</button>';
+    row.querySelector('button').addEventListener('click', () => row.remove());
+    document.getElementById('more-amount-inputand-button').appendChild(row);
+}
+
+function getAllAmounts() {
+    return Array.from(document.querySelectorAll('#amount, .extra-amount'))
+        .map((input) => Number(input.value))
+        .filter((amount) => Number.isFinite(amount) && amount > 0);
+}
+
+function formatAmount(amount) {
+    return new Intl.NumberFormat('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(amount);
 }
 
 // Amount in words with paisa (like PO voucher)
@@ -228,13 +237,10 @@ function clearData() {
     document.getElementById('name').value = '';
     document.getElementById('date').value = '';
     document.getElementById('amount').value = '';
+    document.getElementById('more-amount-inputand-button').innerHTML = '';
 
     // Clear cheque preview
-    document.getElementById('cheque-name').innerText = '';
-    document.getElementById('cheque-date').innerText = '';
-    document.getElementById('cheque-words').innerText = '';
-    document.getElementById('cheque-amount').innerText = '';
-    document.getElementById('not-over-tk').innerText = '';
+    document.getElementById('chequeContainer').innerHTML = '';
     document.getElementById('amount-in-words').textContent = '';
 }
 
