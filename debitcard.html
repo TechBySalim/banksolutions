@@ -206,7 +206,9 @@
         }
 
         .title {
-            color: #2f5d24;
+            /* color: #2f5d24; */
+
+            color: #000000;
             font-size: 30px;
             font-weight: bold;
         }
@@ -215,7 +217,8 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
-            font-size: 18px;
+            font-size: 25px;
+
         }
 
         .date-boxes {
@@ -229,8 +232,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #8eb76b;
+            color: #030303;
             font-size: 20px;
+            font-weight: bold;
         }
 
         .section-title {
@@ -238,7 +242,7 @@
             border: 1px solid #444;
             text-align: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 25px;
             padding: 4px;
             margin: 15px 0;
         }
@@ -246,7 +250,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         th,
@@ -257,7 +261,7 @@
         th {
             background: #bfd4ae;
             padding: 5px;
-            font-size: 18px;
+            font-size: 25px;
         }
 
         td {
@@ -269,7 +273,7 @@
 
         .application {
             margin: 20px 0;
-            font-size: 18px;
+            font-size: 25px;
         }
 
         .checkbox {
@@ -290,7 +294,7 @@
 
         .signature-text {
             margin-top: 5px;
-            font-size: 18px;
+            font-size: 25px;
         }
 
         .branch-use {
@@ -300,9 +304,12 @@
         .card-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin: 15px 0;
-            font-size: 18px;
+            align-items: center;
+            color: #030303;
+            font-size: 25px;
+            font-weight: bold;
+            padding-right: 95px;
         }
 
         .card-id-box {
@@ -318,7 +325,7 @@
         }
 
         .verify {
-            font-size: 18px;
+            font-size: 25px;
             margin: 15px 0;
         }
 
@@ -383,7 +390,7 @@
                 width: 210mm;
                 max-height: 148.5mm;
                 overflow: hidden;
-                font-size: 11px;
+                font-size: 25px;
             }
 
             .bank-logo {
@@ -391,11 +398,11 @@
             }
 
             .title {
-                font-size: 16px;
+                font-size: 25px;
             }
 
             .branch-row {
-                font-size: 12px;
+                font-size: 20px;
                 margin-bottom: 8px;
             }
 
@@ -412,22 +419,22 @@
             }
 
             th {
-                font-size: 11px;
+                font-size: 20px;
                 padding: 2px;
             }
 
             td {
                 height: 24px;
-                font-size: 11px;
+                font-size: 20px;
             }
 
             .application {
-                font-size: 11px;
+                font-size: 20px;
                 margin: 6px 0;
             }
 
             .checkbox {
-                width: 16px;
+                width: 20px;
                 height: 16px;
                 margin: 0 6px;
             }
@@ -452,7 +459,7 @@
             }
 
             .verify {
-                font-size: 11px;
+                font-size: 15px;
                 margin: 6px 0;
             }
 
@@ -462,14 +469,14 @@
             }
 
             .sign-label {
-                font-size: 10px;
+                font-size: 11px;
                 margin-top: 4px;
             }
 
             .seal {
                 width: 80px;
                 height: 60px;
-                font-size: 10px;
+                font-size: 11px;
             }
 
             .header {
@@ -565,6 +572,7 @@
                         <option value="">Select card type</option>
                         <option value="VISA">VISA</option>
                         <option value="TakaPay" selected>TakaPay</option>
+                        <option value="MasterCard">MasterCard</option>
                     </select>
                 </div>
             </div>
