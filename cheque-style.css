@@ -313,6 +313,10 @@ header {
         position: relative;
     }
 
+    .main-content {
+        padding: 0 !important;
+    }
+
     /* Hide all elements except cheque */
     header,
     .input-section,
@@ -332,6 +336,8 @@ header {
 
     #chequeContainer {
         display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     #chequeContainer .cheque {

@@ -233,7 +233,7 @@ header {
     right: 163px !important;
     top: 115px !important;
     width: 190px !important;
-    font-size: 12px !important; 
+    font-size: 14px !important; 
     font-weight: bold !important; 
     transform: rotate(-90deg);
     text-align: right;
@@ -355,6 +355,10 @@ header {
         position: relative;
     }
 
+    .main-content {
+        padding: 0 !important;
+    }
+
     /* Hide all elements except cheque */
     header,
     .input-section,
@@ -373,6 +377,8 @@ header {
 
     #chequeContainer {
         display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     #chequeContainer .cheque {
