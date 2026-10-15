@@ -1,5 +1,8 @@
 // script.js
 document.addEventListener('DOMContentLoaded', function () {
+    const dateInput = document.getElementById('date');
+    dateInput.value = getLocalDateString();
+
     // Add event listeners
     document.getElementById('generateBtn').addEventListener('click', generateCheque);
     document.getElementById('printBtn').addEventListener('click', printCheque);
@@ -39,11 +42,16 @@ function closeModal() {
 
 function generateCheque() {
     const name = document.getElementById('name').value;
+    const accountNumber = document.getElementById('accountNumber').value.trim();
     const date = document.getElementById('date').value;
+    const rate = document.getElementById('rate').value.trim();
+    const tenureButton = document.querySelector('.month-dropdown-btn');
+    const tenureMonths = Number(tenureButton.dataset.month);
     const amounts = getAllAmounts();
 
-    if (!name || !date || amounts.length === 0) {
-        alert('Please fill Payee Name, Date, and at least one Amount');
+    if (!name.trim() || !date || !rate || !Number.isFinite(Number(rate)) ||
+        Number(rate) < 0 || !tenureMonths || amounts.length === 0) {
+        alert('Please enter the owner name, a valid interest rate, select a date and tenure, and enter at least one amount.');
         return;
     }
 
@@ -56,6 +64,7 @@ function generateCheque() {
 
 
     const formattedDate = formatDate(date);
+    const formattedMaturityDate = formatDate(addMonthsToDate(date, tenureMonths));
 
     const container = document.getElementById('chequeContainer');
     const template = document.getElementById('chequeTemplate');
@@ -66,10 +75,16 @@ function generateCheque() {
         cheque.id = '';
         cheque.style.display = '';
         cheque.querySelector('.cheque-name').innerText = name.toTitleCase();
+        cheque.querySelector('.cheque-account-number').innerText =
+            accountNumber ? `A/C No: ${accountNumber}` : '';
         cheque.querySelector('.cheque-date').innerText = formattedDate;
+        cheque.querySelector('.tenure').innerText =
+            `${tenureMonths} ${tenureMonths === 1 ? 'Month' : 'Months'}`;
+        cheque.querySelector('.maturity-date').innerText =
+            `${formattedMaturityDate}`;
+        cheque.querySelector('.interest-rate').innerText = `${rate}%`;
         const formattedAmount = formatAmount(amount);
         cheque.querySelector('.cheque-amount').innerText = '=' + formattedAmount;
-        cheque.querySelector('.not-over-tk').innerText = 'NOT OVER TK. ' + formattedAmount;
         cheque.querySelector('.cheque-words').innerText = amountToWords(amount);
         container.appendChild(cheque);
     }
@@ -93,17 +108,35 @@ function generateCheque() {
 // }
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString();
+    const [year, month, day] = dateString.split('-').map(Number);
+    const monthName = new Date(Date.UTC(year, month - 1, 1)).toLocaleString('en', {
+        month: 'long',
+        timeZone: 'UTC'
+    });
+    return `${day} ${monthName} ${year}`;
+}
 
-    // Convert each digit to individual characters with spaces
-    const daySpaced = day.split('').join(' ');
-    const monthSpaced = month.split('').join(' ');
-    const yearSpaced = year.split('').join(' ');
+function addMonthsToDate(dateString, monthsToAdd) {
+    const [year, month, day] = dateString.split('-').map(Number);
+    const targetMonth = year * 12 + (month - 1) + monthsToAdd;
+    const targetYear = Math.floor(targetMonth / 12);
+    const targetMonthIndex = targetMonth % 12;
+    const lastDayOfTargetMonth = new Date(Date.UTC(targetYear, targetMonthIndex + 1, 0)).getUTCDate();
+    const maturityDay = Math.min(day, lastDayOfTargetMonth);
 
-    return `${daySpaced} ${monthSpaced} ${yearSpaced}`;
+    return [
+        targetYear,
+        String(targetMonthIndex + 1).padStart(2, '0'),
+        String(maturityDay).padStart(2, '0')
+    ].join('-');
+}
+
+function getLocalDateString() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 function printCheque() {
@@ -235,7 +268,12 @@ function numberToWords(num) {
 function clearData() {
     // Clear input fields
     document.getElementById('name').value = '';
-    document.getElementById('date').value = '';
+    document.getElementById('accountNumber').value = '';
+    document.getElementById('date').value = getLocalDateString();
+    document.getElementById('rate').value = '';
+    const tenureButton = document.querySelector('.month-dropdown-btn');
+    tenureButton.dataset.month = '';
+    tenureButton.textContent = 'Select Tenure';
     document.getElementById('amount').value = '';
     document.getElementById('more-amount-inputand-button').innerHTML = '';
 
@@ -243,5 +281,3 @@ function clearData() {
     document.getElementById('chequeContainer').innerHTML = '';
     document.getElementById('amount-in-words').textContent = '';
 }
-
-

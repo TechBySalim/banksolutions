@@ -221,7 +221,7 @@ header {
 .cheque-date {
     position: absolute;
     right: 163px;
-    top: 110px;
+    top: 106px;
     width: 190px;
     font-size: 15px;
     font-weight: bold;
@@ -232,7 +232,7 @@ header {
 
 .cheque-name {
     position: absolute;
-    right: -100px;
+    right: -104px;
     bottom: 340px;
     font-size: 14px;
     font-weight: bold;
@@ -269,7 +269,7 @@ header {
     padding: 0px;
     margin: 0px;
     left: -15px;
-    bottom: 273px;
+    bottom: 275px;
     width: 370px;
     height: 50px;
     font-size: 12px;

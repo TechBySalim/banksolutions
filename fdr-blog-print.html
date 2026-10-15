@@ -16,7 +16,7 @@
     <div class="header-container">
         <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
         <div class="dropdown-container">
-            <button class="dropdown-btn">
+            <button class="dropdown-btn" type="button" aria-expanded="false" aria-label="Open navigation menu">
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
                 <div class="hamburger-line"></div>
@@ -86,22 +86,32 @@
         <!-- ===== INPUTS FOR FDR DETAILS ===== -->
         <div class="input-section">
             <input type="text" id="name" placeholder="Name & Details of the FDR owner">
-             <input type="text" id="name" placeholder="A/C Number">
-            <div class="dropdown-container">
-                <button class="dropdown-btn">Select Month</button>
-                <div class="dropdown-content">
-                    <a href="#" data-month="1">01 Month</a>
-                    <a href="#" data-month="3">03 Month</a>
-                    <a href="#" data-month="6">06 Month</a>
-                    <a href="#" data-month="12">12 Month</a>
-                    <a href="#" data-month="24">24 Month</a>
-                    <a href="#" data-month="36">36 Month</a>
-                    <a href="#" data-month="48">48 Month</a>
-                    <a href="#" data-month="60">60 Month</a>
+            <input type="text" id="accountNumber" placeholder="A/C Number">
+            <input type="number" id="rate" placeholder="FDR Rate (%)" min="0" step="any">
+            <div class="date-tenure-row">
+                <input type="date" id="date" placeholder="Select Date" aria-label="Select Date">
+                <div class="dropdown-container">
+                    <button class="dropdown-btn month-dropdown-btn" type="button" aria-expanded="false" data-month="">
+                        Select Tenure
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" data-month="1">01 Month</a>
+                        <a href="#" data-month="3">03 Months</a>
+                        <a href="#" data-month="6">06 Months</a>
+                        <a href="#" data-month="12">12 Months</a>
+                        <a href="#" data-month="24">24 Months</a>
+                        <a href="#" data-month="36">36 Months</a>
+                        <a href="#" data-month="48">48 Months</a>
+                        <a href="#" data-month="60">60 Months</a>
+                        <a href="#" data-month="72">72 Months</a>
+                        <a href="#" data-month="84">84 Months</a>
+                        <a href="#" data-month="96">96 Months</a>
+                        <a href="#" data-month="108">108 Months</a>
+                        <a href="#" data-month="120">120 Months</a>
+
+                    </div>
                 </div>
             </div>
-            <input type="text" id="rate" placeholder="FDR Rate (%)">
-            <input type="date" id="date" placeholder="Select Date">
             <div class="amount-inputand-button">
                 <input type="number" id="amount" placeholder="Enter Amount (৳)">
                 <button id="addmore-amount" type="button" aria-label="Add another amount">+</button>
@@ -116,11 +126,15 @@
             <div class="cheque-container" id="chequeContainer"></div>
 
             <div class="cheque" id="chequeTemplate" style="display: none;">
-                <div class="not-over-tk"></div>
                 <div class="cheque-date"></div>
                 <div class="cheque-name"></div>
+                <div class="cheque-account-number"></div>
                 <div class="cheque-amount"></div>
                 <div class="cheque-words"></div>
+                <div class="tenure"></div>
+                <div class="maturity-date"></div>
+                <div class="interest-rate"></div>
+
             </div>
         </div>
 
@@ -131,35 +145,50 @@
         <!-- Dropdown menu functionality -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const dropdownContainer = document.querySelector('.dropdown-container');
-                const dropdownContent = document.querySelector('.dropdown-content');
-                let timeoutId;
+                const dropdowns = document.querySelectorAll('.dropdown-container');
 
-                // Show dropdown on mouse enter
-                dropdownContainer.addEventListener('mouseenter', function () {
-                    clearTimeout(timeoutId);
-                    dropdownContent.classList.remove('hide');
-                    dropdownContent.classList.add('show');
+                function closeDropdown(container) {
+                    const button = container.querySelector('.dropdown-btn');
+                    const content = container.querySelector('.dropdown-content');
+                    content.classList.remove('show');
+                    content.classList.add('hide');
+                    button.setAttribute('aria-expanded', 'false');
+                }
+
+                dropdowns.forEach(function (container) {
+                    const button = container.querySelector('.dropdown-btn');
+                    const content = container.querySelector('.dropdown-content');
+
+                    button.addEventListener('click', function () {
+                        const shouldOpen = !content.classList.contains('show');
+                        dropdowns.forEach(closeDropdown);
+                        if (shouldOpen) {
+                            content.classList.remove('hide');
+                            content.classList.add('show');
+                            button.setAttribute('aria-expanded', 'true');
+                        }
+                    });
+
+                    content.addEventListener('click', function (event) {
+                        const option = event.target.closest('a[data-month]');
+                        if (!option) return;
+
+                        event.preventDefault();
+                        button.dataset.month = option.dataset.month;
+                        button.textContent = option.textContent.trim();
+                        closeDropdown(container);
+                    });
                 });
 
-                // Hide dropdown on mouse leave with delay
-                dropdownContainer.addEventListener('mouseleave', function () {
-                    timeoutId = setTimeout(function () {
-                        dropdownContent.classList.remove('show');
-                        dropdownContent.classList.add('hide');
-                    }, 200); // 200ms delay before hiding
+                document.addEventListener('click', function (event) {
+                    dropdowns.forEach(function (container) {
+                        if (!container.contains(event.target)) closeDropdown(container);
+                    });
                 });
 
-                // Keep dropdown open when hovering over content
-                dropdownContent.addEventListener('mouseenter', function () {
-                    clearTimeout(timeoutId);
-                });
-
-                dropdownContent.addEventListener('mouseleave', function () {
-                    timeoutId = setTimeout(function () {
-                        dropdownContent.classList.remove('show');
-                        dropdownContent.classList.add('hide');
-                    }, 200);
+                document.addEventListener('keydown', function (event) {
+                    if (event.key !== 'Escape') return;
+                    dropdowns.forEach(closeDropdown);
                 });
             });
         </script>
