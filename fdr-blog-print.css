@@ -398,6 +398,11 @@ header {
         page-break-after: always;
         break-after: page;
     }
+
+    #chequeContainer .cheque:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
 }
 /* responsive */
 @media (min-width: 1000px) {
@@ -412,3 +417,5 @@ header {
     color: #555;
     font-size: 0.95rem;
 }
+
+/* FRD Blog Print Css styles sheet*/
