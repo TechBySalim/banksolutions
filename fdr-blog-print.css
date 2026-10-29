@@ -233,10 +233,10 @@ header {
 
 .cheque-date {
     position: absolute;
-    right: 163px;
-    top: 110px;
-    width: 190px;
-    font-size: 14px;
+    right: 200px;
+    top: 75px;
+    width: 140px;
+    font-size: 12px;
     font-weight: bold;
     transform: rotate(-90deg);
     /* border: 1px solid red; */
@@ -244,15 +244,15 @@ header {
 
 .cheque-name {
     position: absolute;
-    right: -105px;
-    bottom: 429px;
+    right: -101px;
+    bottom: 416px;
     font-size: 14px;
     font-weight: bold;
     transform: rotate(-90deg);
     padding: 0px;
     margin: 0px;
     /* border: 1px solid rgb(128, 2, 245); */
-    width: 600px;
+    width: 557px;
     height: auto;
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -262,23 +262,25 @@ header {
 
 .cheque-account-number {
     position: absolute;
-    left: -55px;
-    top: 350px;
+    left: -100px;
+    top: 320px;
     font-size: 14px;
     font-weight: bold;
+    width: 250px;
     transform: rotate(270deg);
+    /* border: 1px solid red; */
     /* overflow-wrap: anywhere; */
 }
 
 .cheque-amount {
-    position: absolute;
-    left: 10px;
-    top: 480px;
+position: absolute;
+    left: -31px;
+    top: 410px;
     font-size: 16px;
     font-weight: bold;
     transform: rotate(270deg);
     /* border: 1px solid red; */
-    width: 180px;
+    width: 300px;
     height: auto;
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -288,13 +290,13 @@ header {
 }
 
 .cheque-words {
-    position:absolute;
+position: absolute;
     padding: 0px;
     margin: 0px;
-    left: -17px;
-    bottom: 295px;
-    width: 370px;
-    height: 50px;
+    left: -125px;
+    bottom: 410px;
+    width: 590px;
+    height: 20px;
     font-size: 12px;
     font-weight: bold;
     word-wrap: break-word;
@@ -308,7 +310,7 @@ header {
 .maturity-date,
 .interest-rate {
     position: absolute;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     white-space: nowrap;
     transform: rotate(-90deg);
@@ -320,8 +322,10 @@ header {
 }
 
 .maturity-date {
-    right: 160px;
-    top: 150px;
+    right: 155px;
+    top: 75px;
+    width: 140px;
+    /* border: 1px solid red; */
 }
 
 .interest-rate {

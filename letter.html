@@ -13,7 +13,7 @@
             border: 0;
             box-sizing: border-box;
             font-family: "Times New Roman", serif;
-            }
+        }
 
         body {
 
@@ -24,6 +24,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .container {
             background: white;
             max-width: 500px;
@@ -35,7 +36,7 @@
 
         h1 {
             text-align: center;
-            color:black;
+            color: black;
             margin-bottom: 20px;
         }
 
@@ -62,7 +63,7 @@
         }
 
         button {
-            background-color:  #1faf3f;
+            background-color: #1faf3f;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -73,7 +74,7 @@
         }
 
         button:hover {
-            background-color:  #10c538;
+            background-color: #10c538;
         }
 
         .clear-btn {
@@ -137,18 +138,21 @@
 
         @media print {
             @page {
-        size: A4; /* A4 page size */
-        margin: 0mm 0mm 0mm 0mm !important;
-    }
+                size: A4;
+                /* A4 page size */
+                margin: 0mm 0mm 0mm 0mm !important;
+            }
 
-    body {
-        background: transparent;
-        width: 210mm; /* A4 width */
-        height: 297mm; /* A4 height */
-        margin: 0 !important;
-        padding: 0 !important;
-        position: relative;
-    }
+            body {
+                background: transparent;
+                width: 210mm;
+                /* A4 width */
+                height: 297mm;
+                /* A4 height */
+                margin: 0 !important;
+                padding: 0 !important;
+                position: relative;
+            }
 
             body {
                 background: white;
@@ -179,23 +183,24 @@
         }
 
         /* Header Styles */
-    .header-container {
-        background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-    .header-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-    
-    /* Header with dropdown */
-    .header-container {
+        .header-container {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Header with dropdown */
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -229,7 +234,7 @@
             font-size: 1rem;
             font-weight: 400;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 6px rgba(52,152,219,0.08);
+            box-shadow: 0 2px 6px rgba(52, 152, 219, 0.08);
             cursor: pointer;
             transition: background 0.2s;
             display: flex;
@@ -257,7 +262,7 @@
             right: 0;
             background-color: #fff;
             min-width: 200px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12), 0 3px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.08);
             z-index: 1000;
             border-radius: 12px;
             overflow: hidden;
@@ -296,27 +301,27 @@
         }
     </style>
 </head>
-    <!-- Header with Dropdown -->
-    <div class="header-container">
-        <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
-        <div class="dropdown-container">
-            <button class="dropdown-btn">
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-            </button>
-            <div class="dropdown-content">
-                <a href="index.html">Home</a>
-                <a href="fdr.html">FDR Calculator</a>
-                <a href="dps.html">DPS Calculator</a>
-                <a href="emi.html">Loan EMI Calculator</a>
-                <a href="date.html">Date Calculator</a>
-                <a href="cheque.html">Payment Order Print</a>
-                <a href="voucherprint.html">Debit/Credit Voucher & Print</a>
-                <a href="sc-lscprint.html">SC/LSC Form Print (Non MICR Cheque)</a>
-            </div>
+<!-- Header with Dropdown -->
+<div class="header-container">
+    <div class="header-title" onclick="location.href='index.html'">Bank Solutions</div>
+    <div class="dropdown-container">
+        <button class="dropdown-btn">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </button>
+        <div class="dropdown-content">
+            <a href="index.html">Home</a>
+            <a href="fdr.html">FDR Calculator</a>
+            <a href="dps.html">DPS Calculator</a>
+            <a href="emi.html">Loan EMI Calculator</a>
+            <a href="date.html">Date Calculator</a>
+            <a href="cheque.html">Payment Order Print</a>
+            <a href="voucherprint.html">Debit/Credit Voucher & Print</a>
+            <a href="sc-lscprint.html">SC/LSC Form Print (Non MICR Cheque)</a>
         </div>
     </div>
+</div>
 
 <body>
     <div class="container">
@@ -349,12 +354,12 @@
 
     <div class="preview" id="previewSection">
         <div class="letter-header">
-            <img src="full-logo.png"
-                alt="Pubali Bank Logo">
+            <img src="full-logo.png" alt="Pubali Bank Logo">
             <div>
                 <div id="previewBranchName" style="font-weight: bold; font-size: 18px;"></div>
                 <div style="text-align: right; font-size: 12px;">www.pubalibankbd.com</div>
                 <div style="text-align: right; font-size: 12px;">www.pubalibangla.com</div>
+
             </div>
         </div>
         <hr>
@@ -397,7 +402,9 @@
             previewDate.textContent = `Date: ${dateFormatted}`;
 
             const letter = `
-The Manager
+Ref: PBPLC/${branch}/Eng. Call/............./20......
+
+The Head of Branch
 Pubali Bank PLC.
 Bhola Branch
 Bhola Sadar, Bhola.
@@ -427,33 +434,33 @@ Yours sincerely,
         }
 
         // Dropdown menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const dropdownContainer = document.querySelector('.dropdown-container');
             const dropdownContent = document.querySelector('.dropdown-content');
             let timeoutId;
 
             // Show dropdown on mouse enter
-            dropdownContainer.addEventListener('mouseenter', function() {
+            dropdownContainer.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
                 dropdownContent.classList.remove('hide');
                 dropdownContent.classList.add('show');
             });
 
             // Hide dropdown on mouse leave with delay
-            dropdownContainer.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContainer.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200); // 200ms delay before hiding
             });
 
             // Keep dropdown open when hovering over content
-            dropdownContent.addEventListener('mouseenter', function() {
+            dropdownContent.addEventListener('mouseenter', function () {
                 clearTimeout(timeoutId);
             });
 
-            dropdownContent.addEventListener('mouseleave', function() {
-                timeoutId = setTimeout(function() {
+            dropdownContent.addEventListener('mouseleave', function () {
+                timeoutId = setTimeout(function () {
                     dropdownContent.classList.remove('show');
                     dropdownContent.classList.add('hide');
                 }, 200);
